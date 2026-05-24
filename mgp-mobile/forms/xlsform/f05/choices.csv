@@ -1,0 +1,8 @@
+list_name,name,label::French,label::Haoussa,label::Zarma
+oui_non,oui,Oui,Eh,Oho
+oui_non,non,Non,A'a,Aula
+statut_traitement,recu,Reçu - en attente d'examen,An karɓa - Ana jiran duba,Zarma reçu
+statut_traitement,en_examen,En cours d'examen,Ana dubawa,Zarma en examen
+statut_traitement,resolu,Résolu,An warware,Zarma resolu
+statut_traitement,rejete,Rejeté,An ƙi,Zarma rejeté
+statut_traitement,escalade,Escaladé au niveau supérieur,An tura sama,Zarma escaladé

@@ -1,0 +1,30 @@
+type,name,label::French,label::Haoussa,label::Zarma,hint::French,required,appearance,constraint,constraint_message,relevant,calculation,read_only
+start,start,,,,,,,,,,,
+end,end,,,,,,,,,,,
+
+begin_group,grp_localisation,Localisation du comité,,,,,field-list,,,,,
+select_one region,region,Région,Yankin,Zaɲey,,yes,,,,,
+select_one departement,departement,Département,Gundumar,Faaba,,yes,,,,,
+select_one commune,commune,Commune,Birni,Koome,,yes,,,,,
+text,localite_name,Localité / Village,Gari,Katoo,,yes,,,,,
+select_one type_comite,type_comite,Type de comité installé,Nau'in kwamitin da aka kafa,Zarma type comité,,yes,,,,,
+date,date_ag,Date de l'Assemblée générale,Ranar taron kwamitin,Zarma date AG,,yes,,,,,
+end_group,grp_localisation,,,,,,,,,,
+
+begin_group,grp_participants,Participants à l'AG,,,,,field-list,,,,,
+integer,nb_total,Nombre total de participants,Jimlar masu halarci,Zarma nb total,,yes,,number > 0,,,,
+integer,nb_hommes,Dont hommes,Ciki maza,Zarma hommes,,yes,,number >= 0,,,,
+integer,nb_femmes,Dont femmes,Ciki mata,Zarma femmes,,yes,,number >= 0,,,,
+end_group,grp_participants,,,,,,,,,,
+
+begin_group,grp_membres,Membres élus du comité,,,,,,,,,,,
+begin_repeat,membres_elus,Membre élu,Mambon da aka zaba,Zarma membre élu,
+select_one poste_comite,poste,Poste,Matsayi,Zarma poste,,yes,,,,,
+text,profil,Profil (ex : représentant femmes),Bayani,Zarma profil,,no,,,,,
+text,nom_elu,Nom du membre élu,Sunan mambon da aka zaba,Zarma nom élu,,yes,,,,,
+select_one mode_election,mode_election,Mode d'élection,Hanyar zaben,Zarma mode élection,,yes,,,,,
+end_repeat,membres_elus,,,,,,,,,,
+end_group,grp_membres,,,,,,,,,,
+
+draw,signature_pv,Signature du président de séance,Sa'in shugaba,Zarma signature,,yes,,,,,
+geopoint,gps,Position GPS,GPS,GPS,,no,placement-map,,,,

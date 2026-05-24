@@ -1,0 +1,25 @@
+list_name,name,label::French,label::Haoussa,label::Zarma
+oui_non,oui,Oui,Eh,Oho
+oui_non,non,Non,A'a,Aula
+region,agadez,Agadez,Agadez,Agadez
+region,diffa,Diffa,Diffa,Diffa
+region,dosso,Dosso,Dosso,Dosso
+region,maradi,Maradi,Maradi,Maradi
+region,niamey,Niamey,Niamey,Niamey
+region,tahoua,Tahoua,Tahoua,Tahoua
+region,tillaberi,Tillabéri,Tillabéri,Tillabéri
+region,zinder,Zinder,Zinder,Zinder
+type_comite,cbgp,CBGP - Comité de Base (localité),CBGP - Kwamitin Gari,Zarma CBGP
+type_comite,ccgp,CCGP - Comité Communal,CCGP - Kwamitin Birni,Zarma CCGP
+poste_comite,president,Président,Shugaba,Zarma président
+poste_comite,vice_president,Vice-Président,Mataimakin shugaba,Zarma vice-président
+poste_comite,secretaire,Secrétaire,Sakatare,Zarma secrétaire
+poste_comite,focal_vbg_h,Point focal VBG (Homme),Daraktan VBG (Namiji),Zarma focal VBG H
+poste_comite,focal_vbg_f,Point focal VBG (Femme),Daraktan VBG (Mace),Zarma focal VBG F
+poste_comite,rep_beneficiaires,Représentant bénéficiaires,Wakilin masu cin gajiyar,Zarma rep bénéficiaires
+poste_comite,rep_pap,Représentant PAP,Wakilin PAP,Zarma rep PAP
+poste_comite,rep_femmes,Représentant femmes,Wakilin mata,Zarma rep femmes
+poste_comite,rep_ong,Représentant ONG,Wakilin NGO,Zarma rep ONG
+mode_election,vote_main,Vote à main levée,Zabe da hannun dama,Zarma vote main
+mode_election,vote_secret,Vote secret,Zabe asiri,Zarma vote secret
+mode_election,consensus,Consensus,Yarjejeniya,Zarma consensus

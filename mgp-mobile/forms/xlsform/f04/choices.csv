@@ -1,0 +1,4 @@
+list_name,name,label::French,label::Haoussa,label::Zarma
+resultat,accord,Accord trouvé - plainte résolue,An samu yarjejeniya,Zarma accord
+resultat,desaccord,Désaccord - escalade au niveau supérieur,Ba a samu yarjejeniya - An tura sama,Zarma désaccord
+resultat,partiel,Accord partiel - suivi requis,Yarjejeniya ta bangare,Zarma partiel

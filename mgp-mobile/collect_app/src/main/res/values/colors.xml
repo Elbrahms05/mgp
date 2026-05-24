@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    PACIPA-MGP - Palette Niger
+    Vert Niger   #009A44  (primary)
+    Orange Niger #E05206  (secondary / accent)
+-->
+<resources>
+    <!-- Light theme - Vert Niger -->
+    <color name="colorPrimaryLight">#009A44</color>
+    <color name="colorOnPrimaryLight">#ffffff</color>
+    <color name="colorPrimaryContainerLight">#b7f0cc</color>
+    <color name="colorOnPrimaryContainerLight">#002110</color>
+    <color name="colorSurfaceLight">#ffffff</color>
+    <color name="colorOnSurfaceLight">#1a1c19</color>
+    <color name="colorSurfaceContainerHighestLight">#e2e3dd</color>
+
+    <!-- Dark theme -->
+    <color name="colorPrimaryDark">#2DB266</color>
+    <color name="colorOnPrimaryDark">#003919</color>
+    <color name="colorPrimaryContainerDark">#005227</color>
+    <color name="colorOnPrimaryContainerDark">#b7f0cc</color>
+    <color name="colorSurfaceDark">#1a1c19</color>
+    <color name="colorOnSurfaceDark">#e2e3dd</color>
+    <color name="colorSurfaceContainerHighestDark">#303330</color>
+
+    <!-- PACIPA accent -->
+    <color name="pacipa_orange">#E05206</color>
+    <color name="pacipa_orange_light">#F97B3D</color>
+    <color name="pacipa_green">#009A44</color>
+    <color name="pacipa_dark">#1C1C2E</color>
+    <color name="pacipa_red">#DC3545</color>
+</resources>

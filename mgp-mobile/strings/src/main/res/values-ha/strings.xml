@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Haoussa (ha) - Traductions PACIPA-MGP
+    Langue parlée par ~50% de la population du Niger
+-->
+<resources>
+    <string name="app_name">PACIPA - MGP</string>
+
+    <!-- Navigation principale -->
+    <string name="main_menu">Babban Menu</string>
+    <string name="fill_blank_form">Cika sabon fom</string>
+    <string name="edit_saved_form">Gyara fom ɗin da aka adana</string>
+    <string name="send_finalized_form">Tura fom ɗin da aka kammala</string>
+    <string name="view_sent_form">Duba fom ɗin da aka tura</string>
+    <string name="get_blank_form">Samu sabon fom</string>
+    <string name="delete_saved_form">Share fom ɗin da aka adana</string>
+
+    <!-- PACIPA specific -->
+    <string name="pacipa_welcome">Barka da zuwa zuwa PACIPA-MGP\nMutumin kara da kariya</string>
+    <string name="pacipa_complaint_new">Sabon kara</string>
+    <string name="pacipa_complaint_vbg">Kara VBG/EAS/HS (Asiri)</string>
+    <string name="pacipa_sync_pending">%1$d fom ɗin da suke jiran tura</string>
+    <string name="pacipa_sync_success">An tura duk fom ɗin cikin nasara</string>
+    <string name="pacipa_sync_failed">Kuskure wajen tura - za a sake gwadawa</string>
+    <string name="pacipa_offline_mode">Ana aiki ba tare da cibiyar sadarwa ba</string>
+    <string name="pacipa_sms_fallback">Tura ta hanyar SMS (ba tare da data ba)</string>
+
+    <!-- VBG -->
+    <string name="vbg_confidential_warning">ASIRI - Bayanai na musamman VBG/EAS/HS\nAn hana shi ga masu ba izini</string>
+    <string name="vbg_consent_required">Ana buƙatar izinin mai rauni kafin ci gaba</string>
+    <string name="vbg_no_mediation">⚠️ BA SULHU BA - EAS/HS suna da hanya ta musamman</string>
+
+    <!-- Status -->
+    <string name="status_registered">An yi rajista</string>
+    <string name="status_under_review">Ana duba</string>
+    <string name="status_resolved">An warware</string>
+    <string name="status_escalated">An tura sama</string>
+    <string name="status_rejected">An ƙi</string>
+
+    <!-- Boutons -->
+    <string name="btn_submit">Tura</string>
+    <string name="btn_save_draft">Adana (kwafi)</string>
+    <string name="btn_cancel">Soke</string>
+    <string name="btn_next">Gaba</string>
+    <string name="btn_previous">Baya</string>
+    <string name="btn_sync">Daidaita yanzu</string>
+</resources>

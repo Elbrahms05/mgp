@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php artisan:*)",
+      "Bash(php -l app/Http/Controllers/User/UserController.php)",
+      "Bash(php -l app/Http/Controllers/Setting/SettingController.php)",
+      "Bash(php -l app/Http/Controllers/Statistic/StatisticController.php)",
+      "Bash(php -l app/Http/Controllers/Worker/WorkerComplaintController.php)",
+      "Bash(php -l app/Http/Controllers/Mediation/MediationController.php)",
+      "Bash(php -l app/Http/Controllers/Communication/CommunicationController.php)",
+      "Bash(php -l app/Http/Controllers/Form/FormController.php)",
+      "Bash(php -l app/Http/Controllers/Documentation/PageGuideController.php)",
+      "Bash(php -l app/Http/Controllers/Report/ReportController.php)",
+      "Bash(php -l app/Http/Requests/User/StoreUserRequest.php)",
+      "Bash(php -l app/Http/Requests/User/UpdateUserRequest.php)",
+      "Bash(php -l app/Http/Requests/Worker/StoreWorkerComplaintRequest.php)",
+      "Bash(php -l app/Http/Requests/Worker/UpdateWorkerComplaintRequest.php)",
+      "Bash(php -l app/Http/Requests/Mediation/StoreMediationRequest.php)",
+      "Bash(php -l app/Http/Controllers/Vbg/DirectReport/UssdWebhookController.php)",
+      "Bash(php -l app/Http/Controllers/Vbg/DirectReport/SmsWebhookController.php)",
+      "Bash(php -l app/Http/Controllers/Vbg/DirectReport/WhatsAppWebhookController.php)",
+      "Bash(php -l app/Http/Controllers/Vbg/DirectReport/TrustedPersonController.php)",
+      "Bash(php -l database/seeders/PageGuidesSeeder.php)",
+      "Bash(php -l app/Domains/Geography/Models/Region.php)"
+    ]
+  }
+}

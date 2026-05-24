@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+        xmlns:h="http://www.w3.org/1999/xhtml"
+        xmlns:jr="http://openrosa.org/javarosa"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <h:head>
+    <h:title>F07 — Évaluation trimestrielle du comité CGP (Annexe 10)</h:title>
+
+    <model>
+      <instance>
+        <data id="pacipa_f07" version="1.0">
+          <region/>
+          <commune/>
+          <localite/>
+          <trimestre/>
+          <annee/>
+          <date_evaluation/>
+          <nb_membres_total/>
+          <nb_membres_actifs/>
+          <nb_reunions_tenues/>
+          <plaintes_enregistrees/>
+          <plaintes_traitees/>
+          <plaintes_reglees/>
+          <plaintes_transmises/>
+          <plaintes_dans_delai/>
+          <plaintes_hors_delai/>
+          <difficultes/>
+          <solutions/>
+          <satisfaction_communaute/>
+          <feedbacks_recus/>
+          <suggestions/>
+          <meta>
+            <instanceID/>
+          </meta>
+        </data>
+      </instance>
+
+      <bind nodeset="/data/region"                  type="string"  required="true()"/>
+      <bind nodeset="/data/commune"                 type="string"  required="true()"/>
+      <bind nodeset="/data/localite"                type="string"  required="true()"/>
+      <bind nodeset="/data/trimestre"               type="string"  required="true()"/>
+      <bind nodeset="/data/annee"                   type="integer" required="true()"/>
+      <bind nodeset="/data/date_evaluation"         type="date"    required="true()"/>
+      <bind nodeset="/data/nb_membres_total"        type="integer" required="true()"/>
+      <bind nodeset="/data/nb_membres_actifs"       type="integer" required="true()"/>
+      <bind nodeset="/data/nb_reunions_tenues"      type="integer" required="true()"/>
+      <bind nodeset="/data/plaintes_enregistrees"   type="integer" required="true()"/>
+      <bind nodeset="/data/plaintes_traitees"       type="integer" required="true()"/>
+      <bind nodeset="/data/plaintes_reglees"        type="integer" required="true()"/>
+      <bind nodeset="/data/plaintes_transmises"     type="integer" required="true()"/>
+      <bind nodeset="/data/plaintes_dans_delai"     type="integer" required="true()"/>
+      <bind nodeset="/data/plaintes_hors_delai"     type="integer" required="true()"/>
+      <bind nodeset="/data/difficultes"             type="string"/>
+      <bind nodeset="/data/solutions"               type="string"/>
+      <bind nodeset="/data/satisfaction_communaute" type="string"/>
+      <bind nodeset="/data/feedbacks_recus"         type="string"/>
+      <bind nodeset="/data/suggestions"             type="string"/>
+      <bind nodeset="/data/meta/instanceID"         type="string"  readonly="true()" jr:preload="uid"/>
+    </model>
+  </h:head>
+
+  <h:body>
+
+    <select1 ref="/data/region">
+      <label>Région *</label>
+      <item><label>Agadez</label><value>agadez</value></item>
+      <item><label>Diffa</label><value>diffa</value></item>
+      <item><label>Dosso</label><value>dosso</value></item>
+      <item><label>Maradi</label><value>maradi</value></item>
+      <item><label>Niamey</label><value>niamey</value></item>
+      <item><label>Tahoua</label><value>tahoua</value></item>
+      <item><label>Tillabéri</label><value>tillaberi</value></item>
+      <item><label>Zinder</label><value>zinder</value></item>
+    </select1>
+
+    <input ref="/data/commune">
+      <label>Commune *</label>
+    </input>
+
+    <input ref="/data/localite">
+      <label>Localité *</label>
+    </input>
+
+    <select1 ref="/data/trimestre">
+      <label>Trimestre *</label>
+      <item><label>T1 (Jan–Mar)</label><value>T1</value></item>
+      <item><label>T2 (Avr–Jun)</label><value>T2</value></item>
+      <item><label>T3 (Jul–Sep)</label><value>T3</value></item>
+      <item><label>T4 (Oct–Déc)</label><value>T4</value></item>
+    </select1>
+
+    <input ref="/data/annee">
+      <label>Année *</label>
+    </input>
+
+    <input ref="/data/date_evaluation">
+      <label>Date d'évaluation *</label>
+    </input>
+
+    <input ref="/data/nb_membres_total">
+      <label>Nombre total de membres *</label>
+    </input>
+
+    <input ref="/data/nb_membres_actifs">
+      <label>Nombre de membres actifs *</label>
+    </input>
+
+    <input ref="/data/nb_reunions_tenues">
+      <label>Nombre de réunions tenues ce trimestre *</label>
+    </input>
+
+    <input ref="/data/plaintes_enregistrees">
+      <label>Plaintes enregistrées *</label>
+    </input>
+
+    <input ref="/data/plaintes_traitees">
+      <label>Plaintes traitées *</label>
+    </input>
+
+    <input ref="/data/plaintes_reglees">
+      <label>Plaintes réglées définitivement *</label>
+    </input>
+
+    <input ref="/data/plaintes_transmises">
+      <label>Plaintes transmises au niveau supérieur *</label>
+    </input>
+
+    <input ref="/data/plaintes_dans_delai">
+      <label>Plaintes réglées dans les délais *</label>
+    </input>
+
+    <input ref="/data/plaintes_hors_delai">
+      <label>Plaintes réglées hors délais *</label>
+    </input>
+
+    <input ref="/data/difficultes">
+      <label>Principales difficultés rencontrées</label>
+    </input>
+
+    <input ref="/data/solutions">
+      <label>Solutions mises en œuvre</label>
+    </input>
+
+    <select1 ref="/data/satisfaction_communaute">
+      <label>Niveau de satisfaction de la communauté</label>
+      <item><label>Très satisfaite</label><value>tres_satisfait</value></item>
+      <item><label>Satisfaite</label><value>satisfait</value></item>
+      <item><label>Peu satisfaite</label><value>peu_satisfait</value></item>
+      <item><label>Non satisfaite</label><value>non_satisfait</value></item>
+    </select1>
+
+    <input ref="/data/feedbacks_recus">
+      <label>Retours reçus de la communauté</label>
+    </input>
+
+    <input ref="/data/suggestions">
+      <label>Suggestions d'amélioration</label>
+    </input>
+
+  </h:body>
+</h:html>

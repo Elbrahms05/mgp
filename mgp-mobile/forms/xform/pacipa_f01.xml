@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+        xmlns:h="http://www.w3.org/1999/xhtml"
+        xmlns:jr="http://openrosa.org/javarosa"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <h:head>
+    <h:title>F01 — Dépôt de plainte (Annexe 4)</h:title>
+
+    <model>
+      <instance>
+        <data id="pacipa_f01" version="1.0">
+          <local_ref/>
+          <site_pacipa/>
+          <date_depot/>
+          <plaignant_anonyme/>
+          <plaignant_nom/>
+          <plaignant_prenom/>
+          <plaignant_age/>
+          <plaignant_sexe/>
+          <plaignant_localite_residence/>
+          <plaignant_contact/>
+          <canal_reception/>
+          <type_plainte/>
+          <date_faits/>
+          <description_faits/>
+          <personne_visee/>
+          <structure_visee/>
+          <meta>
+            <instanceID/>
+          </meta>
+        </data>
+      </instance>
+
+      <bind nodeset="/data/local_ref"                    type="string"  required="true()"/>
+      <bind nodeset="/data/site_pacipa"                  type="string"/>
+      <bind nodeset="/data/date_depot"                   type="date"    required="true()"/>
+      <bind nodeset="/data/plaignant_anonyme"            type="string"  required="true()"/>
+      <bind nodeset="/data/plaignant_nom"                type="string"
+            relevant="/data/plaignant_anonyme = 'false'"/>
+      <bind nodeset="/data/plaignant_prenom"             type="string"
+            relevant="/data/plaignant_anonyme = 'false'"/>
+      <bind nodeset="/data/plaignant_age"                type="string"/>
+      <bind nodeset="/data/plaignant_sexe"               type="string"/>
+      <bind nodeset="/data/plaignant_localite_residence" type="string"/>
+      <bind nodeset="/data/plaignant_contact"            type="string"
+            relevant="/data/plaignant_anonyme = 'false'"/>
+      <bind nodeset="/data/canal_reception"              type="string"  required="true()"/>
+      <bind nodeset="/data/type_plainte"                 type="integer" required="true()"/>
+      <bind nodeset="/data/date_faits"                   type="date"/>
+      <bind nodeset="/data/description_faits"            type="string"  required="true()"/>
+      <bind nodeset="/data/personne_visee"               type="string"/>
+      <bind nodeset="/data/structure_visee"              type="string"/>
+      <bind nodeset="/data/meta/instanceID"              type="string"  readonly="true()"
+            jr:preload="uid"/>
+    </model>
+  </h:head>
+
+  <h:body>
+
+    <input ref="/data/local_ref">
+      <label>Référence locale de la plainte *</label>
+      <hint>Ex : MGP-2025-001</hint>
+    </input>
+
+    <input ref="/data/site_pacipa">
+      <label>Code du site PACIPA</label>
+    </input>
+
+    <input ref="/data/date_depot">
+      <label>Date de dépôt *</label>
+    </input>
+
+    <select1 ref="/data/plaignant_anonyme">
+      <label>La plainte est-elle anonyme ? *</label>
+      <item><label>Non — plainte nominative</label><value>false</value></item>
+      <item><label>Oui — plainte anonyme</label><value>true</value></item>
+    </select1>
+
+    <input ref="/data/plaignant_nom">
+      <label>Nom du plaignant</label>
+    </input>
+
+    <input ref="/data/plaignant_prenom">
+      <label>Prénom du plaignant</label>
+    </input>
+
+    <input ref="/data/plaignant_age">
+      <label>Âge approximatif</label>
+    </input>
+
+    <select1 ref="/data/plaignant_sexe">
+      <label>Sexe</label>
+      <item><label>Masculin</label><value>M</value></item>
+      <item><label>Féminin</label><value>F</value></item>
+    </select1>
+
+    <input ref="/data/plaignant_localite_residence">
+      <label>Localité de résidence</label>
+    </input>
+
+    <input ref="/data/plaignant_contact">
+      <label>Contact téléphonique</label>
+    </input>
+
+    <select1 ref="/data/canal_reception">
+      <label>Canal de réception *</label>
+      <item><label>En personne</label><value>en_personne</value></item>
+      <item><label>Téléphone</label><value>telephone</value></item>
+      <item><label>SMS</label><value>sms</value></item>
+      <item><label>WhatsApp</label><value>whatsapp</value></item>
+      <item><label>Courrier</label><value>courrier</value></item>
+      <item><label>Email</label><value>email</value></item>
+      <item><label>Boîte à réclamations</label><value>boite_reclamation</value></item>
+      <item><label>Ligne verte</label><value>ligne_verte</value></item>
+      <item><label>Auto-saisine</label><value>auto_saisine</value></item>
+    </select1>
+
+    <input ref="/data/type_plainte">
+      <label>Type de plainte (ID) *</label>
+      <hint>1=Affectation bien, 2=Emploi, 3=Environnement, 4=Gouvernance, 5=VBG/EAS/HS</hint>
+    </input>
+
+    <input ref="/data/date_faits">
+      <label>Date des faits</label>
+    </input>
+
+    <input ref="/data/description_faits">
+      <label>Description des faits *</label>
+    </input>
+
+    <input ref="/data/personne_visee">
+      <label>Personne visée (nom)</label>
+    </input>
+
+    <input ref="/data/structure_visee">
+      <label>Structure visée</label>
+    </input>
+
+  </h:body>
+</h:html>

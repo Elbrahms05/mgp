@@ -1,0 +1,14 @@
+type,name,label::French,label::Haoussa,label::Zarma,hint::French,required,appearance,constraint,constraint_message,relevant,calculation,read_only
+start,start,,,,,,,,,,,
+end,end,,,,,,,,,,,
+
+text,ref_f01,Numéro de plainte (F01),Lambar kara (F01),Zarma ref F01,,yes,,,,,
+date,date_conciliation,Date de la séance de conciliation,Ranar tattaunawa,Zarma date,,yes,,,,,
+text,president_seance,Président de la séance,Shugaban taronta,Zarma président,,yes,,,,,
+text,membres_presents,Membres présents (liste),Mambobinn da suka halarci,Zarma membres,,yes,multiline,,,,
+text,sujet_reclamation,Sujet de la réclamation débattue,Batun da aka tattauna,Zarma sujet,,yes,multiline,,,,
+select_one resultat,resultat_seance,Résultat de la séance,Sakamakon taronta,Zarma résultat,,yes,,,,,
+text,accord_details,Détails de l'accord (si applicable),Cikakkun bayanan yarjejeniya,Zarma accord,,no,multiline,,${resultat_seance} = 'accord',
+draw,signature_president,Signature du président,Sa'in shugaba,Zarma signature president,,yes,,,,,
+draw,signature_plaignant,Signature du plaignant,Sa'in mai kara,Zarma signature plaignant,,yes,,,,,
+draw,signature_accuse,Signature de la personne mise en cause,Sa'in mai tuhuma,Zarma signature accusé,,no,,,,,

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+        xmlns:h="http://www.w3.org/1999/xhtml"
+        xmlns:jr="http://openrosa.org/javarosa"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <h:head>
+    <h:title>F06 — PV d'installation du comité CBGP (Annexe 3)</h:title>
+
+    <model>
+      <instance>
+        <data id="pacipa_f06" version="1.0">
+          <site_pacipa/>
+          <region/>
+          <commune/>
+          <localite/>
+          <date_installation/>
+          <lieu_reunion/>
+          <representant_ugp/>
+          <nb_participants_total/>
+          <nb_participants_hommes/>
+          <nb_participants_femmes/>
+          <meta>
+            <instanceID/>
+          </meta>
+        </data>
+      </instance>
+
+      <bind nodeset="/data/site_pacipa"            type="string"/>
+      <bind nodeset="/data/region"                 type="string"  required="true()"/>
+      <bind nodeset="/data/commune"                type="string"  required="true()"/>
+      <bind nodeset="/data/localite"               type="string"  required="true()"/>
+      <bind nodeset="/data/date_installation"      type="date"    required="true()"/>
+      <bind nodeset="/data/lieu_reunion"           type="string"  required="true()"/>
+      <bind nodeset="/data/representant_ugp"       type="string"/>
+      <bind nodeset="/data/nb_participants_total"  type="integer" required="true()"/>
+      <bind nodeset="/data/nb_participants_hommes" type="integer" required="true()"/>
+      <bind nodeset="/data/nb_participants_femmes" type="integer" required="true()"/>
+      <bind nodeset="/data/meta/instanceID"        type="string"  readonly="true()" jr:preload="uid"/>
+    </model>
+  </h:head>
+
+  <h:body>
+
+    <input ref="/data/site_pacipa">
+      <label>Code site PACIPA (si applicable)</label>
+    </input>
+
+    <select1 ref="/data/region">
+      <label>Région *</label>
+      <item><label>Agadez</label><value>agadez</value></item>
+      <item><label>Diffa</label><value>diffa</value></item>
+      <item><label>Dosso</label><value>dosso</value></item>
+      <item><label>Maradi</label><value>maradi</value></item>
+      <item><label>Niamey</label><value>niamey</value></item>
+      <item><label>Tahoua</label><value>tahoua</value></item>
+      <item><label>Tillabéri</label><value>tillaberi</value></item>
+      <item><label>Zinder</label><value>zinder</value></item>
+    </select1>
+
+    <input ref="/data/commune">
+      <label>Commune *</label>
+    </input>
+
+    <input ref="/data/localite">
+      <label>Localité *</label>
+    </input>
+
+    <input ref="/data/date_installation">
+      <label>Date d'installation *</label>
+    </input>
+
+    <input ref="/data/lieu_reunion">
+      <label>Lieu de la réunion *</label>
+    </input>
+
+    <input ref="/data/representant_ugp">
+      <label>Représentant UGP présent</label>
+    </input>
+
+    <input ref="/data/nb_participants_total">
+      <label>Nombre total de participants *</label>
+    </input>
+
+    <input ref="/data/nb_participants_hommes">
+      <label>Dont hommes *</label>
+    </input>
+
+    <input ref="/data/nb_participants_femmes">
+      <label>Dont femmes *</label>
+    </input>
+
+  </h:body>
+</h:html>

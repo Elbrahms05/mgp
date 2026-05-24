@@ -1,0 +1,27 @@
+list_name,name,label::French,label::Haoussa,label::Zarma
+oui_non,oui,Oui,Eh,Oho
+oui_non,non,Non,A'a,Aula
+age_groupe,girl_lt18,Fille de moins de 18 ans,Yarinya ƙasa da shekara 18,Zarma fille lt18
+age_groupe,woman_gte18,Femme de 18 ans et plus,Mace mai shekara 18 ko fiye,Zarma femme gte18
+age_groupe,boy_lt18,Garçon de moins de 18 ans,Yaro ƙasa da shekara 18,Zarma garçon lt18
+age_groupe,man_gte18,Homme de 18 ans et plus,Namiji mai shekara 18 ko fiye,Zarma homme gte18
+genre_survivant,F,Féminin,Mata,Haw
+genre_survivant,M,Masculin,Maza,Wane
+auteur_lien,personnel_projet,Personnel du projet PACIPA,Ma'aikacin aikin PACIPA,Zarma personnel projet
+auteur_lien,fds,Forces de Défense et Sécurité (FDS),Rundunar Tsaro,Zarma FDS
+auteur_lien,inconnu,Inconnu,Ba a sani ba,Zarma inconnu
+auteur_lien,sans_lien,Sans lien avec le projet,Ba shi da alaka da aikin,Zarma sans lien
+forme_vbg,viol,Viol,Cin zarafi,Zarma viol
+forme_vbg,agression_sexuelle,Agression sexuelle,Cin zarafin jiki,Zarma agression sexuelle
+forme_vbg,agression_physique,Agression physique,Dukan jiki,Zarma agression physique
+forme_vbg,violence_psychologique,Violence psychologique,Azabar hankali,Zarma violence psychologique
+forme_vbg,mariage_force,Mariage forcé / précoce,Auren tilas,Zarma mariage forcé
+forme_vbg,deni_services,Déni de services / ressources,Hana ayyuka,Zarma déni services
+forme_vbg,pas_incident_vbg,Aucun incident VBG vérifié,Ba a tabbatar da lamarin VBG,Zarma pas incident VBG
+services_ref,medical,Services médicaux,Magunguna,Zarma medical
+services_ref,psychosocial,Soutien psychosocial,Tallafin hankali,Zarma psychosocial
+services_ref,juridique,Assistance juridique / légale,Taimako na shari'a,Zarma juridique
+services_ref,securite,Protection sécuritaire,Kariyar tsaro,Zarma securite
+services_ref,hebergement,Hébergement d'urgence,Dakin gaggawa,Zarma hebergement
+nationalite,nigerienne,Nigérienne,Yar Nijar,Zarma nigerienne
+nationalite,etrangere,Étrangère,Ba Nijar ba,Zarma etrangere

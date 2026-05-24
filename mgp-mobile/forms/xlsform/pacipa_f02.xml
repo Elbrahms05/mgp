@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+        xmlns:h="http://www.w3.org/1999/xhtml"
+        xmlns:jr="http://openrosa.org/javarosa"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <h:head>
+    <h:title>F02 — Instruction plainte non sensible (Annexe 8)</h:title>
+
+    <model>
+      <instance>
+        <data id="pacipa_f02" version="1.0">
+          <ref_f01/>
+          <nature_bien_affecte/>
+          <observations_autorite/>
+          <reponse_proposee/>
+          <plaignant_accepte/>
+          <statut_resolution/>
+          <meta>
+            <instanceID/>
+          </meta>
+        </data>
+      </instance>
+
+      <bind nodeset="/data/ref_f01"               type="string" required="true()"/>
+      <bind nodeset="/data/nature_bien_affecte"   type="string"/>
+      <bind nodeset="/data/observations_autorite" type="string" required="true()"/>
+      <bind nodeset="/data/reponse_proposee"      type="string" required="true()"/>
+      <bind nodeset="/data/plaignant_accepte"     type="string" required="true()"/>
+      <bind nodeset="/data/statut_resolution"     type="string" required="true()"/>
+      <bind nodeset="/data/meta/instanceID"       type="string" readonly="true()" jr:preload="uid"/>
+    </model>
+  </h:head>
+
+  <h:body>
+
+    <input ref="/data/ref_f01">
+      <label>Référence de la plainte F01 *</label>
+      <hint>Ex : MGP-2025-001</hint>
+    </input>
+
+    <input ref="/data/nature_bien_affecte">
+      <label>Nature du bien affecté</label>
+    </input>
+
+    <input ref="/data/observations_autorite">
+      <label>Observations de l'autorité locale *</label>
+    </input>
+
+    <input ref="/data/reponse_proposee">
+      <label>Réponse proposée *</label>
+    </input>
+
+    <select1 ref="/data/plaignant_accepte">
+      <label>Le plaignant accepte la réponse ? *</label>
+      <item><label>Oui</label><value>oui</value></item>
+      <item><label>Non</label><value>non</value></item>
+      <item><label>Partiellement</label><value>partiel</value></item>
+    </select1>
+
+    <select1 ref="/data/statut_resolution">
+      <label>Statut de résolution *</label>
+      <item><label>Résolu</label><value>resolu</value></item>
+      <item><label>Partiellement résolu</label><value>partiel</value></item>
+      <item><label>Non résolu — à transmettre</label><value>non_resolu</value></item>
+    </select1>
+
+  </h:body>
+</h:html>

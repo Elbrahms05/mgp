@@ -1,0 +1,32 @@
+type,name,label::French,label::Haoussa,label::Zarma,hint::French,required,appearance,constraint,constraint_message,relevant,calculation,read_only
+start,start,,,,,,,,,,,
+end,end,,,,,,,,,,,
+
+begin_group,grp_identite,Identification du comité,,,,,field-list,,,,,
+select_one region,region,Région,Yankin,Zaɲey,,yes,,,,,
+text,commune_nom,Commune,Birni,Koome,,yes,,,,,
+text,localite_nom,Localité / Village (si CBGP),Gari,Zarma localité,,no,,,,,
+select_one type_comite,type_comite,Type de comité,Nau'in kwamiti,Zarma type comité,,yes,,,,,
+select_one trimestre,trimestre,Trimestre évalué,Kwata da ake kimantawa,Zarma trimestre,,yes,,,,,
+integer,annee,Année,Shekara,Zarma année,,yes,,"number >= 2025 and number <= 2030",,,,
+end_group,grp_identite,,,,,,,,,,
+
+begin_group,grp_membres_ops,Membres opérationnels,,,,,field-list,,,,,
+integer,membres_operationnels,Nombre de membres opérationnels,Adadin mamboba masu aiki,Zarma membres ops,,yes,,number >= 0,,,,
+end_group,grp_membres_ops,,,,,,,,,,
+
+begin_group,grp_plaintes,Bilan des plaintes du trimestre,,,,,field-list,,,,,
+integer,plaintes_enregistrees,Plaintes enregistrées,Ƙararraki da aka yi rubutu,Zarma plaintes enreg,,yes,,number >= 0,,,,
+integer,plaintes_traitees,Plaintes traitées,Ƙararraki da aka yi aiki da su,Zarma plaintes traitées,,yes,,number >= 0,,,,
+integer,plaintes_reglees,Plaintes réglées (résolues),Ƙararraki da aka warware,Zarma plaintes réglées,,yes,,number >= 0,,,,
+integer,plaintes_transmises,Plaintes transmises au niveau supérieur,Ƙararraki da aka tura sama,Zarma plaintes transmises,,yes,,number >= 0,,,,
+end_group,grp_plaintes,,,,,,,,,,
+
+begin_group,grp_qualitatif,Évaluation qualitative,,,,,field-list,,,,,
+text,difficultes,Difficultés rencontrées,Matsaloli da suka faru,Zarma difficultés,Décrire les principaux obstacles,yes,multiline,,,,
+text,solutions,Solutions proposées,Mafita da aka ba da shawara,Zarma solutions,,yes,multiline,,,,
+text,feedbacks_communaute,Feedbacks de la communauté,Ra'ayoyin al'umma,Zarma feedbacks,,yes,multiline,,,,
+text,suggestions,Suggestions pour amélioration,Shawarwari don ingantawa,Zarma suggestions,,no,multiline,,,,
+end_group,grp_qualitatif,,,,,,,,,,
+
+draw,signature_president,Signature du président du comité,Sa'in shugaban kwamiti,Zarma signature,,yes,,,,,

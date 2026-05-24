@@ -1,0 +1,16 @@
+list_name,name,label::French,label::Haoussa,label::Zarma
+region,agadez,Agadez,Agadez,Agadez
+region,diffa,Diffa,Diffa,Diffa
+region,dosso,Dosso,Dosso,Dosso
+region,maradi,Maradi,Maradi,Maradi
+region,niamey,Niamey,Niamey,Niamey
+region,tahoua,Tahoua,Tahoua,Tahoua
+region,tillaberi,Tillabéri,Tillabéri,Tillabéri
+region,zinder,Zinder,Zinder,Zinder
+type_comite,cbgp,CBGP - Comité de Base (localité),CBGP - Kwamitin Gari,Zarma CBGP
+type_comite,ccgp,CCGP - Comité Communal,CCGP - Kwamitin Birni,Zarma CCGP
+type_comite,cngp,CNGP - Comité National,CNGP - Kwamitin Ƙasa,Zarma CNGP
+trimestre,q1,1er trimestre (Jan–Mar),Kwata na 1 (Jan–Mar),Zarma Q1
+trimestre,q2,2e trimestre (Avr–Jun),Kwata na 2 (Avr–Jun),Zarma Q2
+trimestre,q3,3e trimestre (Jul–Sep),Kwata na 3 (Jul–Sep),Zarma Q3
+trimestre,q4,4e trimestre (Oct–Déc),Kwata na 4 (Oct–Déc),Zarma Q4

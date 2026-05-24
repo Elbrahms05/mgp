@@ -1,0 +1,35 @@
+type,name,label::French,label::Haoussa,label::Zarma,hint::French,required,appearance,constraint,constraint_message,relevant,calculation,read_only
+start,start,,,,,,,,,,,
+end,end,,,,,,,,,,,
+today,today,,,,,,,,,,,
+deviceid,deviceid,,,,,,,,,,,
+
+note,note_securite,"⚠️ FORMULAIRE CONFIDENTIEL VBG/EAS/HS - Accès restreint points focaux VBG uniquement. Données chiffrées. NE PAS partager.","⚠️ Asiri - Masu VBG kawai.","⚠️ Confidential VBG zarma.",,,,,,,,
+
+begin_group,grp_partie1,PARTIE 1 - Enregistrement initial (OBLIGATOIRE),,,,,field-list,,,,,
+note,note_p1,"Cette partie est remplie par le point focal VBG. Elle ne contient aucun identifiant de la survivant(e).","Wannan ɓangare yana cika da Ma'aikacin VBG.",,,,,,,,,
+calculate,id_vbg,Code VBG (automatique),,,,,,,,,"concat('VBG-', substr(${region_vbg},0,3), '-', year(today()), '-', uuid())"
+text,region_vbg,Région d'enregistrement,Yankin yin rubutu,Zarma region,,yes,minimal,,,,
+note,note_code,Code VBG attribué :,,,,,,,,,${id_vbg},
+select_one age_groupe,survivor_age_group,Tranche d'âge de la survivant(e),Zamanin mutumin da ya tsira,Zarma age groupe,Ne pas demander l'âge exact,yes,,,,,
+select_one genre_survivant,survivor_gender,Genre de la survivant(e),Jinsin mutumin,Zarma genre,,yes,,,,,
+date,date_incident,Date de l'incident (approximative),Ranar lamari,Zarma araw,,yes,,,,,
+text,lieu_incident,Lieu de l'incident (général - ne pas préciser adresse),Wuri mai yiwuwa (ba adireshi ba),Zarma lieu,,yes,,,,,
+select_one auteur_lien,auteur_lien_projet,Lien de l'auteur présumé avec le projet,Haɗin gwiwar mai aikata da aikin,Zarma lien projet,,yes,,,,,
+select_multiple forme_vbg,formes_vbg,Forme(s) de VBG (GBVIMS),Nau'in VBG (GBVIMS),Zarma formes VBG,,yes,,,,,
+select_one oui_non,services_recus,La survivant(e) a-t-elle reçu des services ?,Ta sami ayyuka ?,Zarma services reçus,,yes,,,,,
+select_one oui_non,consent_mgp,Consentement de renvoi vers le MGP PACIPA ?,An yardar tura zuwa MGP ?,Zarma consentement MGP,Consentement éclairé - expliquer les risques et bénéfices avant de demander,yes,,,,,
+end_group,grp_partie1,,,,,,,,,,
+
+begin_group,grp_partie2,PARTIE 2 - Description des faits (UNIQUEMENT si consentement = OUI),,,,,field-list,,,${consent_mgp} = 'oui',,
+note,note_p2_warning,"⚠️ Cette partie est SÉPARÉE et ARCHIVÉE à part. NE PAS partager avec des tiers. Chiffrée individuellement.","⚠️ Wannan ɓangare an raba shi, an ɓoye shi.",,,,,,,,,
+note,note_consentement,"Consentement confirmé. Expliquez à la survivant(e) comment les informations seront utilisées et protégées avant de continuer.","An tabbatar da izini. Faɗa wa mutumin yadda za a yi amfani da bayanan.",,,,,,,,${consent_mgp} = 'oui',
+text,auteur_nom,Nom/surnom de l'auteur présumé,Sunan mai aikata,Zarma auteur nom,Si connu,no,,,,${consent_mgp} = 'oui',
+text,auteur_fonction,Fonction dans le projet,Aikin da yake yi a aikin,Zarma fonction,,no,,,,${consent_mgp} = 'oui',
+select_one nationalite,auteur_nationalite,Nationalité,Ƙasa,Zarma nationalite,,no,,,,,
+text,recit_faits,Récit précis des faits (confidences de la survivant(e)),Bayani dalla-dalla na abubuwan da suka faru,Zarma recit,Reprendre les mots exacts de la survivant(e),yes,multiline,,,${consent_mgp} = 'oui',
+select_multiple services_ref,services_references,Services référencés (cocher tous ceux fournis),Ayyukan da aka yi,Zarma services,,yes,,,,,
+draw,signature_focal,Signature du point focal VBG,Sa'in Ma'aikacin VBG,Zarma signature,,yes,,,,,
+end_group,grp_partie2,,,,,,,,,,
+
+geopoint,gps_loc,Position GPS,GPS,GPS,Automatique,no,placement-map,,,,

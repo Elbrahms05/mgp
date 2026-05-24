@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+        xmlns:h="http://www.w3.org/1999/xhtml"
+        xmlns:jr="http://openrosa.org/javarosa"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <h:head>
+    <h:title>F04 — PV de conciliation (Annexe 5)</h:title>
+
+    <model>
+      <instance>
+        <data id="pacipa_f04" version="1.0">
+          <ref_plainte/>
+          <date_seance/>
+          <lieu_seance/>
+          <president_seance/>
+          <resultat_conciliation/>
+          <description_accord/>
+          <engagements/>
+          <delai_execution/>
+          <meta>
+            <instanceID/>
+          </meta>
+        </data>
+      </instance>
+
+      <bind nodeset="/data/ref_plainte"           type="string" required="true()"/>
+      <bind nodeset="/data/date_seance"           type="date"   required="true()"/>
+      <bind nodeset="/data/lieu_seance"           type="string" required="true()"/>
+      <bind nodeset="/data/president_seance"      type="string" required="true()"/>
+      <bind nodeset="/data/resultat_conciliation" type="string" required="true()"/>
+      <bind nodeset="/data/description_accord"    type="string" required="true()"/>
+      <bind nodeset="/data/engagements"           type="string"
+            relevant="/data/resultat_conciliation = 'accord' or /data/resultat_conciliation = 'accord_partiel'"/>
+      <bind nodeset="/data/delai_execution"       type="date"
+            relevant="/data/resultat_conciliation = 'accord' or /data/resultat_conciliation = 'accord_partiel'"/>
+      <bind nodeset="/data/meta/instanceID"       type="string" readonly="true()" jr:preload="uid"/>
+    </model>
+  </h:head>
+
+  <h:body>
+
+    <input ref="/data/ref_plainte">
+      <label>Référence de la plainte *</label>
+      <hint>Ex : MGP-2025-001</hint>
+    </input>
+
+    <input ref="/data/date_seance">
+      <label>Date de la séance de conciliation *</label>
+    </input>
+
+    <input ref="/data/lieu_seance">
+      <label>Lieu de la séance *</label>
+    </input>
+
+    <input ref="/data/president_seance">
+      <label>Président de séance *</label>
+    </input>
+
+    <select1 ref="/data/resultat_conciliation">
+      <label>Résultat de la conciliation *</label>
+      <item><label>Accord total</label><value>accord</value></item>
+      <item><label>Accord partiel</label><value>accord_partiel</value></item>
+      <item><label>Pas d'accord</label><value>desaccord</value></item>
+    </select1>
+
+    <input ref="/data/description_accord">
+      <label>Description de l'accord / du constat *</label>
+    </input>
+
+    <input ref="/data/engagements">
+      <label>Engagements pris</label>
+    </input>
+
+    <input ref="/data/delai_execution">
+      <label>Délai d'exécution</label>
+    </input>
+
+  </h:body>
+</h:html>

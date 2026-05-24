@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Zarma / Djerma (zr) - Traductions PACIPA-MGP
+    Langue parlée dans la vallée du fleuve Niger (région Niamey, Tillabéri, Dosso)
+-->
+<resources>
+    <string name="app_name">PACIPA - MGP</string>
+
+    <!-- Navigation principale -->
+    <string name="main_menu">Menu Kulu</string>
+    <string name="fill_blank_form">Suba forma kura</string>
+    <string name="edit_saved_form">Feeri forma kaŋ a naadi</string>
+    <string name="send_finalized_form">Tonton forma kaŋ a caw</string>
+    <string name="view_sent_form">Haw forma kaŋ a tonton</string>
+    <string name="get_blank_form">Naa forma kura</string>
+    <string name="delete_saved_form">Wori forma kaŋ a naadi</string>
+
+    <!-- PACIPA specific -->
+    <string name="pacipa_welcome">Ni koy PACIPA-MGP\nLahari ga ganji</string>
+    <string name="pacipa_complaint_new">Lahari kura</string>
+    <string name="pacipa_complaint_vbg">Lahari VBG/EAS/HS (Asiri)</string>
+    <string name="pacipa_sync_pending">%1$d forma hãy tonton</string>
+    <string name="pacipa_sync_success">Forma kulu a tonton ciray</string>
+    <string name="pacipa_sync_failed">Cɛɛ tonton - go tonton ci</string>
+    <string name="pacipa_offline_mode">Ana di mana réseau</string>
+    <string name="pacipa_sms_fallback">Tonton SMS hori (mana data)</string>
+
+    <!-- VBG -->
+    <string name="vbg_confidential_warning">ASIRI - Bayanai VBG/EAS/HS\nFoyan mana izini</string>
+    <string name="vbg_consent_required">Naa izini maa boro din ci gaba</string>
+    <string name="vbg_no_mediation">⚠️ MANA SULHU - EAS/HS way kulu</string>
+
+    <!-- Status -->
+    <string name="status_registered">A suba</string>
+    <string name="status_under_review">Ana haw</string>
+    <string name="status_resolved">A warware</string>
+    <string name="status_escalated">A tonton sama</string>
+    <string name="status_rejected">A ƙi</string>
+
+    <!-- Boutons -->
+    <string name="btn_submit">Tonton</string>
+    <string name="btn_save_draft">Naadi (kwafi)</string>
+    <string name="btn_cancel">Wori</string>
+    <string name="btn_next">Gaba</string>
+    <string name="btn_previous">Baya</string>
+    <string name="btn_sync">Daidaita noa</string>
+</resources>

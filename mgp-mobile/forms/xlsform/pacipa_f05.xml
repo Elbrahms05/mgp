@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+        xmlns:h="http://www.w3.org/1999/xhtml"
+        xmlns:jr="http://openrosa.org/javarosa"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <h:head>
+    <h:title>F05 — Suivi périodique de plainte (Annexe 6)</h:title>
+
+    <model>
+      <instance>
+        <data id="pacipa_f05" version="1.0">
+          <ref_plainte/>
+          <service_transmis/>
+          <accuse_reception/>
+          <statut_actuel/>
+          <plaignant_informe/>
+          <reaction_plaignant/>
+          <meta>
+            <instanceID/>
+          </meta>
+        </data>
+      </instance>
+
+      <bind nodeset="/data/ref_plainte"        type="string" required="true()"/>
+      <bind nodeset="/data/service_transmis"   type="string"/>
+      <bind nodeset="/data/accuse_reception"   type="string"/>
+      <bind nodeset="/data/statut_actuel"      type="string" required="true()"/>
+      <bind nodeset="/data/plaignant_informe"  type="string" required="true()"/>
+      <bind nodeset="/data/reaction_plaignant" type="string"/>
+      <bind nodeset="/data/meta/instanceID"    type="string" readonly="true()" jr:preload="uid"/>
+    </model>
+  </h:head>
+
+  <h:body>
+
+    <input ref="/data/ref_plainte">
+      <label>Référence de la plainte *</label>
+      <hint>Ex : MGP-2025-001</hint>
+    </input>
+
+    <input ref="/data/service_transmis">
+      <label>Service / structure à qui la plainte a été transmise</label>
+    </input>
+
+    <input ref="/data/accuse_reception">
+      <label>Accusé de réception (nom / date)</label>
+    </input>
+
+    <select1 ref="/data/statut_actuel">
+      <label>Statut actuel de la plainte *</label>
+      <item><label>En cours de traitement</label><value>en_cours</value></item>
+      <item><label>Résolu</label><value>resolu</value></item>
+      <item><label>Transmis au niveau supérieur</label><value>transmis_niveau_superieur</value></item>
+      <item><label>Classé sans suite</label><value>classe</value></item>
+    </select1>
+
+    <select1 ref="/data/plaignant_informe">
+      <label>Le plaignant a-t-il été informé ? *</label>
+      <item><label>Oui</label><value>oui</value></item>
+      <item><label>Non</label><value>non</value></item>
+    </select1>
+
+    <input ref="/data/reaction_plaignant">
+      <label>Réaction du plaignant</label>
+    </input>
+
+  </h:body>
+</h:html>

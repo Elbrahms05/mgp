@@ -1,0 +1,19 @@
+type,name,label::French,label::Haoussa,label::Zarma,hint::French,required,appearance,constraint,constraint_message,relevant,calculation,read_only
+start,start,,,,,,,,,,,
+end,end,,,,,,,,,,,
+
+note,note_ref,"Référence au formulaire F01 correspondant.","Duba F01.",,,,,,,,,
+text,ref_f01,Numéro de plainte F01 (référence),Lambar kara F01,Zarma F01 ref,,yes,,,,,
+
+begin_group,grp_nature,Nature du bien affecté,,,,,field-list,,,,,
+text,bien_affecte,Nature du bien ou service affecté,Dukiyar da abin ya shafa,Zarma bien affecté,,yes,,,,,
+text,observations_autorite,Observations de l'autorité compétente,Lura na hukuma,Zarma observations,,yes,multiline,,,,
+end_group,grp_nature,,,,,,,,,,
+
+begin_group,grp_reponse,Réponse au plaignant,,,,,field-list,,,,,
+text,reponse_plaignant,Réponse fournie au plaignant,Amsar da aka baiwa mai kara,Zarma reponse,,yes,multiline,,,,
+select_one resolution,statut_resolution,Statut de résolution,Yanayin warware kara,Zarma resolution,,yes,,,,,
+date,date_resolution,Date de résolution,Ranar warwarewa,Zarma date,,no,,,,,
+draw,signature_agent,Signature du chargé MGP,Sa'in Jami'in MGP,Zarma signature,,yes,,,,,
+draw,signature_plaignant,Signature du plaignant,Sa'in mai kara,Zarma signature plaignant,,no,,,,,
+end_group,grp_reponse,,,,,,,,,,

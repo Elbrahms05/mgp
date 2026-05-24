@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- SMS fallback -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+
+    <!-- Network sync -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application>
+
+        <!-- Détection retour réseau → auto-sync -->
+        <receiver
+            android:name="ne.pacipa.mgp.receivers.NetworkChangeReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Service soumission SMS chiffrée -->
+        <service
+            android:name="ne.pacipa.mgp.sms.SmsSubmissionService"
+            android:exported="false" />
+
+        <!-- Service chargement formulaires depuis mgp-office API -->
+        <service
+            android:name="ne.pacipa.mgp.sync.FormSyncService"
+            android:exported="false" />
+
+    </application>
+
+</manifest>

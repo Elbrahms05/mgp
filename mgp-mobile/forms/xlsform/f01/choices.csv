@@ -1,0 +1,30 @@
+list_name,name,label::French,label::Haoussa,label::Zarma
+oui_non,oui,Oui,Eh,Oho
+oui_non,non,Non,A'a,Aula
+region,agadez,Agadez,Agadez,Agadez
+region,diffa,Diffa,Diffa,Diffa
+region,dosso,Dosso,Dosso,Dosso
+region,maradi,Maradi,Maradi,Maradi
+region,niamey,Niamey,Niamey,Niamey
+region,tahoua,Tahoua,Tahoua,Tahoua
+region,tillaberi,Tillabéri,Tillabéri,Tillabéri
+region,zinder,Zinder,Zinder,Zinder
+genre,F,Féminin,Mata,Haw
+genre,M,Masculin,Maza,Wane
+type_plainte,type1,Type 1 - Inaccessibilité aux informations,Nau'i 1 - Babu bayani,Zarma nau'i 1
+type_plainte,type2,Type 2 - Exécution des marchés,Nau'i 2 - Aiki da kwangilar,Zarma nau'i 2
+type_plainte,type3,Type 3 - Travaux de réhabilitation,Nau'i 3 - Aikin gina,Zarma nau'i 3
+type_plainte,type4,Type 4 - Conditions de travail,Nau'i 4 - Yanayin aiki,Zarma nau'i 4
+type_plainte,type5,Type 5 - Pertes/affectation de biens,Nau'i 5 - Asara/raba dukiya,Zarma nau'i 5
+type_plainte,type6,Type 6 - Octroi d'équipements,Nau'i 6 - Ba da kayan aiki,Zarma nau'i 6
+type_plainte,type7,Type 7 - Formations,Nau'i 7 - Horo,Zarma nau'i 7
+type_plainte,type8,Type 8 - VBG / EAS / HS / VCE ⚠️,Nau'i 8 - VBG / EAS / HS,Zarma nau'i 8
+canal,en_personne,En personne,Kai tsaye,Zarma en personne
+canal,telephone,Téléphone,Waya,Zarma telephone
+canal,sms,SMS,SMS,SMS
+canal,whatsapp,WhatsApp,WhatsApp,WhatsApp
+canal,courrier,Courrier postal,Wasiƙa,Zarma courrier
+canal,email,Email / Courriel,Email,Email
+canal,boite_reclamation,Boîte à réclamations,Akwatin kara,Zarma boite
+canal,ligne_verte,Ligne verte (numéro vert),Layin kore,Zarma ligne verte
+canal,auto_saisine,Auto-saisine (presse/rapport),Auto-saisine,Zarma auto-saisine

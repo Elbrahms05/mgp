@@ -1,0 +1,14 @@
+type,name,label::French,label::Haoussa,label::Zarma,hint::French,required,appearance,constraint,constraint_message,relevant,calculation,read_only
+start,start,,,,,,,,,,,
+end,end,,,,,,,,,,,
+
+text,ref_f01,Numéro de plainte (F01),Lambar kara (F01),Zarma ref F01,,yes,,,,,
+date,date_depot,Date de dépôt de la plainte,Ranar shigar da kara,Zarma date depot,,yes,,,,,
+date,date_transmission,Date de transmission au service compétent,Ranar tura wa hukuma,Zarma date transmission,,yes,,,,,
+text,service_responsable,Service / organe responsable du traitement,Hukumar da ke kula,Zarma service,,yes,,,,,
+text,accuse_reception,Accusé de réception (nom + fonction),Wanda ya karɓa,Zarma accusé réception,,yes,,,,,
+select_one statut_traitement,statut,Statut du traitement,Yanayin aiki,Zarma statut,,yes,,,,,
+date,date_resolution,Date de résolution (si applicable),Ranar warwarewa,Zarma date resolution,,no,,,,${statut} = 'resolu',
+text,modalites_resolution,Modalités de résolution,Yadda aka warware,Zarma modalités,,no,multiline,,,${statut} = 'resolu',
+select_one oui_non,retour_plaignant,Retour d'information fourni au plaignant ?,An sanar da mai kara ?,Zarma retour,,yes,,,,,
+date,date_retour,Date du retour au plaignant,Ranar sanar da mai kara,Zarma date retour,,no,,,,${retour_plaignant} = 'oui',

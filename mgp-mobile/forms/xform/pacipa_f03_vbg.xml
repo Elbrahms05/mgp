@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  F03 — Rapport VBG/EAS/HS (Annexe 9)
+  CONFIDENTIEL — Ne mentionne jamais "VBG" ni "violence" dans les labels visibles.
+  Circuit : point focal → UGP → commission enquête. Jamais de médiation.
+-->
+<h:html xmlns="http://www.w3.org/2002/xforms"
+        xmlns:h="http://www.w3.org/1999/xhtml"
+        xmlns:jr="http://openrosa.org/javarosa"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <h:head>
+    <h:title>F03 — Signalement (Annexe 9)</h:title>
+
+    <model>
+      <instance>
+        <data id="pacipa_f03_vbg" version="1.0">
+          <forme_vbg/>
+          <survivant_groupe_age/>
+          <date_incident/>
+          <lieu_incident_type/>
+          <auteur_categorie/>
+          <services_recus_avant/>
+          <consentement_referral/>
+          <auteur_nom_surnom/>
+          <compte_rendu_faits/>
+          <meta>
+            <instanceID/>
+          </meta>
+        </data>
+      </instance>
+
+      <bind nodeset="/data/forme_vbg"            type="string"  required="true()"/>
+      <bind nodeset="/data/survivant_groupe_age"  type="string"/>
+      <bind nodeset="/data/date_incident"         type="date"    required="true()"/>
+      <bind nodeset="/data/lieu_incident_type"    type="string"/>
+      <bind nodeset="/data/auteur_categorie"      type="string"  required="true()"/>
+      <bind nodeset="/data/services_recus_avant"  type="string"/>
+      <bind nodeset="/data/consentement_referral" type="string"  required="true()"/>
+      <bind nodeset="/data/auteur_nom_surnom"     type="string"
+            relevant="/data/consentement_referral = 'oui'"/>
+      <bind nodeset="/data/compte_rendu_faits"    type="string"
+            relevant="/data/consentement_referral = 'oui'"/>
+      <bind nodeset="/data/meta/instanceID"       type="string"  readonly="true()" jr:preload="uid"/>
+    </model>
+  </h:head>
+
+  <h:body>
+
+    <select ref="/data/forme_vbg">
+      <label>Type(s) d'incident signalé *</label>
+      <item><label>Viol</label><value>viol</value></item>
+      <item><label>Agression sexuelle</label><value>agression_sexuelle</value></item>
+      <item><label>Agression physique</label><value>agression_physique</value></item>
+      <item><label>Violence psychologique / émotionnelle</label><value>violence_psychologique</value></item>
+      <item><label>Mariage forcé</label><value>mariage_force</value></item>
+      <item><label>Déni de ressources / services</label><value>deni_services</value></item>
+      <item><label>Aucun incident vérifié</label><value>aucun_incident_verifie</value></item>
+    </select>
+
+    <select1 ref="/data/survivant_groupe_age">
+      <label>Groupe d'âge de la personne concernée</label>
+      <item><label>Enfant (moins de 18 ans)</label><value>enfant</value></item>
+      <item><label>Adulte (18 ans et plus)</label><value>adulte</value></item>
+      <item><label>Non communiqué</label><value>non_communique</value></item>
+    </select1>
+
+    <input ref="/data/date_incident">
+      <label>Date approximative de l'incident *</label>
+    </input>
+
+    <select1 ref="/data/lieu_incident_type">
+      <label>Type de lieu</label>
+      <item><label>Site de travaux</label><value>site_travaux</value></item>
+      <item><label>Domicile</label><value>domicile</value></item>
+      <item><label>Espace public</label><value>espace_public</value></item>
+      <item><label>Autre</label><value>autre</value></item>
+    </select1>
+
+    <select1 ref="/data/auteur_categorie">
+      <label>Lien présumé de l'auteur avec le projet *</label>
+      <item><label>Personnel du projet</label><value>personnel_projet</value></item>
+      <item><label>Forces de défense et de sécurité</label><value>fds</value></item>
+      <item><label>Sans lien avec le projet</label><value>sans_lien_projet</value></item>
+    </select1>
+
+    <select ref="/data/services_recus_avant">
+      <label>Services déjà reçus</label>
+      <item><label>Soins médicaux</label><value>medical</value></item>
+      <item><label>Soutien psychosocial</label><value>psychosocial</value></item>
+      <item><label>Sécurité / hébergement</label><value>securite</value></item>
+      <item><label>Appui juridique</label><value>juridique</value></item>
+      <item><label>Aucun</label><value>aucun</value></item>
+    </select>
+
+    <select1 ref="/data/consentement_referral">
+      <label>La personne consent-elle au référencement ? *</label>
+      <item><label>Oui</label><value>oui</value></item>
+      <item><label>Non</label><value>non</value></item>
+    </select1>
+
+    <input ref="/data/auteur_nom_surnom">
+      <label>Nom ou surnom de l'auteur présumé</label>
+    </input>
+
+    <input ref="/data/compte_rendu_faits">
+      <label>Compte-rendu des faits</label>
+    </input>
+
+  </h:body>
+</h:html>
