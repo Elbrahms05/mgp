@@ -1,0 +1,15 @@
+{
+    "auth.email": "Imel adiresi",
+    "auth.password": "Iyan ganda",
+    "auth.login": "Hantum",
+    "auth.logout": "Jeyo",
+    "auth.remember_me": "A hane ni",
+    "auth.forgot_password": "I boro iyan ganda?",
+    "auth.reset_password": "Iyan ganda fondo",
+    "auth.name": "Maa",
+    "Complaints": "Korobu",
+    "New Complaint": "Korobu tarey",
+    "Dashboard": "Dashboard",
+    "Settings": "Dabari",
+    "Help": "Ŋwaŋey"
+}

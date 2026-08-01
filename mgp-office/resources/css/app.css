@@ -1,0 +1,323 @@
+/* ============================================================
+   PACIPA-MGP - Feuille de styles principale
+   Framework : Bootstrap 5.2.3 + SB Admin Pro v2.0.5
+   Palette    : Drapeau du Niger (Orange #E05206 / Vert #009A44)
+   ============================================================ */
+
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import './template.css';
+@import './niger-theme.css';
+
+/* ── Variables PACIPA - Palette Niger ──────────────────────── */
+:root {
+    /* Couleurs Niger */
+    --pacipa-orange:       #E05206;   /* Primary / Brand - Orange Niger    */
+    --pacipa-orange-light: #F97B3D;   /* Hover buttons, badges secondaires  */
+    --pacipa-green:        #009A44;   /* Secondary / Accent - Vert Niger    */
+    --pacipa-green-light:  #2DB266;   /* Hover links actifs                 */
+    --pacipa-dark:         #1C1C2E;   /* Sidebar dark, footer               */
+    --pacipa-bg:           #F4F6F9;   /* Fond de page                       */
+    --pacipa-red:          #DC3545;   /* Danger / Suppressions              */
+    --pacipa-info:         #17A2B8;   /* Notifications info                 */
+    --pacipa-grey:         #6C757D;   /* Textes secondaires                 */
+
+    --sidebar-width:       230px;
+    --topnav-height:       56px;
+
+    /* ── Surcharge Bootstrap primary → Orange Niger ── */
+    --bs-primary:          #E05206;
+    --bs-primary-rgb:      224, 82, 6;
+    --bs-primary-bg-subtle:#FDE8DC;
+    --bs-success:          #009A44;
+    --bs-success-rgb:      0, 154, 68;
+    --bs-danger:           #DC3545;
+    --bs-danger-rgb:       220, 53, 69;
+    --bs-info:             #17A2B8;
+    --bs-info-rgb:         23, 162, 184;
+    --bs-body-bg:          #F4F6F9;
+    --bs-body-font-family: Arial, Helvetica, sans-serif;
+    --bs-link-color:       #E05206;
+    --bs-link-hover-color: #F97B3D;
+}
+
+/* ── Police globale ────────────────────────────────────────── */
+body, .form-control, .form-select, .btn {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ── Bouton primaire - Orange Niger ────────────────────────── */
+.btn-primary {
+    background-color: var(--pacipa-orange);
+    border-color:     var(--pacipa-orange);
+    color: #fff;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    background-color: var(--pacipa-orange-light);
+    border-color:     var(--pacipa-orange-light);
+    color: #fff;
+}
+.btn-primary:focus { box-shadow: 0 0 0 .2rem rgba(224,82,6,.35); }
+
+.btn-success {
+    background-color: var(--pacipa-green);
+    border-color:     var(--pacipa-green);
+}
+.btn-success:hover, .btn-success:focus {
+    background-color: var(--pacipa-green-light);
+    border-color:     var(--pacipa-green-light);
+}
+
+/* Espacements boutons cohérents */
+.btn { padding: .45rem 1rem; font-size: .875rem; }
+.btn-sm { padding: .25rem .65rem; font-size: .8rem; }
+.btn-lg { padding: .6rem 1.4rem; font-size: 1rem; }
+.btn + .btn { margin-left: .5rem; }
+
+/* ── Topnav ────────────────────────────────────────────────── */
+.topnav {
+    border-bottom: 3px solid var(--pacipa-orange) !important;
+}
+.navbar-brand {
+    font-weight: 700;
+    color: var(--pacipa-dark) !important;
+    font-size: 1.1rem;
+    letter-spacing: .01em;
+}
+
+/* ── Sidebar - Dark Anthracite #1C1C2E ─────────────────────── */
+.sidenav {
+    background-color: var(--pacipa-dark);
+}
+
+.sidenav .sidenav-menu-heading {
+    color: #7b7f99;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    padding: 1rem 1rem .25rem;
+}
+
+.sidenav .nav-link {
+    color: #c8ccd8;
+    font-size: .875rem;
+    padding: .625rem 1rem;
+    border-radius: .25rem;
+    margin: 1px .5rem;
+    transition: background .15s, color .15s;
+}
+
+.sidenav .nav-link:hover {
+    color: #ffffff;
+    background-color: rgba(255,255,255,.08);
+}
+
+.sidenav .nav-link.active {
+    color: #ffffff;
+    background-color: var(--pacipa-orange);
+}
+
+.sidenav .nav-link .nav-link-icon {
+    color: #7b7f99;
+    margin-right: .5rem;
+}
+
+.sidenav .nav-link.active .nav-link-icon,
+.sidenav .nav-link:hover .nav-link-icon {
+    color: #ffffff;
+}
+
+.sidenav-collapse-arrow { color: #7b7f99; }
+
+.sidenav-menu-nested .nav-link {
+    padding-left: 2.75rem;
+    font-size: .82rem;
+    color: #9499b0;
+}
+.sidenav-menu-nested .nav-link:hover,
+.sidenav-menu-nested .nav-link.active {
+    color: #ffffff;
+    background-color: rgba(255,255,255,.06);
+}
+
+/* Logo heading sidebar */
+.sidenav .sidenav-menu-heading.brand-heading {
+    padding: 1.25rem 1rem .5rem;
+    font-size: 1rem;
+    letter-spacing: 0;
+    text-transform: none;
+    color: #ffffff;
+}
+
+/* ── Page header gradient Orange → Vert Niger ──────────────── */
+.page-header-pacipa {
+    background: linear-gradient(135deg, var(--pacipa-orange) 0%, var(--pacipa-green) 100%);
+}
+
+/* ── Cards ─────────────────────────────────────────────────── */
+.card {
+    border: none;
+    border-radius: .5rem;
+    box-shadow: 0 .1rem 1rem rgba(28,28,46,.1);
+    margin-bottom: 1.5rem;
+}
+.card-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid rgba(28,28,46,.1);
+    padding: .875rem 1.25rem;
+    font-weight: 600;
+    font-size: .9rem;
+}
+.card-body { padding: 1.25rem; }
+.card-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid rgba(28,28,46,.08);
+    padding: .75rem 1.25rem;
+}
+
+/* KPI Cards (colored) */
+.card-kpi {
+    border-radius: .5rem;
+    color: #fff;
+    padding: 1.25rem;
+}
+.card-kpi .kpi-value { font-size: 2rem; font-weight: 700; line-height: 1; }
+.card-kpi .kpi-label { font-size: .8rem; opacity: .85; margin-top: .25rem; }
+.card-kpi-primary   { background-color: var(--pacipa-orange); }
+.card-kpi-success   { background-color: var(--pacipa-green); }
+.card-kpi-warning   { background-color: #F97B3D; }
+.card-kpi-danger    { background-color: var(--pacipa-red); }
+.card-kpi-dark      { background-color: var(--pacipa-dark); }
+.card-kpi-secondary { background-color: var(--pacipa-grey); }
+
+/* ── Flash messages ────────────────────────────────────────── */
+.alert {
+    border-radius: .5rem;
+    border: none;
+    border-left: 4px solid currentColor;
+    padding: .75rem 1rem;
+}
+.alert-success { border-color: var(--pacipa-green); }
+.alert-danger  { border-color: var(--pacipa-red); }
+.alert-warning { border-color: #ffc107; }
+.alert-info    { border-color: var(--pacipa-info); }
+
+/* ── Badges statut plainte ─────────────────────────────────── */
+.badge-registered   { background-color: #17A2B8; color:#fff; }
+.badge-under_review { background-color: var(--pacipa-orange); color:#fff; }
+.badge-accepted     { background-color: var(--pacipa-green); color:#fff; }
+.badge-rejected     { background-color: var(--pacipa-grey); color:#fff; }
+.badge-in_mediation { background-color: #F97B3D; color:#fff; }
+.badge-resolved     { background-color: #005F27; color:#fff; }
+.badge-escalated    { background-color: var(--pacipa-red); color:#fff; }
+.badge-closed       { background-color: var(--pacipa-dark); color:#fff; }
+
+.badge-risk-low      { background-color: var(--pacipa-green); color:#fff; }
+.badge-risk-medium   { background-color: #F97B3D; color:#fff; }
+.badge-risk-high     { background-color: var(--pacipa-orange); color:#fff; }
+.badge-risk-critical { background-color: var(--pacipa-red); color:#fff; }
+
+/* ── SLA countdown ─────────────────────────────────────────── */
+.sla-countdown { font-weight: 600; font-size: .82rem; }
+.sla-countdown.overdue {
+    color: var(--pacipa-red);
+    animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: .5; }
+}
+
+/* ── VBG zone chiffrée ─────────────────────────────────────── */
+.vbg-encrypted-field {
+    border-left: 3px solid var(--pacipa-red);
+    padding-left: .75rem;
+    background-color: #fff8e1;
+    border-radius: 0 .25rem .25rem 0;
+}
+
+/* Consentement VBG */
+.consent-banner {
+    border-left: 4px solid var(--pacipa-red);
+    background-color: #fff3f3;
+    border-radius: .5rem;
+    padding: 1rem;
+}
+
+/* ── Tables ────────────────────────────────────────────────── */
+.table thead th {
+    font-size: .75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--pacipa-grey);
+    border-bottom: 2px solid #e9ecef;
+    padding: .75rem 1rem;
+    background-color: #fafbfc;
+}
+.table tbody td { padding: .75rem 1rem; vertical-align: middle; }
+.table-hover tbody tr:hover { background-color: #fdf3ee; }
+
+/* ── Panneau aide contextuelle ─────────────────────────────── */
+.help-panel {
+    position: fixed;
+    right: 0;
+    top: var(--topnav-height);
+    width: 340px;
+    height: calc(100vh - var(--topnav-height));
+    background: #ffffff;
+    box-shadow: -2px 0 8px rgba(0,0,0,.12);
+    z-index: 1040;
+    overflow-y: auto;
+    transition: transform .3s ease;
+}
+.help-panel.hidden { transform: translateX(100%); }
+
+.help-badge-btn {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 1050;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--pacipa-orange);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(224,82,6,.4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    transition: background .15s;
+}
+.help-badge-btn:hover { background-color: var(--pacipa-orange-light); }
+
+/* ── Liens ─────────────────────────────────────────────────── */
+a { color: var(--pacipa-orange); }
+a:hover { color: var(--pacipa-orange-light); }
+
+/* ── Formulaires ───────────────────────────────────────────── */
+.form-control:focus, .form-select:focus {
+    border-color: var(--pacipa-orange);
+    box-shadow: 0 0 0 .2rem rgba(224,82,6,.2);
+}
+.form-label { font-weight: 500; font-size: .875rem; margin-bottom: .35rem; }
+
+/* ── Pagination ────────────────────────────────────────────── */
+.pagination .page-link {
+    color: var(--pacipa-orange);
+    border-radius: .375rem;
+    margin: 0 2px;
+}
+.pagination .page-item.active .page-link {
+    background-color: var(--pacipa-orange);
+    border-color: var(--pacipa-orange);
+}
+
+/* ── Responsive helper ─────────────────────────────────────── */
+@media (max-width: 992px) {
+    .help-panel { display: none; }
+}

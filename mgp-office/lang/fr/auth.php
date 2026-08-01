@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'email'             => 'Adresse email',
+    'password'          => 'Mot de passe',
+    'remember_me'       => 'Se souvenir de moi',
+    'login'             => 'Se connecter',
+    'logout'            => 'Déconnexion',
+    'forgot_password'   => 'Mot de passe oublié ?',
+    'reset_password'    => 'Réinitialiser le mot de passe',
+    'send_reset_link'   => 'Envoyer le lien de réinitialisation',
+    'name'              => 'Nom complet',
+    'confirm_password'  => 'Confirmer le mot de passe',
+    'register'          => "S'inscrire",
+    'already_registered'=> 'Déjà inscrit ?',
+    'verify_email_title'=> 'Vérification de l\'adresse email',
+    'verify_email_msg'  => 'Merci de vous être inscrit ! Avant de commencer, pourriez-vous vérifier votre adresse email en cliquant sur le lien que nous venons de vous envoyer ? Si vous n\'avez pas reçu l\'email, nous vous en enverrons un autre avec plaisir.',
+    'verification_sent' => 'Un nouveau lien de vérification a été envoyé à l\'adresse email que vous avez fournie lors de l\'inscription.',
+    'resend_email'      => 'Renvoyer l\'email de vérification',
+    'confirm_password_msg' => 'Ceci est une zone sécurisée de l\'application. Veuillez confirmer votre mot de passe avant de continuer.',
+    'confirm'           => 'Confirmer',
+    'failed'            => 'Ces identifiants ne correspondent pas à nos enregistrements.',
+    'password_incorrect'=> 'Le mot de passe fourni est incorrect.',
+    'throttle'          => 'Trop de tentatives de connexion. Veuillez réessayer dans :seconds secondes.',
+    'forgot_intro'      => 'Mot de passe oublié ? Indiquez-nous votre adresse email et nous vous enverrons un lien de réinitialisation.',
+];

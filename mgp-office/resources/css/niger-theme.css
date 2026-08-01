@@ -1,0 +1,301 @@
+:root {
+    --niger-orange: #E05206;
+    --niger-white: #FFFFFF;
+    --niger-green: #0DB02B;
+    --niger-orange-light: #FF6B2C;
+    --niger-orange-dark: #C64505;
+    --niger-green-light: #10D934;
+    --niger-green-dark: #0A8F22;
+}
+
+/* Sidebar */
+#layoutSidenav_nav {
+    background: linear-gradient(180deg, var(--niger-orange) 0%, var(--niger-orange-dark) 100%);
+}
+
+.sb-sidenav-dark .sb-sidenav-menu .nav-link {
+    color: var(--niger-white);
+}
+
+.sb-sidenav-dark .sb-sidenav-menu .nav-link:hover {
+    background-color: var(--niger-orange-light);
+    color: var(--niger-white);
+}
+
+.sb-sidenav-dark .sb-sidenav-menu .nav-link.active {
+    background-color: var(--niger-green);
+    color: var(--niger-white);
+}
+
+.sb-sidenav-dark .sb-sidenav-footer {
+    background-color: var(--niger-orange-dark);
+    color: var(--niger-white);
+}
+
+/* Topbar */
+.sb-topnav {
+    background: linear-gradient(90deg, var(--niger-orange) 0%, var(--niger-orange-light) 100%);
+    border-bottom: 3px solid var(--niger-green);
+}
+
+.navbar-dark .navbar-brand {
+    color: var(--niger-white);
+    font-weight: bold;
+}
+
+/* Boutons principaux */
+.btn-primary {
+    background-color: var(--niger-green);
+    border-color: var(--niger-green);
+    color: var(--niger-white);
+}
+
+.btn-primary:hover {
+    background-color: var(--niger-green-dark);
+    border-color: var(--niger-green-dark);
+}
+
+.btn-primary:focus, .btn-primary:active {
+    background-color: var(--niger-green-dark);
+    border-color: var(--niger-green-dark);
+    box-shadow: 0 0 0 0.25rem rgba(13, 176, 43, 0.5);
+}
+
+/* Boutons secondaires */
+.btn-secondary {
+    background-color: var(--niger-orange);
+    border-color: var(--niger-orange);
+    color: var(--niger-white);
+}
+
+.btn-secondary:hover {
+    background-color: var(--niger-orange-dark);
+    border-color: var(--niger-orange-dark);
+}
+
+/* Cards */
+.card-header {
+    background: linear-gradient(90deg, var(--niger-orange) 0%, var(--niger-orange-light) 100%);
+    color: var(--niger-white);
+    font-weight: 600;
+}
+
+.card {
+    border-top: 3px solid var(--niger-green);
+}
+
+/* Tables */
+.table thead th {
+    background-color: var(--niger-orange);
+    color: var(--niger-white);
+    border-color: var(--niger-orange-dark);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(224, 82, 6, 0.1);
+}
+
+/* Badges */
+.badge-success {
+    background-color: var(--niger-green);
+}
+
+.badge-warning {
+    background-color: var(--niger-orange);
+}
+
+/* Pagination */
+.page-item.active .page-link {
+    background-color: var(--niger-green);
+    border-color: var(--niger-green);
+}
+
+.page-link {
+    color: var(--niger-orange);
+}
+
+.page-link:hover {
+    color: var(--niger-orange-dark);
+    background-color: rgba(224, 82, 6, 0.1);
+}
+
+/* Forms */
+.form-control:focus {
+    border-color: var(--niger-green);
+    box-shadow: 0 0 0 0.25rem rgba(13, 176, 43, 0.25);
+}
+
+.form-check-input:checked {
+    background-color: var(--niger-green);
+    border-color: var(--niger-green);
+}
+
+/* Alerts */
+.alert-success {
+    background-color: rgba(13, 176, 43, 0.1);
+    border-color: var(--niger-green);
+    color: var(--niger-green-dark);
+}
+
+.alert-warning {
+    background-color: rgba(224, 82, 6, 0.1);
+    border-color: var(--niger-orange);
+    color: var(--niger-orange-dark);
+}
+
+/* Dashboard cards */
+.card-orange {
+    border-left: 4px solid var(--niger-orange);
+}
+
+.card-green {
+    border-left: 4px solid var(--niger-green);
+}
+
+.text-orange {
+    color: var(--niger-orange);
+}
+
+.text-green {
+    color: var(--niger-green);
+}
+
+.bg-orange {
+    background-color: var(--niger-orange);
+}
+
+.bg-green {
+    background-color: var(--niger-green);
+}
+
+/* Icons with colors */
+.icon-orange {
+    color: var(--niger-orange);
+}
+
+.icon-green {
+    color: var(--niger-green);
+}
+
+/* Dropdown */
+.dropdown-item:hover {
+    background-color: rgba(224, 82, 6, 0.1);
+}
+
+/* Progress bars */
+.progress-bar {
+    background-color: var(--niger-green);
+}
+
+/* Links */
+a {
+    color: var(--niger-green);
+}
+
+a:hover {
+    color: var(--niger-green-dark);
+}
+
+/* Topbar (Navbar supérieure) */
+.topnav {
+    background: linear-gradient(90deg, var(--niger-orange) 0%, var(--niger-orange-light) 100%) !important;
+    border-bottom: 3px solid var(--niger-green) !important;
+}
+
+.topnav .navbar-brand {
+    color: var(--niger-white) !important;
+    font-weight: bold;
+}
+
+.topnav .nav-link {
+    color: var(--niger-white) !important;
+}
+
+.topnav .nav-link:hover {
+    color: var(--niger-green-light) !important;
+    background-color: rgba(13, 176, 43, 0.1);
+}
+
+.topnav .nav-link.active {
+    color: var(--niger-green) !important;
+}
+
+.topnav .dropdown-toggle::after {
+    border-top-color: var(--niger-white) !important;
+}
+
+.topnav .dropdown-toggle:hover::after {
+    border-top-color: var(--niger-green-light) !important;
+}
+
+/* Sidebar */
+/* NOTE: Sidebar uses original white/light theme from template.css */
+/* Colors redirected to Topbar for Niger branding */
+
+/* Sidebar Light variant - Original Bootstrap styling preserved */
+.sidenav-light {
+    /* Original styling maintained - white background with dark text */
+}
+
+.sidenav-light .nav-link {
+    /* Original styling maintained */
+}
+
+.sidenav-light .nav-link.active {
+    /* Original styling maintained - will use bootstrap colors */
+}
+
+/* Navbar dropdown menu */
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-menu .dropdown-item {
+    color: #212832;
+    transition: all 0.2s ease;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: rgba(13, 176, 43, 0.1);
+    color: var(--niger-green-dark);
+}
+
+.dropdown-menu .dropdown-item.active {
+    background-color: var(--niger-green);
+    color: white;
+}
+
+/* Sidebar links (already defined above, enhanced) */
+.stats-card {
+    border-radius: 10px;
+    padding: 20px;
+    transition: transform 0.3s ease;
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Module icons styling */
+.module-icon {
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.module-icon-orange {
+    background: linear-gradient(135deg, var(--niger-orange) 0%, var(--niger-orange-light) 100%);
+    color: var(--niger-white);
+}
+
+.module-icon-green {
+    background: linear-gradient(135deg, var(--niger-green) 0%, var(--niger-green-light) 100%);
+    color: var(--niger-white);
+}

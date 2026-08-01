@@ -1,0 +1,16 @@
+{
+    "auth.email": "Adireshin imel",
+    "auth.password": "Kalmar sirri",
+    "auth.login": "Shiga",
+    "auth.logout": "Fita",
+    "auth.remember_me": "Ka tuna ni",
+    "auth.forgot_password": "Ka manta kalmar sirri?",
+    "auth.reset_password": "Dawo da kalmar sirri",
+    "auth.name": "Suna",
+    "Complaints": "Korafe-korafe",
+    "New Complaint": "Sabuwar korafi",
+    "Dashboard": "Dashboard",
+    "Settings": "Saituna",
+    "Users": "Masu amfani",
+    "Help": "Taimako"
+}
