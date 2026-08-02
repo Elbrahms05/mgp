@@ -41,6 +41,30 @@ class ReportController extends Controller
         $from = \Carbon\Carbon::parse($data['date_from'])->startOfDay();
         $to   = \Carbon\Carbon::parse($data['date_to'])->endOfDay();
 
+        // Export PDF (états mensuel / VBG agrégé / annuel) — EF-14 / ER-04
+        if ($data['format'] === 'pdf') {
+            if ($data['report_type'] === 'quarterly_vbg'
+                && ! $request->user()->can('statistics.view_vbg_aggregated')) {
+                return back()->with('error', 'Accès refusé : rapport VBG réservé au Coordonnateur UGP et Spécialiste VBG.');
+            }
+
+            $pdf = app(\App\Domains\Statistic\Services\ReportPdfService::class)->forType($data['report_type'], $from, $to);
+
+            if ($pdf === null) {
+                return back()->with('error', "Le format PDF n'est pas disponible pour ce type de rapport.");
+            }
+
+            return $pdf->download("rapport_{$data['report_type']}_{$from->format('Ymd')}_{$to->format('Ymd')}.pdf");
+        }
+
+        // Export Excel des plaintes non sensibles
+        if ($data['format'] === 'xlsx') {
+            return \Maatwebsite\Excel\Facades\Excel::download(
+                new \App\Domains\Statistic\Exports\ComplaintsExport($from, $to),
+                "rapport_plaintes_{$from->format('Ymd')}_{$to->format('Ymd')}.xlsx",
+            );
+        }
+
         return match ($data['report_type']) {
             'monthly_dashboard', 'complaint_detail', 'sla_compliance', 'annual_mgp'
                 => $this->generateComplaintReport($data['report_type'], $from, $to, $data['format'], $request),

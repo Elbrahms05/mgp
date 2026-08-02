@@ -9,9 +9,17 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // Recréer le schéma proprement (utile après migrate:fresh qui ne touche pas les schémas non-public)
-        DB::statement('DROP SCHEMA IF EXISTS vbg CASCADE');
-        DB::statement('CREATE SCHEMA vbg');
+        if (DB::getDriverName() === 'sqlite') {
+            // SQLite (tests) ne connaît pas les schémas nommés : on attache une base en
+            // mémoire sous l'alias « vbg » pour que « vbg.vbg_reports » reste résolvable.
+            if (! $this->sqliteVbgAttached()) {
+                DB::statement("ATTACH DATABASE ':memory:' AS vbg");
+            }
+        } else {
+            // PostgreSQL : recréer le schéma proprement (migrate:fresh ne touche pas les schémas non-public)
+            DB::statement('DROP SCHEMA IF EXISTS vbg CASCADE');
+            DB::statement('CREATE SCHEMA vbg');
+        }
 
         // Table vbg_reports dans le schéma vbg
         Schema::create('vbg.vbg_reports', function (Blueprint $table): void {
@@ -96,6 +104,23 @@ return new class extends Migration
         Schema::dropIfExists('vbg.vbg_enquiries');
         Schema::dropIfExists('vbg.vbg_referrals');
         Schema::dropIfExists('vbg.vbg_reports');
-        DB::statement('DROP SCHEMA IF EXISTS vbg CASCADE');
+
+        if (DB::getDriverName() !== 'sqlite') {
+            DB::statement('DROP SCHEMA IF EXISTS vbg CASCADE');
+        }
+    }
+
+    /**
+     * La base « vbg » est-elle déjà attachée à la connexion SQLite courante ?
+     */
+    private function sqliteVbgAttached(): bool
+    {
+        foreach (DB::select('PRAGMA database_list') as $database) {
+            if (($database->name ?? null) === 'vbg') {
+                return true;
+            }
+        }
+
+        return false;
     }
 };

@@ -8,6 +8,7 @@ use App\Domains\Complaint\Enums\ComplaintChannel;
 use App\Domains\Complaint\Enums\ComplaintStatus;
 use App\Domains\Complaint\Models\Complaint;
 use App\Domains\Complaint\Models\ComplaintType;
+use App\Domains\Complaint\Services\ComplaintAcknowledgmentService;
 use App\Domains\Complaint\Services\ComplaintWorkflowService;
 use App\Domains\Complaint\Services\SlaMonitorService;
 use App\Domains\Geography\Models\Region;
@@ -16,6 +17,7 @@ use App\Http\Requests\Complaint\StoreComplaintRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ComplaintController extends Controller
 {
@@ -95,6 +97,23 @@ class ComplaintController extends Controller
         return redirect()
             ->route('complaints.show', $complaint)
             ->with('success', "Plainte {$complaint->registration_number} enregistrée avec succès.");
+    }
+
+    /**
+     * Télécharge (ou régénère à la volée) l'accusé de réception PDF imprimable (EF-06).
+     */
+    public function acknowledgment(Complaint $complaint, ComplaintAcknowledgmentService $service): BinaryFileResponse
+    {
+        $media = $complaint->getFirstMedia('acknowledgment');
+
+        if ($media === null) {
+            $service->generate($complaint);
+            $media = $complaint->refresh()->getFirstMedia('acknowledgment');
+        }
+
+        abort_if($media === null, 404, "Accusé de réception indisponible.");
+
+        return response()->download($media->getPath(), $media->file_name);
     }
 
     public function show(Complaint $complaint): View

@@ -9,6 +9,7 @@ use App\Domains\Vbg\Enums\ReferralServiceType;
 use App\Domains\Vbg\Enums\VbgAuthorLink;
 use App\Domains\Vbg\Enums\GbvimsClassification;
 use App\Domains\Vbg\Services\DirectReportIngestionService;
+use App\Domains\Vbg\Services\TrustedPersonComplianceService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -25,6 +26,7 @@ class TrustedPersonController extends Controller
     public function __construct(
         private readonly TrustedPersonChannel $channel,
         private readonly DirectReportIngestionService $ingestion,
+        private readonly TrustedPersonComplianceService $compliance,
     ) {}
 
     /**
@@ -42,9 +44,28 @@ class TrustedPersonController extends Controller
             'author_link'        => ['nullable', new Enum(VbgAuthorLink::class)],
             'classification'     => ['nullable', new Enum(GbvimsClassification::class)],
             'site_id'            => ['nullable', 'exists:sites,id'],
+            'conflict_declared'  => ['nullable', 'boolean'],
         ]);
 
-        $normalized = $this->channel->normalize($validated, $request->user()->id);
+        $trustedPerson = $request->user();
+
+        // 2.5 — Recyclage obligatoire : une formation à jour (< 6 mois) est requise.
+        if (! $this->compliance->isTrainingValid($trustedPerson)) {
+            return response()->json([
+                'message' => "Votre formation de personne de confiance n'est plus à jour. "
+                    . "Un recyclage est requis avant de pouvoir enregistrer un signalement.",
+            ], 403);
+        }
+
+        // 2.5 — Contrôle automatique de conflit d'intérêts.
+        if ($this->compliance->detectConflict($validated, $trustedPerson)) {
+            return response()->json([
+                'message' => "Conflit d'intérêts détecté : vous ne pouvez pas traiter ce cas. "
+                    . "Orientez la personne vers une autre personne de confiance ou directement vers l'UGP.",
+            ], 422);
+        }
+
+        $normalized = $this->channel->normalize($validated, $trustedPerson->id);
         $report     = $this->ingestion->ingest($normalized);
 
         return response()->json([

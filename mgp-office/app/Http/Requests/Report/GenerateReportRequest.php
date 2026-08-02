@@ -19,7 +19,7 @@ class GenerateReportRequest extends FormRequest
             'report_type' => ['required', 'string', 'in:monthly_dashboard,quarterly_vbg,committee_evaluation,complaint_detail,sla_compliance,annual_mgp'],
             'date_from'   => ['required', 'date'],
             'date_to'     => ['required', 'date', 'after_or_equal:date_from'],
-            'format'      => ['required', 'string', 'in:csv,html'],
+            'format'      => ['required', 'string', 'in:csv,html,pdf,xlsx'],
         ];
     }
 

@@ -6,6 +6,7 @@ namespace App\Domains\Statistic\Services;
 
 use App\Domains\Complaint\Enums\ComplaintStatus;
 use App\Domains\Complaint\Models\Complaint;
+use App\Domains\Evaluation\Models\SatisfactionSurvey;
 use App\Domains\Vbg\Enums\VbgChannel;
 use App\Domains\Vbg\Models\VbgReport;
 use Illuminate\Support\Collection;
@@ -156,6 +157,36 @@ class KpiCalculatorService
             return $rows;
         } catch (\Throwable) {
             return [];
+        }
+    }
+
+    /**
+     * Indicateurs de satisfaction du plaignant (EF-08).
+     *
+     * @return array{count:int, avg_overall:float, satisfied_pct:float, recommend_pct:float}
+     */
+    public function getSatisfactionStats(): array
+    {
+        try {
+            $surveys = SatisfactionSurvey::query();
+            $count   = (clone $surveys)->count();
+
+            if ($count === 0) {
+                return ['count' => 0, 'avg_overall' => 0.0, 'satisfied_pct' => 0.0, 'recommend_pct' => 0.0];
+            }
+
+            $avg       = (float) (clone $surveys)->avg('overall_rating');
+            $satisfied = (clone $surveys)->where('overall_rating', '>=', 4)->count();
+            $recommend = (clone $surveys)->where('would_recommend', true)->count();
+
+            return [
+                'count'         => $count,
+                'avg_overall'   => round($avg, 2),
+                'satisfied_pct' => round($satisfied / $count * 100, 1),
+                'recommend_pct' => round($recommend / $count * 100, 1),
+            ];
+        } catch (\Throwable) {
+            return ['count' => 0, 'avg_overall' => 0.0, 'satisfied_pct' => 0.0, 'recommend_pct' => 0.0];
         }
     }
 

@@ -1,311 +1,335 @@
-# UPDATE.md — Mises à jour requises pour la conformité du système PACIPA-MGP
+# UPDATE.md — Mises à jour requises pour la conformité du système PACIPA-MGP (v2)
 
-> **Objet** : écarts constatés entre l'état actuel du dépôt `Elbrahms05/mgp` (commit `e522ca4`)
-> et le référentiel des 28 exigences (Annexe 3 du mémoire — EF-01…14, ENF-01…07, ER-01…07),
-> avec les mises à jour à réaliser pour atteindre la conformité.
+> **Objet** : revue du dépôt `Elbrahms05/mgp` au commit `cae5a5d` (« Suivre les fichiers de
+> mgp-office — correction du gitlink ») contre le référentiel des 28 exigences (Annexe 3 du
+> mémoire — EF-01…14, ENF-01…07, ER-01…07). Cette version **remplace** le `update.md` v1
+> commis à la racine, établi quand `mgp-office/` était un gitlink vide.
 >
-> **Légende priorités** : 🔴 P0 = bloquant conformité BM / MVP · 🟠 P1 = requis avant généralisation · 🟢 P2 = amélioration
->
-> **Statuts** : ✅ Conforme · 🟡 Partiel · ❌ Absent · 📄 Spécifié seulement (claude-*.md à jour, code absent)
+> **Priorités** : 🔴 P0 = bloquant pilote/conformité BM · 🟠 P1 = requis avant généralisation · 🟢 P2 = amélioration
+> **Statuts** : ✅ Conforme · 🟡 Partiel · ❌ Absent
 
 ---
 
-## 0. Synthèse de l'état du dépôt
+## 0. Écarts v1 corrigés — le back-office existe désormais
 
-| Composant | État constaté | Conformité |
-|---|---|---|
-| Spécifications `claude*.md` (6 fichiers + complément) | Complètes, alignées sur le manuel MGP mars 2025 | ✅ |
-| `mgp-mobile/` — fork ODK Collect + module `pacipa/` | Avancé : SMS chiffré, sync, FormIdGenerator, palette PACIPA | 🟡 |
-| `mgp-mobile/forms/` — F01–F07 (CSV → XLSForm → XForm + `build_forms.py`) | Présents, 3 langues (FR/HA/ZR) | 🟡 |
-| **`mgp-office/` — back-office Laravel** | **Répertoire vide : aucun code** | ❌ |
-| Canaux directs VBG (USSD, SMS 3xxx, Ligne verte, WhatsApp, personnes de confiance) | Spécifiés (`claude-vbg.md`), rien d'implémenté | 📄 |
-| `docker/`, `.github/` (CI/CD), tests | Annoncés dans `claude-deploy.md`, absents du dépôt | ❌ |
-| `template/` | Gabarit HTML admin générique, non intégré en Blade | 🟡 |
-| Médias didactiques formulaires (`forms/media/icons`, `audio/`) | Absents | ❌ |
-| `graphify-out/` (référencé par `claude.md`) | Absent | ❌ |
-| Formulaires dupliqués à la racine (`pacipa_f01*.xlsx`, 26 lignes, monolingues) | Divergent des versions `forms/xlsform/` | 🟡 |
+La quasi-totalité du chantier n°1 de la v1 est réalisée. Constaté dans le code :
 
-**Conclusion** : la chaîne de collecte terrain est en bonne voie ; la conformité globale est
-bloquée par l'absence totale du back-office, qui porte à lui seul **16 des 28 exigences**.
+| Item v1 | Constat au commit `cae5a5d` |
+|---|---|
+| 1.1 Socle | Laravel 12, PostgreSQL/Redis, tous les packages Spatie + DomPDF + Maatwebsite ; vues Blade de **tous** les modules (`resources/views/pages/{complaints,vbg,workers,sites,reports,statistics,…}`) |
+| 1.2 Domaines | 14 domaines `app/Domains/` (dont `Company/` ajouté hors spec — à documenter) |
+| 1.3 Workflow | `ComplaintWorkflowService` complet : register/accept/reject/startMediation/resolve/close/escalate + `ComplaintHistory` |
+| 1.4 SLA/escalade | `SlaMonitorService::computeDeadline()` sur `SlaSettings` ; commande planifiée `complaints:check-sla --escalate` (auto en production) ; équivalent travailleurs `workers:check-sla` |
+| 1.6 Module VBG | Schéma PostgreSQL **séparé** `vbg.*` (4 tables), `VbgEncryptionService` en **libsodium réel** (`sodium_crypto_secretbox`), clé hors BDD (`VBG_ENCRYPTION_KEY`), `ConsentService`, `AnonymizationService`, purge planifiée `vbg:purge-stale --hours=72` |
+| 1.9 RBAC | `RolesAndPermissionsSeeder` : les 13+ rôles au complet (dont `personne_confiance_vbg`, `entreprise_travaux`, `auditeur`) ; champs 2FA sur `User` |
+| 1.10 Audit | `spatie/laravel-activitylog` migré + `AuditController` |
+| 1.14 Travailleurs | Domaine `Worker/` complet : workflow, SLA, historique, lien `company_id` |
+| 1.15/1.17 | `KpiCalculatorService`, `ChartDataService`, `SiteRiskAnalysisService` + `sites:recalculate-risk` planifié |
+| 1.18 Pont ODK | `OdkApiClient/OdkSyncService/SubmissionMapper` + `odk:sync` et `odk:sync --vbg` planifiés + webhooks `/webhooks/odk` |
+| 1.19 Aide | `PageGuidesSeeder` + `FieldTooltipsSeeder` |
+| 1.20 Paramètres | Les 6 classes Settings (Project/Odk/Sms/Sla/Security/Notification) + seeders |
+| 3.x Canaux VBG | Les 4 webhooks (`UssdWebhookController`, `SmsWebhookController`, `WhatsAppWebhookController`, `TrustedPersonController`) + `DirectReportIngestionService` + routes `/webhooks/vbg` |
+| 4.4 F01 assaini | La note type 8 redirige vers F03 : « NE PAS continuer ce formulaire » (`relevant ${type}='type8'`) |
+| ENF-07 (serveur) | `lang/` couvre FR + HA/ZR/TQ/KR/FF |
+
+**Le reste de ce fichier ne liste que ce qui manque encore.**
 
 ---
 
-## 1. 🔴 P0 — Back-office Laravel `mgp-office/` (chantier principal)
+## 1. 🔴 P0 — Câblages fonctionnels manquants dans mgp-office
 
-Le répertoire est vide. Toutes les mises à jour ci-dessous consistent à implémenter
-`claude-office.md` §par§ ; chaque item cite les exigences qu'il débloque.
-
-- [ ] **1.1 Socle applicatif** — Laravel 12, PostgreSQL + Redis, Breeze/Fortify + **2FA
-  obligatoire** pour `super_admin`, `coordonnateur_ugp`, `specialiste_vbg` ; Sanctum pour
-  l'API mobile. Intégrer `template/` en layouts Blade + Alpine.js/Materialize.
-  → *ENF-02 (socle), ER-03 (prérequis audit)*
-- [ ] **1.2 Domaines métier** — arborescence `app/Domains/` complète (Geography via
-  `elbrahms/niger-location`, Site, Committee, Complaint, Vbg, Worker, Mediation, Form,
-  OdkBridge, Communication, Evaluation, Documentation, Statistic).
-  → *EF-01, EF-02, ER-05, ER-06*
-- [ ] **1.3 Workflow des plaintes** — statuts `NOUVELLE → ENREGISTRÉE → EXAMEN → RECEVABLE/
-  REJETÉE → MÉDIATION → RÉSOLUE/ESCALADÉE → CLÔTURÉE` ; chaque transition horodatée
-  (utilisateur + commentaire) ; PV générés (4 ex. CBGP, 3 ex. CCGP).
-  → *EF-02, ER-04, ER-06*
-- [ ] **1.4 Moteur SLA + escalade automatique** — `SlaSettings` paramétrable (3+7j CBGP,
-  3+4j CCGP, 7+3j CNGP, 24 h notification VBG, 72 h référencement, 48 h PEES, 30 j
-  commission) ; job planifié : alerte à l'approche du terme, **escalade automatique** au
-  niveau supérieur en cas de dépassement sans action. Couvrir par `SlaCalculationTest` et
-  `ComplaintEscalationTest`.
-  → *EF-03 — cœur de l'hypothèse H1 du mémoire*
-- [ ] **1.5 Accusé de réception automatique** — génération immédiate à l'enregistrement
-  (PDF DomPDF + **SMS auto** via `SmsSettings`), y compris pour la saisie différée.
+- [x] **1.1 Notifications Banque mondiale réellement émises** — ✅ **FAIT**. Mailables
+  dé-identifiés `EsirtNotificationMail` (24 h) / `PeesNotificationMail` (48 h) + vues
+  `resources/views/emails/vbg/{esirt,pees}.blade.php` ; `WorldBankNotificationService`
+  réécrit : envoi réel `Mail::to()` vers les destinataires de
+  `NotificationSettings->recipients['worldbank_esirt'|'worldbank_pees']['emails']`,
+  traçage dans `notification_logs` via le modèle `App\Models\NotificationLog` (statut
+  sent/failed/pending, `sent_at`). Couvert par `NotificationDeadlineTest`.
+  → *ER-01 — satisfait*
+- [x] **1.2 Accusé de réception effectif** — ✅ **FAIT (PDF + SMS)**. Nouveau
+  `ComplaintAcknowledgmentService` (DomPDF → `resources/views/pdf/complaint-acknowledgment.blade.php`,
+  stocké en collection média privée `acknowledgment`, tracé dans `notification_logs`).
+  Génération **centralisée dans `ComplaintObserver::created()`** → couvre **toutes** les
+  voies de création (saisie back-office, import ODK `SubmissionMapper::mapF01`, futur
+  webhook SMS). L'accusé **SMS** au plaignant part déjà via
+  `ComplaintRegisteredNotification`. Route imprimable `complaints.acknowledgment`
+  (`GET /complaints/{complaint}/accuse`). Couvert par `ComplaintWorkflowTest`.
+  **Bug corrigé au passage** : `ComplaintObserver` appelait
+  `Notification::route('database', null)` (interdit → toute création de plainte levait une
+  exception) ; désormais la notif tableau de bord vise l'agent enregistreur.
+  ⚠️ Reste l'émetteur SMS réel (passerelle) — voir 1.4 / 2.1.
   → *EF-06*
-- [ ] **1.6 Module VBG cloisonné** — schéma PostgreSQL séparé `vbg` ; chiffrement champ
-  par champ libsodium (XSalsa20-Poly1305) via `VbgEncryptionService` ; clé hors BDD
-  (Vault/HSM), déchiffrement réservé à `specialiste_vbg` + `coordonnateur_ugp` ;
-  Annexe 9 **Partie 1 et Partie 2 stockées séparément** ; consentement horodaté et
-  révocable (`ConsentService`) bloquant la Partie 2 ; filtrage des champs sensibles dans
-  les logs ; purge cryptographique après clôture + délai légal.
-  → *EF-04, EF-12, ER-02, ER-07 — cœur de l'hypothèse H2*
-- [ ] **1.7 Notifications Banque mondiale** — `WorldBankNotificationService` : 24 h EAS/HS
-  et décès (ESIRT), 48 h incidents E&S (PEES), rapport commission ≤ 30 j ; destinataires
-  configurés en Paramètres (« points focaux Banque mondiale » — cf. complément métier).
-  Couvrir par `NotificationDeadlineTest`.
-  → *ER-01*
-- [ ] **1.8 Référencement VBG outillé** — minuterie 72 h, prestataires liés par type de
-  service (médical, psychosocial, juridique, sécurité), **4 centres holistiques
-  pré-configurés** (Maradi, Tahoua, Tillabéri, Zinder). `VbgReferralFlowTest`.
-  → *EF-13*
-- [ ] **1.9 RBAC 13+ rôles** — `spatie/laravel-permission`, matrice de `claude-office.md`
-  (dont `personne_confiance_vbg`, `entreprise_travaux`, `auditeur`) ; double cloisonnement
-  territorial (chaque comité ne voit que son ressort) et thématique (module VBG). Le rôle
-  membre de comité = champ select conforme aux rôles du manuel. `VbgAccessControlTest`.
-  → *ER-02, prérequis de toutes les EF*
-- [ ] **1.10 Audit trail** — `spatie/laravel-activitylog` sur tout CRUD, login, export,
-  consultation ; journal intangible, consultable `super_admin`/`coordonnateur_ugp`.
-  → *ER-03*
-- [ ] **1.11 Sessions de comité & médiation** — convocations, présences, décisions,
-  PV de conciliation (Annexe 5/F04). **Verrou métier : aucun bouton « Médiation » sur le
-  circuit Type 8 (EAS/HS) — jamais de règlement à l'amiable.**
-  → *EF-07, EF-04*
-- [ ] **1.12 Enquête de satisfaction à la clôture** — questionnaire lié à la plainte
-  (processus + résultat), alimentant les indicateurs.
-  → *EF-08*
-- [ ] **1.13 Saisie différée du canal papier** — écran de reprise des fiches F01 papier
-  avec numérisation jointe (`spatie/laravel-medialibrary`).
-  → *EF-11, EF-09*
-- [ ] **1.14 Plaintes des travailleurs** — deux circuits distincts (travailleurs directs
-  UGP : 7 j puis CNGP 2 semaines ; contractuels : chef du personnel 7 j ouvrables puis
-  spécialiste MGP/RH 7 j) ; rôle `entreprise_travaux` limité à ce périmètre.
-  → *ER-05*
-- [ ] **1.15 Tableau de bord & indicateurs (Tableau 7)** — `KpiCalculatorService` :
-  compteurs temps réel, carte Niger (heatmap régions + sites par risque), répartition
-  8 types / canaux / régions, délais moyens par niveau, liste rouge SLA dépassés ;
-  **indicateurs VBG exclusivement agrégés et anonymisés** (`AnonymizationService`),
-  visibles `specialiste_vbg` + `coordonnateur_ugp` uniquement.
-  → *EF-05, EF-14, ER-07 — cœur de l'hypothèse H3*
-- [ ] **1.16 Rapports & états** — DomPDF + Maatwebsite Excel : tableau de bord mensuel,
-  évaluation trimestrielle comités (F07), rapport MGP semestriel/annuel, rapport VBG
-  agrégé trimestriel, fiche de suivi par plainte (Annexe 6/F05), PV conciliation, rapport
-  de commission **chiffré** ; **envoi automatique des rapports périodiques** aux personnes
-  habilitées définies en Paramètres (cf. complément métier).
-  → *EF-05, EF-14, ER-04*
-- [ ] **1.17 Module Sites (§4.12)** — table `sites` (code `PACIPA-REGION-NNN`, type,
-  statut, `risk_level`), `SiteRiskAnalysisService` quotidien (VBG confirmé → critical ;
-  >20 % SLA dépassés → +1 ; accident/décès → critical) avec notification auto ;
-  `site_id` nullable uniquement Type 1 et VBG anonymes.
-  → *EF-01, EF-14*
-- [ ] **1.18 Pont ODK** — `OdkApiClient` + `OdkSyncService` + `SubmissionMapper`
-  (`spatie/laravel-data`) : intégration des soumissions ODK Central → `Complaint` /
-  `VbgReport`, exposition des formulaires à l'app mobile via API.
-  → *EF-01, ENF-01*
-- [ ] **1.19 Aide contextuelle** — `page_guides` + `PageGuidesSeeder` : **chaque page**
-  avec objectif, référence MGP (§/tableau/annexe), guide pas-à-pas, alertes.
-  `PageGuideDisplayTest`.
-  → *ENF-03*
-- [ ] **1.20 Paramétrage générique** — classes Spatie Settings (Project/Odk/Sms/Sla/
-  Security/Notification) ; l'application doit être **entièrement paramétrable pour être
-  réutilisée sur d'autres projets Banque mondiale** (cf. complément métier ; perspective
-  « socle réutilisable » du mémoire).
-  → *ENF-05, ENF-06*
-- [ ] **1.21 Gestion des personnes ressources & prestataires** — CRUD personnes
-  ressources ; structures/prestataires de référencement liés par type de prestation.
-  → *EF-13*
-
----
-
-## 2. 🔴 P0 — Canal SMS de soumission (mobile → back-office)
-
-Le module mobile `pacipa/sms/` (SmsSubmissionService, SmsPayloadBuilder, SmsEncryption)
-existe ; **le côté serveur est absent** (mgp-office vide).
-
-- [ ] **2.1 Webhook SMS sécurisé** — endpoint `spatie/laravel-webhook-client` recevant les
-  soumissions SMS **sans transiter par ODK Central** (passerelle SMS → webhook mgp-office),
-  vérification de signature, idempotence, remontée en `Complaint`/`VbgReport`.
+- [x] **1.3 API mobile : dépendance manquante** — ✅ **FAIT**. `laravel/sanctum` installé,
+  `HasApiTokens` sur `User`. Endpoints `/api/mobile/*` (`AuthController` login/me/logout par
+  jeton d'appareil ; `FormController` index/show distribuant F01–F07 depuis
+  `mgp-office/forms/` avec `version`=hash pour le `FormSyncService` ; `ComplaintStatusController`
+  remontée d'état). **F03/VBG cloisonné** : distribué et téléchargeable uniquement avec
+  `vbg.receive`. Couvert par `MobileApiTest` (8 tests). ⚠️ Reste le **certificat client
+  (mTLS)** des appareils = infra (documenté en tête de `routes/api.php`, cf. 4.3).
   → *ENF-01, EF-01*
-- [ ] **2.2 Contrat de payload ≤ 160 caractères** — figer le format entre
-  `SmsPayloadBuilder` (mobile) et le parseur serveur : segmentation multi-SMS, numéro de
-  séquence, checksum, chiffrement compatible `SmsEncryption` ; documenter dans
-  `claude-mobile.md`.
-  → *ENF-01, ENF-04*
-- [ ] **2.3 Option retenue à instruire : fork `medic/medic-collect`** — évaluer la reprise
-  du transport SMS de medic-collect (ODK Collect modifié par Medic) plutôt que le module
-  maison : envoi des formulaires par SMS vers numéro court ou normal, relais vers le
-  webhook backend ; téléphones + SIM fournis aux acteurs. Trancher, puis aligner
-  `claude-mobile.md` et le code sur l'option choisie (ne pas maintenir les deux).
-  → *ENF-01, ENF-05*
-- [ ] **2.4 Accusé SMS automatique** en réponse à toute soumission SMS (texte neutre).
-  → *EF-06*
+- [ ] **1.4 Webhook de soumission SMS (mobile → office, sans ODK Central)** — côté mobile,
+  `pacipa/sms/` (SmsSubmissionService/PayloadBuilder/Encryption) est prêt ; côté serveur,
+  **rien** : `spatie/laravel-webhook-client` absent, aucune route de réception. Décision
+  d'architecture à trancher et à consigner dans `claude.md` (règle n° 12) :
+  **option A** conserver le module SMS maison et créer le webhook sécurisé (signature,
+  idempotence, déchiffrement compatible `SmsEncryption`, segmentation ≤160 car.) ;
+  **option B (envisagée)** basculer la couche transport sur le fork `medic/medic-collect`
+  (ODK Collect modifié par Medic — envoi des formulaires par SMS vers numéro court/normal,
+  relais vers le backend), téléphones + SIM fournis aux acteurs. Dans les deux cas, un
+  seul transport SMS maintenu, avec accusé SMS automatique (cf. 1.2).
+  → *ENF-01, ENF-04, EF-06, EF-10*
+  → ✅ **FAIT (option A)** : `spatie/laravel-webhook-client` installé et configuré (config
+  « sms »). Route `POST /webhooks/sms` avec **signature HMAC-SHA256** (`X-Signature`),
+  **idempotence** par `message_id`, et `ProcessSmsWebhookJob` qui crée une plainte non
+  sensible via `ComplaintWorkflowService` (accusé SMS + PDF automatiques). Les types
+  sensibles (VBG) ne sont **jamais** matérialisés par ce canal. Exclusion CSRF `webhooks/*`
+  ajoutée dans `bootstrap/app.php` (corrige aussi les webhooks VBG/ODK existants). Couvert
+  par `SmsWebhookTest` (4 tests). ⚠️ Le déchiffrement compatible mobile `SmsEncryption`
+  reste un point d'intégration documenté (en tête de `ProcessSmsWebhookJob`). Arbitrage
+  option A retenu — à consigner dans `claude.md` règle n°12.
+- [x] **1.5 Enquête de satisfaction à la clôture** — ✅ **FAIT**. Table
+  `satisfaction_surveys` + modèle `SatisfactionSurvey` (relation `Complaint::satisfactionSurvey`),
+  `SatisfactionSurveyController` (create/store) + vue `pages/complaints/satisfaction.blade.php`
+  (notes 1–5 globale/délais/accueil/résolution, recommandation, canal, commentaire).
+  Indicateurs `KpiCalculatorService::getSatisfactionStats()` (moyenne, % satisfaits, %
+  recommandation). Couvert par `SatisfactionSurveyTest` (2 tests).
+  → *EF-08*
+- [x] **1.6 Saisie différée du canal papier** — ✅ **FAIT**. Colonne `received_at` sur
+  `complaints` (date de réception papier ≠ date de saisie) ;
+  `SlaMonitorService::computeDeadline()` accepte une base `$from` et
+  `ComplaintWorkflowService::register()` fonde le SLA sur `received_at`.
+  `DeferredComplaintController` (create/store) + vue `pages/complaints/deferred.blade.php`
+  avec **fiche numérisée jointe** (medialibrary, EF-09). Couvert par `DeferredComplaintTest`
+  (SLA calculé depuis la réception + pièce jointe).
+  → *EF-11, EF-09*
+- [x] **1.7 Suite de tests critiques** — ✅ **FAIT**. Les 9 tests sont écrits et **verts**
+  (`php artisan test` : 46 passés) : `SlaCalculationTest`, `ComplaintEscalationTest`,
+  `VbgEncryptionTest`, `VbgReferralFlowTest`, `VbgAccessControlTest`,
+  `NotificationDeadlineTest`, `ComplaintWorkflowTest`, `PageGuideDisplayTest`,
+  `SpatieBackupTest`. Migration VBG rendue **compatible SQLite** (ATTACH DATABASE pour les
+  tests, `CREATE SCHEMA` conservé pour PostgreSQL). Deux écarts réels trouvés et corrigés
+  par les tests : le bug `ComplaintObserver` (cf. 1.2) et 4 guides sans `mgp_reference`
+  (règle n°10) dans `PageGuidesSeeder` (`forms.index`, `settings.index`, `audit.index`,
+  `documentation.index`).
+  → *transverse, critère de sortie de tous les items P0*
+- [x] **1.8 Rapports : génération et envoi automatique** — ✅ **FAIT (états clés + envoi)**.
+  `ReportPdfService` (DomPDF) : tableau de bord mensuel, VBG agrégé trimestriel
+  **anonymisé** (indicateurs `getVbgKpis`, aucune donnée nominative), rapport annuel MGP —
+  vues `pdf/reports/*`. Export **Excel** `ComplaintsExport` (Maatwebsite, plaintes non
+  sensibles). Formats `pdf`/`xlsx` branchés dans `ReportController::generate()` +
+  `GenerateReportRequest` + sélecteur UI. **Envoi automatique périodique** : commande
+  `reports:send-periodic --period=monthly|quarterly|annual` (`PeriodicReportMail` avec PDF
+  joint), destinataires depuis `NotificationSettings::report_recipients` (rôles/emails,
+  flag `enabled`), traçage `notification_logs` ; planifié dans `routes/console.php`
+  (mensuel/trimestriel/annuel). Couvert par `ReportGenerationTest` (3) +
+  `PeriodicReportSendTest` (2). ⚠️ Restent en P2 : fiche Annexe 6, PV Annexe 5 et rapport
+  de commission **chiffré** (gabarits spécifiques — mêmes briques PDF).
+  → *EF-05, EF-14, ER-04*
+- [x] **1.9 2FA : contrainte effective** — ✅ **FAIT**. `laravel/fortify` installé, trait
+  `TwoFactorAuthenticatable` + colonne `two_factor_recovery_codes` sur `User`. Flux réel :
+  activation/confirmation/désactivation + codes de récupération (`TwoFactorController` +
+  `security/two-factor` view via actions Fortify) ; **défi TOTP à la connexion** intégré à
+  Breeze (`AuthenticatedSessionController` suspend la session → `TwoFactorChallengeController`
+  vérifie code TOTP ou code de récupération). Middleware `Enforce2FA` réécrit :
+  **blocage** des rôles `super_admin`/`coordonnateur_ugp`/`specialiste_vbg` (liste
+  `SecuritySettings::two_factor_required_roles`) tant que le 2FA n'est pas confirmé. Routes
+  Fortify désactivées (`Fortify::$registersRoutes = false`) pour ne pas entrer en conflit
+  avec Breeze. Couvert par `TwoFactorAuthTest` (5 tests : enforcement + défi TOTP complet).
+  → *ER-02, ENF-02*
+- [x] **1.10 Sauvegardes planifiées + restauration** — ✅ **FAIT (planification)**.
+  `routes/console.php` planifie `backup:clean` (01:30), `backup:run` (02:30) et
+  `backup:monitor` (08:00), sorties dans `storage/logs/backup.log`. Rétention portée à
+  **90 j** (`config/backup.php` → `keep_daily_backups_for_days`) ; chiffrement d'archive
+  déjà actif (`encryption = default`, mot de passe `BACKUP_ARCHIVE_PASSWORD`). Couvert par
+  `SpatieBackupTest`. ⚠️ Reste à **documenter/exécuter le test de restauration mensuel**
+  (procédure d'exploitation, hors code).
+  → *ENF-02*
 
 ---
 
-## 3. 🔴 P0 — Canaux directs VBG (spécifiés, non implémentés)
+## 2. 🟠 P1 — Canaux directs VBG : du code aux opérateurs
 
-`claude-vbg.md` décrit 5 canaux aboutissant directement au Spécialiste VBG UGP ; aucun
-contrôleur/webhook n'existe. **Rappel transverse : les messages de réponse ne contiennent
-JAMAIS « VBG » ou « violence »** ; anonymat possible partout ; le code `VBG-xxxx` est le
-seul identifiant circulant.
+Les contrôleurs et l'ingestion existent ; il reste l'intégration réelle et les garanties.
 
-- [ ] **3.1 Ingestion unifiée** — `DirectReportIngestionService` + colonnes canaux de
-  `vbg_reports` (`channel`, `is_anonymous`, `caller_phone_encrypted`, `ussd_session_id`,
-  `raw_sms_content`, `voice_memo_path`, `trusted_person_id`) ; chiffrement **à la
-  réception du webhook**, avant tout stockage ; purge des logs webhooks à 72 h.
-  → *EF-04, ER-02, ER-07*
-- [ ] **3.2 Canal USSD `*xxx#`** — `UssdWebhookController` + menu 5 langues (avec
-  « 6. Je préfère ne pas dire ») ; conventions opérateurs (Orange/Airtel/Moov, appel
-  inversé gratuit) à négocier — action UGP, à tracer.
+- [~] **2.1 Passerelles à intégrer** — **partie code déjà en place** : `UssdWebhookController` /
+  `SmsWebhookController` / `WhatsAppWebhookController` vérifient déjà la **signature HMAC-SHA256**
+  et renvoient des **réponses neutres** (jamais « VBG »/« violence »), code `VBG-xxxx` seul
+  identifiant (cf. `UssdChannel::response()`). **Reste (ops)** : brancher une passerelle réelle
+  (Africa's Talking / Twilio / partenaire local) et fournir le secret `VBG_WEBHOOK_SECRET`.
+  → *EF-04, ER-02*
+- [ ] **2.2 Conventions opérateurs** — négociation Orange/Airtel/Moov : short code USSD
+  `*xxx#` gratuit (appel inversé) et SMS `3xxx`. Action UGP à tracer (préalable à toute
+  communication radio).
   → *EF-04, ENF-07*
-- [ ] **3.3 Canal SMS 3xxx** — `SmsWebhookController` : format libre et structuré,
-  mot-clé ANONYME, chiffrement immédiat du numéro, réponse neutre avec code VBG-xxxx.
-  → *EF-04, EF-06*
-- [ ] **3.4 Ligne verte** — saisie Annexe 9 Partie 1 en direct par l'opératrice ONG dans
-  le back-office ; appel jamais enregistré sauf consentement ; bascule 24h/24.
+- [ ] **2.3 Menus 5 langues** — vérifier que l'arbre USSD/WhatsApp sert FR/HA/ZR/TQ/FF,
+  avec l'option « Je préfère ne pas dire » non contournable.
+  → *ENF-07*
+- [ ] **2.4 Ligne verte** — parcours opératrice ONG : saisie Annexe 9 Partie 1 en direct
+  dans le back-office, bascule hors-heures vers la spécialiste VBG, aucun enregistrement
+  d'appel sans consentement.
   → *EF-04, EF-12*
-- [ ] **3.5 WhatsApp Bot** — même arbre que l'USSD ; vocaux transcrits par un opérateur
-  humain (jamais par IA) ; photos avec consentement ; instruction de suppression de la
-  conversation.
-  → *EF-04, EF-09*
-- [ ] **3.6 Personnes de confiance hors comité** — rôle `personne_confiance_vbg` limité à
-  la Partie 1 + transmission directe UGP ; **contrôle automatique de conflit d'intérêts à
-  la saisie** ; registre de formation/recyclage 6 mois.
-  → *EF-04, EF-12, ER-02*
+- [x] **2.5 Personnes de confiance** — ✅ **FAIT**. Table `vbg_trusted_person_trainings` +
+  modèle `TrustedPersonTraining` (registre formation/recyclage) ;
+  `TrustedPersonComplianceService` : validité **6 mois** (`recordTraining` calcule
+  `valid_until`), `isTrainingValid()`, et **contrôle automatique de conflit d'intérêts**
+  (`detectConflict` : numéro identique sur les 8 derniers chiffres, ou conflit déclaré).
+  `TrustedPersonController::store()` **bloque** la saisie si formation périmée (403) ou
+  conflit (422). Registre géré via `TrustedPersonTrainingController` (index/store) +
+  vue `pages/vbg/trusted-person-trainings`. Couvert par `TrustedPersonComplianceTest`
+  (6 tests). ⚠️ La formation initiale/recyclage effective des acteurs reste une action UGP.
+  → *EF-04, ER-02*
+- [ ] **2.6 Recette sécurité du module VBG** — parcours de bout en bout validé par la
+  spécialiste VBG de l'UGP (données fictives) avant toute mise en service : cloisonnement,
+  déchiffrement limité aux 2 rôles, absence de fuite dans logs/exports, purge 72 h.
+  → *ER-02, ER-07 — jalon obligatoire du Lot B*
 
 ---
 
-## 4. 🟠 P1 — Formulaires F01–F07 (écarts vs `claude-mobile.md` et le manuel)
+## 3. 🟠 P1 — Formulaires : une seule source, médias, langues
 
-- [ ] **4.1 Supprimer la double source** — les `pacipa_f01.xlsx` / `pacipa_f01_depot.xlsx`
-  à la racine (26 questions, **monolingues**, `localite_id`/`site_id` en texte libre)
-  divergent des versions `mgp-mobile/forms/xlsform/`. Conserver une seule source (les CSV
-  + `build_forms.py`), déplacer les fichiers racine vers `docs/archive/` ou les supprimer.
+- [ ] **3.1 Monosource** — les formulaires existent désormais en **trois** exemplaires :
+  racine (`pacipa_f01*.xlsx`, monolingues, obsolètes), `mgp-mobile/forms/` (source CSV +
+  `build_forms.py`) et `mgp-office/forms/` (XML servis au mobile). Décréter
+  `mgp-mobile/forms/xlsform/` comme source unique, générer et **publier** vers
+  `mgp-office/forms/` via le script (étape de build), archiver/supprimer les fichiers
+  racine.
   → *ENF-05*
-- [ ] **4.2 Cascade géographique réelle dans F01** — remplacer les champs texte libre par
-  des `select_one` en cascade Région → Département → Commune → Localité → Site (choices
-  générés depuis `elbrahms/niger-location` + référentiel sites), avec options « Plainte
-  hors site » (Type 1) et « Site non listé ».
+- [ ] **3.2 Verrouiller la fin de parcours F01 type 8** — la note de redirection vers F03
+  est en place ; ajouter la logique de saut qui **termine** le formulaire après cette note
+  (aucun champ ultérieur ne doit rester saisissable pour un type 8).
+  → *EF-04, ER-02*
+- [ ] **3.3 Cascade géographique et numérotation** — F01 : remplacer les champs libres
+  `localite_id`/`site_id` par des `select_one` en cascade alimentés par le référentiel du
+  back-office (`GeographyCascadeService` + sites), options « hors site »/« site non
+  listé » ; code `REGION-DEPARTEMENT-COMMUNE-LOCALITE-N°` aligné entre `FormIdGenerator`
+  (mobile) et `ComplaintWorkflowService::generateCode()` (office).
   → *EF-01, EF-10*
-- [ ] **4.3 Numérotation conforme** — `FormIdGenerator` : code plainte
-  `REGION-DEPARTEMENT-COMMUNE-LOCALITE-N°ORDRE` calculé dans F01 (champ `calculation`),
-  identique côté back-office.
-  → *EF-01*
-- [ ] **4.4 Retirer tout contenu sensible de F01** — F01 détecte la sensibilité
-  (`sensibilite`) puis **arrête le parcours et oriente vers le circuit F03/point focal** ;
-  aucun détail VBG ne doit être saisi dans F01 (actuellement `note_vbg` + consentement y
-  figurent). La description des faits n'existe que dans F03 Partie 2, sous consentement.
-  → *EF-04, ER-02, ER-07*
-- [ ] **4.5 Compléter F01 vs spec** — groupe répétable témoins (nom + contact), GPS auto,
-  signature numérique du chargé, résumé visuel avant soumission.
+- [ ] **3.4 Compléments F01 vs spec** — groupe répétable témoins, GPS auto, signature du
+  chargé, résumé visuel avant soumission.
   → *EF-01, EF-09*
-- [ ] **4.6 Langues** — les XLSForms couvrent FR/HA/ZR ; ajouter les colonnes
-  `label::Tamasheq`, `label::Kanouri`, `label::Fulfulde` (et `values-tq/kr/ff` côté app)
-  au moins pour F01 et F03, conformément à `claude-office.md`/`claude-mobile.md`.
-  → *ENF-07 (exigence actuellement « partiellement couverte » dans la matrice)*
-- [ ] **4.7 Médias didactiques** — créer `forms/media/icons/` (ic_type1…8, canaux) et
-  `forms/media/audio/{fr,ha,zr}/` (aides par section), référencés dans les XLSForms ;
-  publics faiblement alphabétisés = condition d'adoption relevée au pilote.
-  → *ENF-03*
-- [ ] **4.8 Validations** — format téléphone `+227XXXXXXXX`, dates cohérentes, champs
-  obligatoires ; un écran = une question (`field-list` à revoir écran par écran).
+- [ ] **3.5 Langues des formulaires** — les XLSForms restent FR/HA/ZR alors que le serveur
+  couvre déjà 6 langues : ajouter `label::Tamasheq/Kanouri/Fulfulde` au moins sur F01 et
+  F03.
+  → *ENF-07*
+- [ ] **3.6 Médias didactiques** — `forms/media/icons/` (ic_type1…8, canaux) et
+  `forms/media/audio/{fr,ha,zr}/` toujours absents ; condition d'adoption des comités
+  faiblement alphabétisés relevée au pilote.
   → *ENF-03*
 
 ---
 
-## 5. 🟠 P1 — Infrastructure, sécurité, exploitation
+## 4. 🟠 P1 — Infrastructure, exploitation, référentiels
 
-- [ ] **5.1 `docker/`** — Docker Compose dev (PostgreSQL, Redis, ODK Central) annoncé par
-  `claude-deploy.md`, absent. → *ENF-05*
-- [ ] **5.2 CI/CD `.github/`** — lint + tests + déploiement staging. → *ENF-05*
-- [ ] **5.3 Sauvegardes** — `spatie/laravel-backup` chiffré quotidien, rétention 90 j,
-  **test de restauration mensuel documenté**. `SpatieBackupTest`. → *ENF-02*
-- [ ] **5.4 Durcissement** — TLS 1.3, AES-256 au repos + LUKS, certificat client pour les
-  appareils terrain, rotation des clés (`SecuritySettings`). → *ER-02, ENF-02*
-- [ ] **5.5 Suite de tests critiques** — implémenter les 9 tests listés dans
-  `claude-deploy.md` (aucun n'existe) ; en faire le critère de sortie de chaque lot P0.
-  → *transverse — c'est aussi la preuve de couverture exigence→composant du mémoire*
-- [ ] **5.6 Dimensionnement 8 régions** — test de charge sur volume cible avant Phase 4.
-  → *ENF-06 (« à confirmer au pilote » dans la matrice)*
-- [ ] **5.7 Énergie terrain** — kits solaires pour zones instables ; Starlink URC isolées
-  (plan d'équipement à budgéter, difficulté remontée au pilote). → *ENF-01, ENF-03*
-
----
-
-## 6. 🟢 P2 — Hygiène du dépôt et documentation
-
-- [ ] **6.1 Générer `graphify-out/`** (référencé par `claude.md`, absent) ou retirer la
-  section graphify.
-- [ ] **6.2 Historique Git** — un seul commit « first commit » : adopter le Git Flow +
-  Conventional Commits FR annoncés (`feat(mgp-office): …`).
-- [ ] **6.3 Nettoyer `template/`** après intégration Blade (pages démo inutiles).
-- [ ] **6.4 Mettre à jour `claude.md`** à chaque arbitrage (règle n° 12 du fichier) —
-  notamment l'issue 2.3 (medic-collect vs module SMS maison).
-- [ ] **6.5 `docs/`** — ajouter le manuel MGP PDF, les BPMN (annexe 5) et la matrice des
-  28 exigences pour que le dépôt soit auto-porteur.
+- [ ] **4.1 `docker/` et `.github/`** — toujours absents (annoncés par
+  `claude-deploy.md`) : Compose dev (PostgreSQL, Redis, ODK Central) + CI lint/tests/
+  staging. Sans CI, la suite de tests (1.7) ne protège rien.
+  → *ENF-05*
+- [ ] **4.2 Référentiel géographique : trancher la contradiction** — `claude.md` règle n° 8
+  impose `elbrahms/niger-location`, mais le package est **absent de composer.json** et le
+  domaine `Geography/` réimplémente les modèles avec ses propres seeders
+  (`localites.sql`). Soit requérir le package et migrer, soit amender la règle n° 8 —
+  puis une seule source géographique pour l'office **et** les choices des formulaires
+  (cf. 3.3).
+  → *ENF-05, EF-01*
+- [ ] **4.3 Durcissement** — TLS 1.3 de bout en bout, LUKS serveur, rotation des clés
+  (`SecuritySettings`), certificat client mobile (avec 1.3).
+  → *ER-02, ENF-02*
+- [ ] **4.4 Test de charge 8 régions** — avant Phase 4 (exigence « à confirmer » de la
+  matrice).
+  → *ENF-06*
+- [ ] **4.5 Énergie terrain** — kits solaires zones instables, Starlink URC isolées (plan
+  d'équipement budgété).
+  → *ENF-01, ENF-03*
 
 ---
 
-## 7. Tableau de conformité récapitulatif (état actuel du dépôt)
+## 5. 🟢 P2 — Hygiène du dépôt
 
-| Exigence | Intitulé court | État | Débloquée par |
+- [ ] **5.1** Remplacer le `update.md` v1 de la racine par la présente v2 et cocher au fil
+  de l'eau (miroir de la colonne Statut de la matrice Excel — Annexe 3).
+- [ ] **5.2** Documenter le domaine `Company/` (ajout hors `claude-office.md`) et refléter
+  dans `claude.md` l'arbitrage SMS (1.4) et géographie (4.2) — règle n° 12.
+- [ ] **5.3** Générer `graphify-out/` ou retirer la section graphify de `claude.md`.
+- [ ] **5.4** Nettoyer `template/` (gabarit HTML intégré ? supprimer les pages démo) et
+  adopter le Git Flow + Conventional Commits annoncés (2 commits à ce jour).
+- [ ] **5.5** Verser dans `docs/` : manuel MGP PDF, BPMN (annexe 5) et matrice des 28
+  exigences.
+
+---
+
+## 6. Tableau de conformité récapitulatif (commit `cae5a5d`)
+
+| Exigence | Intitulé court | État | Reste à faire |
 |---|---|---|---|
-| EF-01 | Enregistrement code unique/type/canal/localisation/PJ | 🟡 formulaires OK, intégration serveur absente | 1.2, 1.18, 4.2, 4.3 |
-| EF-02 | Workflow 3 niveaux + PV | ❌ | 1.3 |
-| EF-03 | Alertes + escalade automatique | ❌ | 1.4 |
-| EF-04 | Circuit sensible cloisonné | 🟡 F03 séparé côté mobile ; serveur + canaux absents | 1.6, 3.x, 4.4 |
-| EF-05 | Indicateurs automatiques | ❌ | 1.15, 1.16 |
-| EF-06 | Accusé de réception immédiat | 🟡 note de fin F01 ; génération réelle absente | 1.5, 2.4 |
-| EF-07 | Sessions de comité | ❌ | 1.11 |
-| EF-08 | Enquête de satisfaction | ❌ | 1.12 |
-| EF-09 | Pièces jointes/preuves | 🟡 image F01 ; medialibrary absente | 1.13, 4.5 |
-| EF-10 | Tous canaux de dépôt | 🟡 champ canal présent ; canaux réels non branchés | 2.x, 3.x |
-| EF-11 | Saisie différée papier | ❌ | 1.13 |
-| EF-12 | Consentement bloquant | 🟡 présent F01/F03 ; ConsentService absent, à retirer de F01 | 1.6, 4.4 |
-| EF-13 | Référencement 72 h outillé | ❌ | 1.8, 1.21 |
-| EF-14 | Tableau de bord multi-axes | ❌ | 1.15, 1.16 |
-| ENF-01 | Hors-ligne + sync | 🟡 fork ODK OK ; pont serveur + SMS serveur absents | 1.18, 2.x |
-| ENF-02 | Disponibilité + sauvegardes | ❌ | 5.3, 5.4 |
-| ENF-03 | Utilisabilité faible littératie | 🟡 principes UX spécifiés ; médias/aide absents | 4.7, 4.8, 1.19 |
-| ENF-04 | Faible débit | 🟡 par conception ; à mesurer | 2.2 |
-| ENF-05 | Maintenabilité locale | 🟡 stack OK ; docker/CI/tests/monosource absents | 5.1, 5.2, 4.1 |
-| ENF-06 | Montée en charge 8 régions | ❌ (à confirmer) | 5.6 |
-| ENF-07 | Multilinguisme | 🟡 FR/HA/ZR ; TQ/KR/FF manquants | 4.6 |
-| ER-01 | Notification UGP 24 h / BM | ❌ | 1.7 |
-| ER-02 | Confidentialité VBG (chiffrement, cloisonnement) | 📄 spécifié précisément ; rien d'exécutable | 1.6, 1.9, 3.1, 5.4 |
-| ER-03 | Journalisation intangible | ❌ | 1.10 |
-| ER-04 | Archivage opposable | ❌ | 1.3, 1.16 |
-| ER-05 | Circuit travailleurs | ❌ | 1.14 |
-| ER-06 | Traçabilité recours PAP | ❌ | 1.2, 1.3 |
-| ER-07 | Minimisation + restitution agrégée | 🟡 principes dans F03 ; AnonymizationService absent | 1.6, 1.15, 3.1 |
+| EF-01 | Enregistrement code/type/canal/localisation/PJ | 🟡 API mobile OK (1.3) | 3.3, 3.4 |
+| EF-02 | Workflow 3 niveaux + PV | ✅ | tests (1.7) |
+| EF-03 | Alertes + escalade automatique | ✅ | `SlaCalculationTest`/`ComplaintEscalationTest` (1.7) |
+| EF-04 | Circuit sensible cloisonné | 🟡 HMAC+neutralité (2.1 code) + personnes confiance (2.5) | passerelle réelle 2.1, 2.2-2.4, 2.6, 3.2 |
+| EF-05 | Indicateurs automatiques | ✅ KPI + états PDF/Excel + envoi auto (1.8) | tests ✅ |
+| EF-06 | Accusé de réception immédiat | 🟡 accusé PDF+SMS + webhook SMS (1.2, 1.4) | passerelle réelle (2.1) |
+| EF-07 | Sessions de comité / médiation | ✅ (Mediation + vues) | vérifier absence de médiation Type 8 en recette (2.6) |
+| EF-08 | Enquête de satisfaction | ✅ entité + indicateurs (1.5) | tests ✅ |
+| EF-09 | Pièces jointes/preuves | 🟡 medialibrary + fiche papier jointe (1.6) | 3.4 |
+| EF-10 | Tous canaux de dépôt | 🟡 webhook SMS (1.4) | 2.1, 2.2 |
+| EF-11 | Saisie différée papier | ✅ écran + SLA sur date réception (1.6) | tests ✅ |
+| EF-12 | Consentement bloquant | 🟡 ConsentService OK | recette 2.6 ; ligne verte 2.4 |
+| EF-13 | Référencement 72 h outillé | 🟡 Referral + enums OK | centres holistiques seedés + minuterie en recette |
+| EF-14 | Tableau de bord multi-axes | 🟡 états PDF/Excel + envoi auto (1.8) | axes additionnels (Annexe 5/6) |
+| ENF-01 | Hors-ligne + sync | ✅ ODK + API mobile (1.3) + webhook SMS (1.4) | énergie terrain 4.5 (infra) |
+| ENF-02 | Disponibilité + sauvegardes | 🟡 backup 90 j (1.10) + 2FA imposé (1.9) | 4.3, test restauration |
+| ENF-03 | Utilisabilité faible littératie | 🟡 PageGuides OK | 3.6 |
+| ENF-04 | Faible débit | 🟡 | mesure au pilote ; contrat SMS (1.4) |
+| ENF-05 | Maintenabilité locale | 🟡 | 3.1, 4.1, 4.2 |
+| ENF-06 | Montée en charge 8 régions | ❌ | 4.4 |
+| ENF-07 | Multilinguisme | 🟡 serveur 6 langues | 3.5, 2.3 |
+| ER-01 | Notifications UGP/BM 24 h-48 h | ✅ envois réels + tracés (1.1) | tests (1.7) ✅ |
+| ER-02 | Confidentialité VBG | 🟡 schéma+libsodium+RBAC+2FA imposé (1.9) | 2.6, 4.3 |
+| ER-03 | Journalisation intangible | ✅ | vérifier filtrage champs VBG en recette (2.6) |
+| ER-04 | Archivage opposable | 🟡 rapports PDF/Excel horodatés + tracés (1.8) | rapport commission chiffré (P2) |
+| ER-05 | Circuit travailleurs | ✅ | tests (1.7) |
+| ER-06 | Traçabilité recours PAP | ✅ | — |
+| ER-07 | Minimisation + agrégation | 🟡 AnonymizationService OK | recette 2.6 |
+
+**Bilan** : 11 ✅ · 16 🟡 · 1 ❌ (après Lots A + B ; contre 7 ✅ · 18 🟡 · 3 ❌ après Lot A,
+6 ✅ · 18 🟡 · 4 ❌ avant, et 0 ✅ · 12 🟡 · 16 ❌ en v1). Le seul ❌ restant est **ENF-06**
+(test de charge 8 régions, 4.4) — une recette d'infra, plus aucun chantier de code.
+
+> **Lot A (P0 « prouver ») réalisé** — 1.1 (notifications BM), 1.2 (accusé PDF+SMS),
+> 1.7 (9 tests) et 1.10 (sauvegardes planifiées 90 j). Deux bugs réels corrigés (voir 1.2, 1.7).
+>
+> **Lot B (P0 « compléter ») réalisé en entier** — dépendances Composer installées
+> (Sanctum, Fortify, webhook-client). Faits : **1.9** (2FA imposé + défi TOTP réel), **1.3**
+> (API mobile Sanctum + distribution formulaires F03 cloisonné), **1.5** (enquête de
+> satisfaction), **1.4** (webhook SMS signé + idempotent, option A), **1.6** (saisie différée
+> papier, SLA sur date de réception), **1.8** (états PDF/Excel + envoi périodique auto).
+> Suite de tests : **71 passés**.
+>
+> **Lot C (P1 VBG opérationnel) — partie code faite** : **2.5** (personnes de confiance :
+> registre formation 6 mois + contrôle automatique de conflit d'intérêts) livré et testé
+> (6 tests) ; **2.1** confirmé côté code (HMAC + réponses neutres déjà en place). Le reste
+> de Lot C (2.2 conventions opérateurs, 2.3 langues gateway, 2.4 ligne verte, 2.6 recette
+> sécurité) relève de l'intégration passerelle et de la recette, pas du code. Suite de
+> tests : **77 passés**.
+>
+> **Tous les P0 de code (Lots A + B) sont livrés et testés.** Reste, hors code : ENF-06
+> (test de charge, 4.4), le certificat client mTLS (4.3), et les gabarits P2 (Annexe 5/6,
+> rapport commission chiffré). Prochaine étape logique : reste de **Lot C** (ops) puis
+> **Lot D** (formulaires + infra, sections 3 et 4).
 
 ---
 
-## 8. Ordre de réalisation recommandé (aligné sur le plan de déploiement)
+## 7. Ordre de réalisation recommandé
 
-1. **Lot A (P0, MVP pilote)** : 1.1 → 1.5, 1.9, 1.10, 1.18, 4.1 → 4.4 — une plainte non
-   sensible traverse le workflow complet avec SLA, accusé et audit.
-2. **Lot B (P0, VBG)** : 1.6, 1.7, 1.8, 3.1, 3.3, 4.4 — le circuit sensible est cloisonné,
-   chiffré et notifié dans les délais (24 h / 72 h). *Validation obligatoire par la
-   spécialiste VBG de l'UGP avant mise en service.*
-3. **Lot C (P0/P1)** : 1.11 → 1.17, 1.19 → 1.21, 2.x, 5.3, 5.5 — pilotage, rapports,
-   travailleurs, SMS, sauvegardes, tests.
-4. **Lot D (P1, avant Phase 4)** : 3.2, 3.4 → 3.6, 4.5 → 4.8, 5.1, 5.2, 5.4, 5.6, 5.7.
-5. **Lot E (P2)** : section 6.
+1. **Lot A (P0 « prouver »)** : 1.7 (tests) + 1.1, 1.2, 1.10 — les exigences déjà codées
+   deviennent démontrées et les notifications/accusés deviennent réels.
+2. **Lot B (P0 « compléter »)** : 1.3 → 1.6, 1.8, 1.9 — API mobile, SMS, satisfaction,
+   saisie différée, rapports, 2FA.
+3. **Lot C (P1 VBG opérationnel)** : 2.1 → 2.6 — passerelles, conventions opérateurs,
+   recette sécurité (jalon spécialiste VBG obligatoire).
+4. **Lot D (P1 formulaires + infra)** : 3.1 → 3.6, 4.1 → 4.5.
+5. **Lot E (P2)** : section 5.
 
 > **Traçabilité mémoire** : chaque case cochée met à jour la colonne « Statut » de la
-> matrice Excel des 28 exigences (Annexe 3) — c'est elle qui fait foi pour la
-> démonstration de conformité au chapitre 3.7.3.
+> matrice Excel (Annexe 3) et, pour les ✅ nouveaux, la section 3.7.3 du mémoire. Le
+> tableau 6 (évaluation pilote) se nourrit des Lots A-B : sans accusé réel (EF-06) ni
+> satisfaction (EF-08), deux lignes de la grille resteront vides.

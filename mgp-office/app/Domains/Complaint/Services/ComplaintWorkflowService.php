@@ -26,11 +26,15 @@ class ComplaintWorkflowService
         $data['registration_number'] = $this->generateCode();
         $data['is_anonymous']        = (bool) ($data['is_anonymous'] ?? false);
 
-        $complaint = Complaint::create($data);
+        // Saisie différée papier (EF-11) : la date de réception réelle fonde le calcul SLA.
+        $receivedAt = ! empty($data['received_at']) ? Carbon::parse($data['received_at']) : null;
 
-        // Calculer l'échéance SLA initiale (niveau CBGP)
-        $complaint->sla_deadline = $this->slaMonitor->computeDeadline($complaint);
-        $complaint->saveQuietly();
+        // Échéance SLA initiale (niveau CBGP) calculée avant création pour que l'accusé de
+        // réception généré par ComplaintObserver::created() la mentionne.
+        $data['sla_deadline'] = $this->slaMonitor->computeDeadline(new Complaint(), CommitteeLevel::CBGP, $receivedAt);
+
+        // La création déclenche ComplaintObserver::created() : accusé PDF (EF-06) + SMS + notif.
+        $complaint = Complaint::create($data);
 
         $this->logHistory($complaint, null, ComplaintStatus::REGISTERED, 'register', 'Plainte enregistrée', $registeredBy);
 

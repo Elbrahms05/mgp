@@ -20,7 +20,7 @@ class SlaMonitorService
     /**
      * Calcule la date d'échéance SLA pour un niveau donné (ou le niveau courant).
      */
-    public function computeDeadline(Complaint $complaint, ?CommitteeLevel $level = null): Carbon
+    public function computeDeadline(Complaint $complaint, ?CommitteeLevel $level = null, ?Carbon $from = null): Carbon
     {
         $level ??= $complaint->current_level ?? CommitteeLevel::CBGP;
 
@@ -30,7 +30,10 @@ class SlaMonitorService
             CommitteeLevel::CNGP => $this->settings->cngp_exam_days + $this->settings->cngp_investigation_days,
         };
 
-        return now()->addDays($days);
+        // Base = date de réception (saisie différée papier, EF-11) sinon maintenant.
+        $base = $from ?? $complaint->received_at ?? now();
+
+        return $base->copy()->addDays($days);
     }
 
     public function isBreached(Complaint $complaint): bool

@@ -73,6 +73,12 @@ Route::middleware(['auth', 'verified', 'enforce.2fa'])->group(function () {
         Route::get('/', [\App\Http\Controllers\Complaint\ComplaintController::class, 'index'])->name('index');
 
         // Routes statiques avant les routes paramétrées
+        // Saisie différée d'une fiche papier F01 (EF-11)
+        Route::middleware('permission:complaints.create')->group(function () {
+            Route::get('/differe/nouveau',  [\App\Http\Controllers\Complaint\DeferredComplaintController::class, 'create'])->name('deferred.create');
+            Route::post('/differe',         [\App\Http\Controllers\Complaint\DeferredComplaintController::class, 'store'])->name('deferred.store');
+        });
+
         Route::middleware('permission:complaints.create')->group(function () {
             Route::get('/create', [\App\Http\Controllers\Complaint\ComplaintController::class, 'create'])->name('create');
             Route::post('/',      [\App\Http\Controllers\Complaint\ComplaintController::class, 'store'])->name('store');
@@ -83,6 +89,13 @@ Route::middleware(['auth', 'verified', 'enforce.2fa'])->group(function () {
         });
 
         Route::get('/{complaint}', [\App\Http\Controllers\Complaint\ComplaintController::class, 'show'])->name('show');
+
+        // Accusé de réception PDF imprimable (EF-06)
+        Route::get('/{complaint}/accuse', [\App\Http\Controllers\Complaint\ComplaintController::class, 'acknowledgment'])->name('acknowledgment');
+
+        // Enquête de satisfaction à la clôture (EF-08)
+        Route::get('/{complaint}/satisfaction',  [\App\Http\Controllers\Complaint\SatisfactionSurveyController::class, 'create'])->name('satisfaction.create');
+        Route::post('/{complaint}/satisfaction', [\App\Http\Controllers\Complaint\SatisfactionSurveyController::class, 'store'])->name('satisfaction.store');
 
         Route::middleware('permission:complaints.edit')->group(function () {
             Route::get('/{complaint}/edit', [\App\Http\Controllers\Complaint\ComplaintController::class, 'edit'])->name('edit');
@@ -120,6 +133,10 @@ Route::middleware(['auth', 'verified', 'enforce.2fa'])->group(function () {
             Route::get('/{report}/enquiry',  [\App\Http\Controllers\Vbg\EnquiryController::class, 'create'])->name('enquiry');
             Route::post('/{report}/enquiry', [\App\Http\Controllers\Vbg\EnquiryController::class, 'store'])->name('enquiry.store');
         });
+
+        // Registre de formation / recyclage des personnes de confiance (2.5)
+        Route::get('/personnes-confiance/formations',  [\App\Http\Controllers\Vbg\TrustedPersonTrainingController::class, 'index'])->name('trusted-person.trainings');
+        Route::post('/personnes-confiance/formations', [\App\Http\Controllers\Vbg\TrustedPersonTrainingController::class, 'store'])->name('trusted-person.trainings.store');
     });
 
     /*
@@ -348,6 +365,13 @@ Route::prefix('webhooks/vbg')->name('webhooks.vbg.')->group(function () {
     // WhatsApp : GET pour la vérification Meta, POST pour les messages entrants
     Route::match(['GET', 'POST'], '/whatsapp', [\App\Http\Controllers\Vbg\DirectReport\WhatsAppWebhookController::class, '__invoke'])->name('whatsapp');
 });
+
+/*
+| Webhook soumissions SMS (passerelle → back-office) — update.md 1.4 (option A).
+| Signature HMAC-SHA256 vérifiée par spatie/laravel-webhook-client (config « sms »),
+| idempotence et création de plainte gérées par ProcessSmsWebhookJob.
+*/
+Route::webhooks('webhooks/sms', 'sms');
 
 // Canal personne de confiance (token Sanctum)
 Route::middleware(['auth:sanctum', 'permission:vbg.receive_direct'])

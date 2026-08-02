@@ -24,6 +24,12 @@ return Application::configure(basePath: dirname(__DIR__))
         // Middleware pour toutes les mutations (web + api)
         $middleware->append(AuditLogMiddleware::class);
 
+        // Les webhooks entrants (VBG, ODK, SMS) sont authentifiés par signature HMAC,
+        // pas par jeton CSRF de session → exclusion du contrôle CSRF.
+        $middleware->validateCsrfTokens(except: [
+            'webhooks/*',
+        ]);
+
         // Aliases pour utilisation dans les routes
         $middleware->alias([
             'vbg.access'  => EnforceVbgAccess::class,

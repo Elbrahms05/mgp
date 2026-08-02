@@ -8,6 +8,8 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\TwoFactorChallengeController;
+use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +37,15 @@ Route::middleware('guest')->group(function () {
         ->name('password.store');
 });
 
+/*
+| Défi 2FA à la connexion (session « login.id » — utilisateur non encore connecté)
+*/
+Route::get('two-factor-challenge', [TwoFactorChallengeController::class, 'create'])
+    ->name('two-factor.challenge');
+Route::post('two-factor-challenge', [TwoFactorChallengeController::class, 'store'])
+    ->middleware('throttle:6,1')
+    ->name('two-factor.challenge.store');
+
 Route::middleware('auth')->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
@@ -56,4 +67,18 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+
+    /*
+    | Gestion du 2FA par l'utilisateur (activation / confirmation / désactivation)
+    */
+    Route::get('security/two-factor', [TwoFactorController::class, 'setup'])
+        ->name('two-factor.setup');
+    Route::post('security/two-factor/enable', [TwoFactorController::class, 'enable'])
+        ->name('two-factor.enable');
+    Route::post('security/two-factor/confirm', [TwoFactorController::class, 'confirm'])
+        ->name('two-factor.confirm');
+    Route::post('security/two-factor/recovery-codes', [TwoFactorController::class, 'recoveryCodes'])
+        ->name('two-factor.recovery-codes');
+    Route::delete('security/two-factor', [TwoFactorController::class, 'disable'])
+        ->name('two-factor.disable');
 });

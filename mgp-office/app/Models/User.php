@@ -8,6 +8,8 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia;
@@ -21,6 +23,16 @@ class User extends Authenticatable implements HasMedia
     use HasRoles;
     use LogsActivity;
     use InteractsWithMedia;
+    use TwoFactorAuthenticatable;
+    use HasApiTokens;
+
+    /**
+     * Le 2FA est-il actif et confirmé pour cet utilisateur ? (source de vérité Fortify)
+     */
+    public function hasConfirmedTwoFactor(): bool
+    {
+        return ! is_null($this->two_factor_secret) && ! is_null($this->two_factor_confirmed_at);
+    }
 
     protected $fillable = [
         'name',

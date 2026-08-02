@@ -146,7 +146,7 @@ class PageGuidesSeeder extends Seeder
             [
                 'route_name'    => 'forms.index',
                 'page_title'    => 'Gestion formulaires',
-                'mgp_reference' => null,
+                'mgp_reference' => '§4.3, Annexe 4',
                 'summary'       => 'Administration des formulaires XForm déployés sur les tablettes terrain. Création, versioning, déploiement vers ODK/KoBoToolbox.',
             ],
             [
@@ -158,7 +158,7 @@ class PageGuidesSeeder extends Seeder
             [
                 'route_name'    => 'settings.index',
                 'page_title'    => 'Paramétrage',
-                'mgp_reference' => null,
+                'mgp_reference' => '§5.4',
                 'summary'       => 'Configuration globale : projet, connexion ODK, SMS gateway, délais SLA, sécurité, notifications.',
             ],
             [
@@ -182,7 +182,7 @@ class PageGuidesSeeder extends Seeder
             [
                 'route_name'    => 'audit.index',
                 'page_title'    => 'Journal d\'audit',
-                'mgp_reference' => null,
+                'mgp_reference' => '§5.5, ESIRT',
                 'summary'       => 'Historique complet de toutes les actions utilisateur. Toute consultation de données VBG est tracée.',
                 'warnings'      => [
                     ['type' => 'info', 'text' => 'Ce journal est conservé conformément aux exigences ESIRT de la Banque mondiale.'],
@@ -242,7 +242,7 @@ class PageGuidesSeeder extends Seeder
             [
                 'route_name'    => 'documentation.index',
                 'page_title'    => 'Guides contextuels',
-                'mgp_reference' => null,
+                'mgp_reference' => '§5.6',
                 'summary'       => 'Administration des guides d\'aide contextuels affichés sur chaque page du back-office. Chaque guide référence le chapitre MGP correspondant.',
                 'warnings'      => [
                     ['type' => 'info', 'text' => 'Les guides sont affichés via le badge ? flottant sur chaque page. Ils apparaissent selon le mode : sidebar, modal ou tooltip.'],

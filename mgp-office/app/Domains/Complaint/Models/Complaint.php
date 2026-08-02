@@ -38,6 +38,7 @@ class Complaint extends Model implements HasMedia
         'incident_date',
         'accused_party',
         'channel',
+        'received_at',
         'status',
         'current_level',
         'assigned_to',
@@ -51,6 +52,7 @@ class Complaint extends Model implements HasMedia
         'status'        => ComplaintStatus::class,
         'current_level' => CommitteeLevel::class,
         'incident_date' => 'date',
+        'received_at'   => 'datetime',
         'sla_deadline'  => 'datetime',
         'closed_at'     => 'datetime',
         'is_anonymous'  => 'boolean',
@@ -94,8 +96,19 @@ class Complaint extends Model implements HasMedia
         return $this->hasMany(\App\Domains\Mediation\Models\Mediation::class);
     }
 
+    public function satisfactionSurvey(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(\App\Domains\Evaluation\Models\SatisfactionSurvey::class);
+    }
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('attachments');
+
+        // Accusé de réception PDF (EF-06) : un seul fichier, disque privé.
+        $this->addMediaCollection('acknowledgment')
+            ->useDisk('local')
+            ->singleFile()
+            ->acceptsMimeTypes(['application/pdf']);
     }
 }

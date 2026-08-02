@@ -26,6 +26,22 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
+        $user = Auth::user();
+
+        // Défi 2FA (ER-02) : si l'utilisateur a le 2FA confirmé, on suspend la session le
+        // temps de vérifier le code TOTP. On mémorise l'identité dans la session « login.* »
+        // et on redirige vers le défi.
+        if ($user instanceof \App\Models\User && $user->hasConfirmedTwoFactor()) {
+            Auth::guard('web')->logout();
+
+            $request->session()->put([
+                'login.id'       => $user->getKey(),
+                'login.remember' => $request->boolean('remember'),
+            ]);
+
+            return redirect()->route('two-factor.challenge');
+        }
+
         $request->session()->regenerate();
 
         return redirect()->intended(route('dashboard', absolute: false));

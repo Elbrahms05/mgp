@@ -6,29 +6,39 @@ namespace App\Observers\Complaint;
 
 use App\Domains\Complaint\Enums\ComplaintStatus;
 use App\Domains\Complaint\Models\Complaint;
+use App\Domains\Complaint\Services\ComplaintAcknowledgmentService;
 use App\Notifications\Complaint\ComplaintRegisteredNotification;
-use Illuminate\Support\Facades\Notification;
 
 /**
- * Observer Complaint - déclenche les notifications automatiques sur les transitions d'état.
+ * Observer Complaint - déclenche l'accusé de réception et les notifications automatiques.
+ *
+ * L'accusé (EF-06) est ainsi produit pour TOUTES les voies de création d'une plainte :
+ * saisie back-office, import ODK (SubmissionMapper::mapF01) et, à terme, webhook SMS.
  */
 class ComplaintObserver
 {
+    public function __construct(
+        private readonly ComplaintAcknowledgmentService $acknowledgment,
+    ) {}
+
     /**
-     * Accusé de réception SMS/database dès qu'une plainte est créée.
-     * Le plaignant est notifié via son numéro de téléphone si disponible.
+     * Accusé de réception (PDF + SMS + notification tableau de bord) dès la création.
      */
     public function created(Complaint $complaint): void
     {
-        // Notifier le plaignant (via un notifiable anonyme portant son téléphone)
+        // Accusé de réception SMS au plaignant (via un notifiable anonyme portant son téléphone)
         if (! $complaint->is_anonymous && $complaint->complainant_phone) {
             $notifiable = new \App\Notifications\AnonymousNotifiable($complaint->complainant_phone);
             $notifiable->notify(new ComplaintRegisteredNotification($complaint));
         }
 
-        // Toujours enregistrer en base (pour le tableau de bord agent)
-        Notification::route('database', null)
-            ->notify(new ComplaintRegisteredNotification($complaint));
+        // Notification « tableau de bord » (canal database) : destinée à l'agent enregistreur.
+        // Le canal database ne supporte pas les notifications on-demand : il faut un notifiable
+        // Eloquent réel.
+        $complaint->registeredBy?->notify(new ComplaintRegisteredNotification($complaint));
+
+        // Accusé de réception PDF imprimable (EF-06)
+        $this->acknowledgment->generate($complaint);
     }
 
     /**

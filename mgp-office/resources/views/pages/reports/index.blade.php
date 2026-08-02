@@ -76,7 +76,9 @@ description="Génération de rapports MGP - Rapports conformes Banque mondiale (
                                 <label for="format" class="form-label">Format *</label>
                                 <select name="format" id="format" required class="form-select">
                                     <option value="html" {{ old('format', 'html') === 'html' ? 'selected' : '' }}>HTML (aperçu)</option>
-                                    <option value="csv" {{ old('format') === 'csv' ? 'selected' : '' }}>CSV (télécharger)</option>
+                                    <option value="pdf"  {{ old('format') === 'pdf'  ? 'selected' : '' }}>PDF (télécharger)</option>
+                                    <option value="xlsx" {{ old('format') === 'xlsx' ? 'selected' : '' }}>Excel (télécharger)</option>
+                                    <option value="csv"  {{ old('format') === 'csv'  ? 'selected' : '' }}>CSV (télécharger)</option>
                                 </select>
                             </div>
 
