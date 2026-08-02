@@ -115,7 +115,10 @@ class SettingController extends Controller
             'timeout_seconds' => ['required', 'integer', 'min:5', 'max:120'],
             'retry_attempts'  => ['required', 'integer', 'min:1', 'max:10'],
         ]);
-
+// Pour ODK Central et Aggregate, le token API n'est pas utilisé
+    if (in_array($data['server_type'], ['odk_central', 'odk_aggregate'])) {
+        $data['api_token'] = "";
+    }
         // Ne pas écraser le mot de passe ODK Central s'il est laissé vide
         if (empty($data['password'])) {
             unset($data['password']);
