@@ -220,9 +220,12 @@ Les contrôleurs et l'ingestion existent ; il reste l'intégration réelle et le
 
 ## 4. 🟠 P1 — Infrastructure, exploitation, référentiels
 
-- [ ] **4.1 `docker/` et `.github/`** — toujours absents (annoncés par
-  `claude-deploy.md`) : Compose dev (PostgreSQL, Redis, ODK Central) + CI lint/tests/
-  staging. Sans CI, la suite de tests (1.7) ne protège rien.
+- [x] **4.1 `docker/` et `.github/`** — ✅ **FAIT**. CI GitHub Actions
+  `.github/workflows/ci.yml` : job **tests** (PHP 8.4, extensions dont `sodium`, `composer
+  install`, clé VBG générée, `php artisan test`) qui **protège désormais les 77 tests**, +
+  job **lint** Pint (informatif). Environnement Docker de dev `docker/` : `docker-compose.yml`
+  (PostgreSQL 16, Redis 7, app PHP-FPM 8.4, Nginx), `Dockerfile`, `nginx.conf`, `README.md`.
+  ODK Central hors périmètre (stack dédiée, cf. `claude-deploy.md`).
   → *ENF-05*
 - [ ] **4.2 Référentiel géographique : trancher la contradiction** — `claude.md` règle n° 8
   impose `elbrahms/niger-location`, mais le package est **absent de composer.json** et le
@@ -247,11 +250,13 @@ Les contrôleurs et l'ingestion existent ; il reste l'intégration réelle et le
 
 - [ ] **5.1** Remplacer le `update.md` v1 de la racine par la présente v2 et cocher au fil
   de l'eau (miroir de la colonne Statut de la matrice Excel — Annexe 3).
-- [ ] **5.2** Documenter le domaine `Company/` (ajout hors `claude-office.md`) et refléter
-  dans `claude.md` l'arbitrage SMS (1.4) et géographie (4.2) — règle n° 12.
+- [x] **5.2** ✅ **FAIT (partiel)** — `claude.md` porte désormais une section « Décisions
+  d'architecture » consignant les arbitrages SMS (1.4, option A), 2FA (1.9), API mobile (1.3),
+  géographie (4.2, non résolu), le domaine `Company/` et la CI/Docker (4.1). Reste à étoffer
+  la documentation du domaine `Company/` dans `claude-office.md`.
 - [ ] **5.3** Générer `graphify-out/` ou retirer la section graphify de `claude.md`.
-- [ ] **5.4** Nettoyer `template/` (gabarit HTML intégré ? supprimer les pages démo) et
-  adopter le Git Flow + Conventional Commits annoncés (2 commits à ce jour).
+- [~] **5.4** **Git Flow + Conventional Commits adoptés** (branche `feat/mgp-conformite-p0-p1`
+  + commit conventionnel). Reste le nettoyage de `template/` (pages démo).
 - [ ] **5.5** Verser dans `docs/` : manuel MGP PDF, BPMN (annexe 5) et matrice des 28
   exigences.
 
@@ -279,7 +284,7 @@ Les contrôleurs et l'ingestion existent ; il reste l'intégration réelle et le
 | ENF-02 | Disponibilité + sauvegardes | 🟡 backup 90 j (1.10) + 2FA imposé (1.9) | 4.3, test restauration |
 | ENF-03 | Utilisabilité faible littératie | 🟡 PageGuides OK | 3.6 |
 | ENF-04 | Faible débit | 🟡 | mesure au pilote ; contrat SMS (1.4) |
-| ENF-05 | Maintenabilité locale | 🟡 | 3.1, 4.1, 4.2 |
+| ENF-05 | Maintenabilité locale | 🟡 CI + Docker dev (4.1) | 3.1, 4.2 |
 | ENF-06 | Montée en charge 8 régions | ❌ | 4.4 |
 | ENF-07 | Multilinguisme | 🟡 serveur 6 langues | 3.5, 2.3 |
 | ER-01 | Notifications UGP/BM 24 h-48 h | ✅ envois réels + tracés (1.1) | tests (1.7) ✅ |
@@ -315,6 +320,12 @@ Les contrôleurs et l'ingestion existent ; il reste l'intégration réelle et le
 > (test de charge, 4.4), le certificat client mTLS (4.3), et les gabarits P2 (Annexe 5/6,
 > rapport commission chiffré). Prochaine étape logique : reste de **Lot C** (ops) puis
 > **Lot D** (formulaires + infra, sections 3 et 4).
+>
+> **Lot D — démarré** : **4.1** (CI GitHub Actions + Docker dev) livré — la CI exécute et
+> **protège les 77 tests** ; **5.2** (arbitrages consignés dans `claude.md`) et **5.4**
+> (Git Flow + Conventional Commits) faits. Reste, côté code, essentiellement du `mgp-mobile`
+> (formulaires XLSForm 3.2→3.6) et l'arbitrage géographique 4.2 ; le reste de la section 4
+> est infra/recette.
 
 ---
 

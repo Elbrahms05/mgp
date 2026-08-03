@@ -61,7 +61,29 @@ Terrain (Android)     Serveur central        Back-office
 11. **Budget digitalisation** : 25 000 000 FCFA - prioriser MVP (formulaires + back-office + dashboard + module VBG) puis itérer.
 
 12. **Deux dépôts, un seul claude.md** : Tout changement métier est reflété ici avant d'être codé.
-12. **Palette claude-colors.md** : respecter charte graphique
+13. **Palette claude-colors.md** : respecter charte graphique
+
+## Décisions d'architecture (mise en œuvre `update.md`)
+
+- **Transport SMS (update.md 1.4) → Option A retenue** : module SMS maison + webhook sécurisé
+  côté back-office via `spatie/laravel-webhook-client` (route `POST /webhooks/sms`, signature
+  HMAC-SHA256 `X-Signature`, idempotence par `message_id`, `ProcessSmsWebhookJob`). Le fork
+  `medic/medic-collect` (option B) n'est pas retenu pour l'instant. Un seul transport SMS maintenu.
+  Le déchiffrement compatible mobile `SmsEncryption` reste un point d'intégration à brancher.
+- **2FA (update.md 1.9) → Fortify en socle, Breeze conservé** : `laravel/fortify` fournit
+  uniquement le 2FA (TOTP + codes de récupération), ses routes sont désactivées
+  (`Fortify::$registersRoutes = false`) ; l'authentification reste gérée par Breeze, avec un
+  défi TOTP inséré à la connexion. 2FA **imposé** aux rôles `super_admin`/`coordonnateur_ugp`/
+  `specialiste_vbg` (`SecuritySettings::two_factor_required_roles`), **non imposé en `APP_ENV=local`**.
+- **API mobile (update.md 1.3)** : `laravel/sanctum`, jeton par appareil. Le certificat client
+  (mTLS) des appareils terrain reste une couche infrastructure (cf. `claude-deploy.md`).
+- **Référentiel géographique (update.md 4.2)** : la règle n° 8 (`elbrahms/niger-location`) n'est
+  **pas encore** appliquée — le domaine `Geography/` reste la source. Arbitrage à trancher
+  (requérir le package et migrer, ou amender la règle n° 8). *Non résolu.*
+- **Domaine `Company/`** : ajouté hors `claude-office.md` (lien `company_id` sur les travailleurs) —
+  à documenter dans `claude-office.md`.
+- **CI/CD (update.md 4.1)** : GitHub Actions `.github/workflows/ci.yml` (tests PHP 8.4 sur SQLite
+  en mémoire + Pint informatif) ; environnement Docker de dev dans `docker/`.
 
 ## graphify
 
