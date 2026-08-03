@@ -20,6 +20,13 @@ import sys
 import subprocess
 from pathlib import Path
 
+# Windows : forcer une sortie console UTF-8 (libellés accentués + caractère ► des logs).
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+
 try:
     import openpyxl
 except ImportError:

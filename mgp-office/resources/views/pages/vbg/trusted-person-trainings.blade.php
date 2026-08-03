@@ -1,5 +1,5 @@
 <x-layout.app title="Formation des personnes de confiance"
-    description="Registre de formation et recyclage (6 mois) — module VBG"
+    description="Registre de formation et recyclage (6 mois) - module VBG"
     icon="shield">
 
     <x-slot name="breadcrumb">
@@ -25,7 +25,7 @@
                             @forelse ($trustedPersons as $tp)
                                 <tr>
                                     <td>{{ $tp['user']->name }}</td>
-                                    <td>{{ $tp['valid_until']?->format('d/m/Y') ?? '—' }}</td>
+                                    <td>{{ $tp['valid_until']?->format('d/m/Y') ?? '-' }}</td>
                                     <td>
                                         @if ($tp['up_to_date'])
                                             <span class="badge bg-success">À jour</span>
@@ -52,7 +52,7 @@
                         <div class="mb-3">
                             <label class="form-label">Personne de confiance</label>
                             <select name="user_id" class="form-select @error('user_id') is-invalid @enderror" required>
-                                <option value="">— Choisir —</option>
+                                <option value="">- Choisir -</option>
                                 @foreach ($trustedPersons as $tp)
                                     <option value="{{ $tp['user']->id }}">{{ $tp['user']->name }}</option>
                                 @endforeach

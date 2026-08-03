@@ -12,7 +12,7 @@ use Spatie\Permission\PermissionRegistrar;
 use Tests\TestCase;
 
 /**
- * ER-02 / ENF-02 — Le 2FA est imposé aux rôles sensibles et réellement vérifié à la
+ * ER-02 / ENF-02 - Le 2FA est imposé aux rôles sensibles et réellement vérifié à la
  * connexion (défi TOTP).
  */
 class TwoFactorAuthTest extends TestCase

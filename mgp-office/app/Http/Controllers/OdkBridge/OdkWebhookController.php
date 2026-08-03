@@ -43,7 +43,7 @@ class OdkWebhookController extends Controller
             return response('Bad Request: formId manquant', 400);
         }
 
-        // Sync ciblée sur le formulaire reçu — lookup en DB pour connaître le form_type
+        // Sync ciblée sur le formulaire reçu - lookup en DB pour connaître le form_type
         dispatch(function () use ($formId): void {
             $this->syncService->syncByFormId($formId);
         })->afterResponse();

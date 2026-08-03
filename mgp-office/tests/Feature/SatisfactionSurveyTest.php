@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 /**
- * EF-08 — Enquête de satisfaction à la clôture : enregistrement rattaché à la plainte
+ * EF-08 - Enquête de satisfaction à la clôture : enregistrement rattaché à la plainte
  * et remontée dans les indicateurs.
  */
 class SatisfactionSurveyTest extends TestCase

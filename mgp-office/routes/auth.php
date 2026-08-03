@@ -38,7 +38,7 @@ Route::middleware('guest')->group(function () {
 });
 
 /*
-| Défi 2FA à la connexion (session « login.id » — utilisateur non encore connecté)
+| Défi 2FA à la connexion (session « login.id » - utilisateur non encore connecté)
 */
 Route::get('two-factor-challenge', [TwoFactorChallengeController::class, 'create'])
     ->name('two-factor.challenge');

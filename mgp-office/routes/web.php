@@ -367,7 +367,7 @@ Route::prefix('webhooks/vbg')->name('webhooks.vbg.')->group(function () {
 });
 
 /*
-| Webhook soumissions SMS (passerelle → back-office) — update.md 1.4 (option A).
+| Webhook soumissions SMS (passerelle → back-office) - update.md 1.4 (option A).
 | Signature HMAC-SHA256 vérifiée par spatie/laravel-webhook-client (config « sms »),
 | idempotence et création de plainte gérées par ProcessSmsWebhookJob.
 */

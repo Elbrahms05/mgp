@@ -5,7 +5,7 @@
         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
   <h:head>
-    <h:title>F02 — Instruction plainte non sensible (Annexe 8)</h:title>
+    <h:title>F02 - Instruction plainte non sensible (Annexe 8)</h:title>
 
     <model>
       <instance>
@@ -62,7 +62,7 @@
       <label>Statut de résolution *</label>
       <item><label>Résolu</label><value>resolu</value></item>
       <item><label>Partiellement résolu</label><value>partiel</value></item>
-      <item><label>Non résolu — à transmettre</label><value>non_resolu</value></item>
+      <item><label>Non résolu - à transmettre</label><value>non_resolu</value></item>
     </select1>
 
   </h:body>

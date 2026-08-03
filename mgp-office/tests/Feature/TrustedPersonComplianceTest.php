@@ -15,7 +15,7 @@ use Spatie\Permission\PermissionRegistrar;
 use Tests\TestCase;
 
 /**
- * update.md 2.5 — Personnes de confiance VBG : recyclage 6 mois obligatoire et contrôle
+ * update.md 2.5 - Personnes de confiance VBG : recyclage 6 mois obligatoire et contrôle
  * automatique de conflit d'intérêts à la saisie d'un signalement.
  */
 class TrustedPersonComplianceTest extends TestCase

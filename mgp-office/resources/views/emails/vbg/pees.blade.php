@@ -1,5 +1,5 @@
 <x-mail::message>
-# Notification PEES — Incident E&S
+# Notification PEES - Incident E&S
 
 Un incident environnemental et social lié au projet **PACIPA (P179272)** requiert une notification à la Banque mondiale au titre du PEES, dans le délai contractuel de **48 heures**.
 
@@ -15,5 +15,5 @@ Un incident environnemental et social lié au projet **PACIPA (P179272)** requie
 
 Le lien avec le projet a été confirmé par la commission d'enquête. Le dossier complet demeure accessible uniquement aux rôles habilités via le module sécurisé.
 
-Équipe MGP — PACIPA
+Équipe MGP - PACIPA
 </x-mail::message>

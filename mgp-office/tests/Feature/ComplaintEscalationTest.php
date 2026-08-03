@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 /**
- * EF-03 — L'escalade d'une plainte change le niveau de traitement, recalcule
+ * EF-03 - L'escalade d'une plainte change le niveau de traitement, recalcule
  * l'échéance SLA du nouveau niveau et journalise la transition.
  */
 class ComplaintEscalationTest extends TestCase

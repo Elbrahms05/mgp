@@ -9,7 +9,7 @@ use RuntimeException;
 use Tests\TestCase;
 
 /**
- * ER-02 / §6 — Le chiffrement libsodium des données VBG est réversible pour le
+ * ER-02 / §6 - Le chiffrement libsodium des données VBG est réversible pour le
  * détenteur de la clé et infalsifiable (toute altération est détectée).
  */
 class VbgEncryptionTest extends TestCase

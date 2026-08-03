@@ -6,5 +6,5 @@ généré automatiquement par le Mécanisme de Gestion des Plaintes du projet PA
 
 Ce document est à diffusion restreinte aux personnes habilitées.
 
-Équipe MGP — PACIPA
+Équipe MGP - PACIPA
 </x-mail::message>

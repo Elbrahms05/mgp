@@ -15,7 +15,7 @@ use Illuminate\Validation\ValidationException;
  * Authentification de l'app mobile terrain (ENF-01) par jeton Sanctum.
  *
  * ⚠️ En production, cette API doit être exposée derrière TLS 1.3 avec authentification
- *    par certificat client des appareils terrain (mTLS — cf. claude-deploy.md / 4.3).
+ *    par certificat client des appareils terrain (mTLS - cf. claude-deploy.md / 4.3).
  *    Le jeton Sanctum est la seconde couche (identité de l'agent).
  */
 class AuthController extends Controller

@@ -18,7 +18,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>{{ $project->name }} — Rapport VBG agrégé trimestriel</h1>
+        <h1>{{ $project->name }} - Rapport VBG agrégé trimestriel</h1>
         <div class="sub">
             {{ $project->donor }} · Projet {{ $project->project_id }} ·
             Période : {{ $from->format('d/m/Y') }} → {{ $to->format('d/m/Y') }}
@@ -61,7 +61,7 @@
     </table>
 
     <div class="footer">
-        Généré automatiquement le {{ $generatedAt->format('d/m/Y H:i') }} — Diffusion restreinte
+        Généré automatiquement le {{ $generatedAt->format('d/m/Y H:i') }} - Diffusion restreinte
     </div>
 </body>
 </html>

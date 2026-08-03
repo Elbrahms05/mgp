@@ -1,1 +1,6 @@
 /build
+
+# Artefacts Python du pipeline XLSForm
+xlsform/__pycache__/
+# Verrous LibreOffice
+xlsform/**/.~lock.*#

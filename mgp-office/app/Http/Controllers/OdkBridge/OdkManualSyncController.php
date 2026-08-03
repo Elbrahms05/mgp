@@ -41,7 +41,7 @@ class OdkManualSyncController extends Controller
                 'errors'    => $result['errors']    + $vbgResult['errors'],
             ];
 
-            Log::info('OdkManualSyncController — sync manuelle', [
+            Log::info('OdkManualSyncController - sync manuelle', [
                 'user'   => $request->user()->id,
                 'result' => $total,
             ]);
@@ -51,7 +51,7 @@ class OdkManualSyncController extends Controller
                 : "Aucune nouvelle soumission.";
 
             if ($total['errors'] > 0) {
-                $message .= " {$total['errors']} erreur(s) — voir les logs.";
+                $message .= " {$total['errors']} erreur(s) - voir les logs.";
             }
 
             return response()->json([
@@ -60,7 +60,7 @@ class OdkManualSyncController extends Controller
                 'result'  => $total,
             ]);
         } catch (\Throwable $e) {
-            Log::error('OdkManualSyncController — échec', ['error' => $e->getMessage()]);
+            Log::error('OdkManualSyncController - échec', ['error' => $e->getMessage()]);
 
             return response()->json([
                 'success' => false,

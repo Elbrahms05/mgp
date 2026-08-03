@@ -175,7 +175,7 @@ Alpine.data('odkSync', () => ({
             this.badge    = data.result?.processed ?? (data.success ? '✓' : '!');
         } catch (e) {
             this.badgeOk  = false;
-            this.toastMsg = 'Erreur réseau — ODK Central inaccessible.';
+            this.toastMsg = 'Erreur réseau - ODK Central inaccessible.';
             this.badge    = '!';
         } finally {
             this.syncing = false;

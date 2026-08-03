@@ -78,9 +78,13 @@ Terrain (Android)     Serveur central        Back-office
 - **API mobile (update.md 1.3)** : `laravel/sanctum`, jeton par appareil. Le certificat client
   (mTLS) des appareils terrain reste une couche infrastructure (cf. `claude-deploy.md`).
 - **Référentiel géographique (update.md 4.2)** : la règle n° 8 (`elbrahms/niger-location`) n'est
-  **pas encore** appliquée — le domaine `Geography/` reste la source. Arbitrage à trancher
-  (requérir le package et migrer, ou amender la règle n° 8). *Non résolu.*
-- **Domaine `Company/`** : ajouté hors `claude-office.md` (lien `company_id` sur les travailleurs) —
+  **pas encore** appliquée - le domaine `Geography/` reste la source côté back-office. Arbitrage
+  encore ouvert pour l'office (requérir le package et migrer, ou amender la règle n° 8).
+- **Géographie côté formulaires (update.md 3.3) → décision : AUCUNE géographie dans les XForm.**
+  Les référentiels géographiques évoluent : on ne les fige plus dans les formulaires. L'agent
+  saisit **uniquement l'ID du site PACIPA** (F01) ; le back-office déduit région/localité du
+  site (`SubmissionMapper` résout par code/id). Cascade region→localité **supprimée** de F01.
+- **Domaine `Company/`** : ajouté hors `claude-office.md` (lien `company_id` sur les travailleurs) -
   à documenter dans `claude-office.md`.
 - **CI/CD (update.md 4.1)** : GitHub Actions `.github/workflows/ci.yml` (tests PHP 8.4 sur SQLite
   en mémoire + Pint informatif) ; environnement Docker de dev dans `docker/`.

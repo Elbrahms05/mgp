@@ -12,7 +12,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 /**
- * EF-13 — Le référencement vers les services fixe une échéance à 72 h (délai
+ * EF-13 - Le référencement vers les services fixe une échéance à 72 h (délai
  * contractuel de référencement VBG), rattachée au signalement.
  */
 class VbgReferralFlowTest extends TestCase

@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
  * Consultation de l'état d'avancement d'une plainte par son numéro (remontée d'état, EF-01).
  *
  * Ne renvoie que des données non nominatives : numéro, statut, niveau, échéance. Aucune
- * plainte sensible (VBG) n'est exposée ici — le suivi VBG passe par le circuit dédié.
+ * plainte sensible (VBG) n'est exposée ici - le suivi VBG passe par le circuit dédié.
  */
 class ComplaintStatusController extends Controller
 {

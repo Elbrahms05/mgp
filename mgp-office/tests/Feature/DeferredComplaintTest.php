@@ -17,7 +17,7 @@ use Spatie\Permission\PermissionRegistrar;
 use Tests\TestCase;
 
 /**
- * EF-11 / EF-09 — Saisie différée d'une fiche papier : le SLA part de la date de
+ * EF-11 / EF-09 - Saisie différée d'une fiche papier : le SLA part de la date de
  * réception papier (pas de la saisie) et la fiche numérisée est jointe.
  */
 class DeferredComplaintTest extends TestCase

@@ -1,14 +1,6 @@
 list_name,name,label::French,label::Haoussa,label::Zarma
 oui_non,oui,Oui,Eh,Oho
 oui_non,non,Non,A'a,Aula
-region,agadez,Agadez,Agadez,Agadez
-region,diffa,Diffa,Diffa,Diffa
-region,dosso,Dosso,Dosso,Dosso
-region,maradi,Maradi,Maradi,Maradi
-region,niamey,Niamey,Niamey,Niamey
-region,tahoua,Tahoua,Tahoua,Tahoua
-region,tillaberi,Tillabéri,Tillabéri,Tillabéri
-region,zinder,Zinder,Zinder,Zinder
 genre,F,Féminin,Mata,Haw
 genre,M,Masculin,Maza,Wane
 type_plainte,type1,Type 1 - Inaccessibilité aux informations,Nau'i 1 - Babu bayani,Zarma nau'i 1

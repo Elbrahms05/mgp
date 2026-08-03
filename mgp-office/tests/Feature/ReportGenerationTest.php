@@ -12,7 +12,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Tests\TestCase;
 
 /**
- * EF-05 / EF-14 / ER-04 — Génération des états : PDF (tableau de bord, VBG agrégé) et Excel.
+ * EF-05 / EF-14 / ER-04 - Génération des états : PDF (tableau de bord, VBG agrégé) et Excel.
  */
 class ReportGenerationTest extends TestCase
 {

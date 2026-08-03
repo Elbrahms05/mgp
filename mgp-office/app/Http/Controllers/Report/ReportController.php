@@ -41,7 +41,7 @@ class ReportController extends Controller
         $from = \Carbon\Carbon::parse($data['date_from'])->startOfDay();
         $to   = \Carbon\Carbon::parse($data['date_to'])->endOfDay();
 
-        // Export PDF (états mensuel / VBG agrégé / annuel) — EF-14 / ER-04
+        // Export PDF (états mensuel / VBG agrégé / annuel) - EF-14 / ER-04
         if ($data['format'] === 'pdf') {
             if ($data['report_type'] === 'quarterly_vbg'
                 && ! $request->user()->can('statistics.view_vbg_aggregated')) {

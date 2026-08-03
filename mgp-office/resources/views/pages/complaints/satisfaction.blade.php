@@ -13,7 +13,7 @@
         <div class="col-xl-8">
             <div class="card mb-4">
                 <div class="card-header">
-                    Enquête de satisfaction — plainte {{ $complaint->registration_number }}
+                    Enquête de satisfaction - plainte {{ $complaint->registration_number }}
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('complaints.satisfaction.store', $complaint) }}">
@@ -36,7 +36,7 @@
                                 </label>
                                 <select name="{{ $field }}" class="form-select @error($field) is-invalid @enderror"
                                         @if ($field === 'overall_rating') required @endif>
-                                    <option value="">— Non renseigné —</option>
+                                    <option value="">- Non renseigné -</option>
                                     @for ($i = 1; $i <= 5; $i++)
                                         <option value="{{ $i }}">{{ $i }} / 5</option>
                                     @endfor

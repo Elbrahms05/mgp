@@ -7,6 +7,7 @@ namespace App\Domains\OdkBridge\Services;
 use App\Domains\Complaint\Enums\ComplaintChannel;
 use App\Domains\Complaint\Enums\ComplaintStatus;
 use App\Domains\Complaint\Models\Complaint;
+use App\Domains\Complaint\Models\ComplaintType;
 use App\Domains\Committee\Models\Committee;
 use App\Domains\Evaluation\Models\CommitteeEvaluation;
 use App\Domains\Mediation\Models\Mediation;
@@ -133,39 +134,63 @@ class SubmissionMapper
 
     private function mapF01(SimpleXMLElement $xml): ?Complaint
     {
-        $localRef = (string) $xml->local_ref;
+        $localRef = $this->field($xml, 'id_plainte');
 
         // Éviter les doublons (soumission déjà importée)
-        if (Complaint::where('registration_number', $localRef)->exists()) {
+        if ($localRef !== '' && Complaint::where('registration_number', $localRef)->exists()) {
             Log::info("SubmissionMapper F01 - doublon ignoré : {$localRef}");
             return null;
         }
 
-        $siteCode = (string) $xml->site_pacipa;
-        $site     = $siteCode ? Site::where('code', 'like', "%{$siteCode}%")->first() : null;
+        // La localisation est déduite du SEUL identifiant de site saisi (les référentiels
+        // géographiques peuvent évoluer : ne rien figer côté formulaire).
+        $horsSite = $this->field($xml, 'plainte_hors_site') === 'oui';
+        $siteId   = $this->field($xml, 'site_id');
+        $site     = (! $horsSite && $siteId !== '')
+            ? Site::where('code', $siteId)
+                ->orWhere('id', ctype_digit($siteId) ? (int) $siteId : 0)
+                ->first()
+            : null;
 
-        $channel = self::CHANNEL_MAP[(string) $xml->canal_reception] ?? ComplaintChannel::IN_PERSON;
+        $isAnonymous = $this->field($xml, 'anonymat') === 'oui';
+
+        // Le formulaire code les types « type1 »…« type8 » ; le référentiel back-office
+        // utilise « type_1 »…« type_8 ».
+        $typeCode = preg_replace('/^type(\d)$/', 'type_$1', $this->field($xml, 'type'));
+        $type     = $typeCode ? ComplaintType::where('code', $typeCode)->first() : null;
+
+        $channel = self::CHANNEL_MAP[$this->field($xml, 'canal')] ?? ComplaintChannel::IN_PERSON;
 
         return Complaint::create([
-            'registration_number' => $localRef,
+            'registration_number' => $localRef ?: 'ODK-' . now()->format('YmdHis'),
             'site_id'             => $site?->id,
-            'complainant_name'    => (bool) (string) $xml->plaignant_anonyme
-                ? null
-                : trim((string) $xml->plaignant_nom . ' ' . (string) $xml->plaignant_prenom),
-            'complainant_age'     => (string) $xml->plaignant_age ?: null,
-            'complainant_gender'  => (string) $xml->plaignant_sexe ?: null,
-            'complainant_locality' => (string) $xml->plaignant_localite_residence ?: null,
-            'complainant_phone'   => (string) $xml->plaignant_contact ?: null,
-            'is_anonymous'        => (bool) (string) $xml->plaignant_anonyme,
-            'complaint_type_id'   => (int) (string) $xml->type_plainte ?: null,
-            'accused_party'       => trim((string) $xml->personne_visee . ' ' . (string) $xml->structure_visee) ?: null,
-            'description'         => (string) $xml->description_faits,
-            'incident_date'       => $this->parseDate((string) $xml->date_faits),
+            'complainant_name'    => $isAnonymous ? null : ($this->field($xml, 'nom_prenom') ?: null),
+            'complainant_age'     => $this->field($xml, 'age') ?: null,
+            'complainant_gender'  => $this->field($xml, 'genre') ?: null,
+            'complainant_locality' => ($this->field($xml, 'lieu_residence')
+                ?: ($horsSite ? $this->field($xml, 'site_libre') : '')) ?: null,
+            'complainant_phone'   => $this->field($xml, 'contact') ?: null,
+            'is_anonymous'        => $isAnonymous,
+            'complaint_type_id'   => $type?->id,
+            'accused_party'       => $this->field($xml, 'personne_visee') ?: null,
+            'description'         => $this->field($xml, 'description') ?: 'Plainte importée (ODK)',
+            'incident_date'       => $this->parseDate($this->field($xml, 'date_faits')),
             'channel'             => $channel,
             'status'              => ComplaintStatus::REGISTERED,
             'source'              => 'odk_mobile',
-            'registered_by'              => 3,
+            'registered_by'       => 3,
         ]);
+    }
+
+    /**
+     * Lit la valeur d'un champ par son nom, où qu'il se trouve dans l'arbre de la
+     * soumission (robuste au regroupement en sections field-list du XForm).
+     */
+    private function field(SimpleXMLElement $xml, string $name): string
+    {
+        $nodes = $xml->xpath("//{$name}");
+
+        return $nodes ? trim((string) $nodes[0]) : '';
     }
 
     // ---------------------------------------------------------------

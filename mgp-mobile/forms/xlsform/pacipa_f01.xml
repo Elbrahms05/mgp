@@ -5,7 +5,7 @@
         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
   <h:head>
-    <h:title>F01 — Dépôt de plainte (Annexe 4)</h:title>
+    <h:title>F01 - Dépôt de plainte (Annexe 4)</h:title>
 
     <model>
       <instance>
@@ -73,8 +73,8 @@
 
     <select1 ref="/data/plaignant_anonyme">
       <label>La plainte est-elle anonyme ? *</label>
-      <item><label>Non — plainte nominative</label><value>false</value></item>
-      <item><label>Oui — plainte anonyme</label><value>true</value></item>
+      <item><label>Non - plainte nominative</label><value>false</value></item>
+      <item><label>Oui - plainte anonyme</label><value>true</value></item>
     </select1>
 
     <input ref="/data/plaignant_nom">

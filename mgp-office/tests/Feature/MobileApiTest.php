@@ -16,7 +16,7 @@ use Spatie\Permission\PermissionRegistrar;
 use Tests\TestCase;
 
 /**
- * EF-01 / ENF-01 — API mobile Sanctum : authentification par jeton, distribution des
+ * EF-01 / ENF-01 - API mobile Sanctum : authentification par jeton, distribution des
  * formulaires (F03/VBG cloisonné), remontée d'état d'une plainte.
  */
 class MobileApiTest extends TestCase

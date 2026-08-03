@@ -26,7 +26,7 @@ class PeriodicReportMail extends Mailable
 
     public function envelope(): Envelope
     {
-        return new Envelope(subject: "[PACIPA-MGP] {$this->reportTitle} — {$this->period}");
+        return new Envelope(subject: "[PACIPA-MGP] {$this->reportTitle} - {$this->period}");
     }
 
     public function content(): Content

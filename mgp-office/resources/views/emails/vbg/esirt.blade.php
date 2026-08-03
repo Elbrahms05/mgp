@@ -1,5 +1,5 @@
 <x-mail::message>
-# Notification ESIRT — Cas EAS/HS
+# Notification ESIRT - Cas EAS/HS
 
 Un cas de violence basée sur le genre (EAS/HS) a été enregistré dans le cadre du projet **PACIPA (P179272)** et requiert une notification à la Banque mondiale dans le délai contractuel de **24 heures**.
 
@@ -17,5 +17,5 @@ Le dossier complet demeure accessible uniquement aux rôles habilités (spécial
 
 Merci de ne pas répondre en incluant des données nominatives.
 
-Équipe MGP — PACIPA
+Équipe MGP - PACIPA
 </x-mail::message>

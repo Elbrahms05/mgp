@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
 /**
- * ENF-02 — La sauvegarde chiffrée est configurée (rétention 90 j, chiffrement de
+ * ENF-02 - La sauvegarde chiffrée est configurée (rétention 90 j, chiffrement de
  * l'archive) et réellement planifiée dans routes/console.php.
  */
 class SpatieBackupTest extends TestCase

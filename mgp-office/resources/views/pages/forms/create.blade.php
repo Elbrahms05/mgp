@@ -121,7 +121,7 @@ document.addEventListener('alpine:init', () => {
                             <input type="hidden" name="form_id" x-model="selected">
                         </div>
 
-                        {{-- Type MGP (F01–F07) — détermine la logique de traitement à la sync --}}
+                        {{-- Type MGP (F01–F07) - détermine la logique de traitement à la sync --}}
                         <div class="mb-3">
                             <label for="form_type" class="form-label fw-semibold">
                                 Type MGP <span class="text-danger">*</span>
@@ -129,14 +129,14 @@ document.addEventListener('alpine:init', () => {
                             <select id="form_type" name="form_type"
                                     class="form-select @error('form_type') is-invalid @enderror"
                                     required>
-                                <option value="">— Sélectionner le type de formulaire —</option>
-                                <option value="F01" {{ old('form_type') === 'F01' ? 'selected' : '' }}>F01 — Dépôt de plainte (Annexe 4)</option>
-                                <option value="F02" {{ old('form_type') === 'F02' ? 'selected' : '' }}>F02 — Plainte non sensible (Annexe 8)</option>
-                                <option value="F03" {{ old('form_type') === 'F03' ? 'selected' : '' }}>F03 — Rapport VBG/EAS/HS (Annexe 9)</option>
-                                <option value="F04" {{ old('form_type') === 'F04' ? 'selected' : '' }}>F04 — PV de conciliation (Annexe 5)</option>
-                                <option value="F05" {{ old('form_type') === 'F05' ? 'selected' : '' }}>F05 — Suivi périodique (Annexe 6)</option>
-                                <option value="F06" {{ old('form_type') === 'F06' ? 'selected' : '' }}>F06 — PV installation comité (Annexe 3)</option>
-                                <option value="F07" {{ old('form_type') === 'F07' ? 'selected' : '' }}>F07 — Évaluation trimestrielle (Annexe 10)</option>
+                                <option value="">- Sélectionner le type de formulaire -</option>
+                                <option value="F01" {{ old('form_type') === 'F01' ? 'selected' : '' }}>F01 - Dépôt de plainte (Annexe 4)</option>
+                                <option value="F02" {{ old('form_type') === 'F02' ? 'selected' : '' }}>F02 - Plainte non sensible (Annexe 8)</option>
+                                <option value="F03" {{ old('form_type') === 'F03' ? 'selected' : '' }}>F03 - Rapport VBG/EAS/HS (Annexe 9)</option>
+                                <option value="F04" {{ old('form_type') === 'F04' ? 'selected' : '' }}>F04 - PV de conciliation (Annexe 5)</option>
+                                <option value="F05" {{ old('form_type') === 'F05' ? 'selected' : '' }}>F05 - Suivi périodique (Annexe 6)</option>
+                                <option value="F06" {{ old('form_type') === 'F06' ? 'selected' : '' }}>F06 - PV installation comité (Annexe 3)</option>
+                                <option value="F07" {{ old('form_type') === 'F07' ? 'selected' : '' }}>F07 - Évaluation trimestrielle (Annexe 10)</option>
                             </select>
                             @error('form_type')
                             <div class="invalid-feedback">{{ $message }}</div>

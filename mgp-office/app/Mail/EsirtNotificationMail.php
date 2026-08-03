@@ -12,7 +12,7 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Notification ESIRT à la Banque mondiale pour un cas EAS/HS — délai contractuel 24 h (ER-01).
+ * Notification ESIRT à la Banque mondiale pour un cas EAS/HS - délai contractuel 24 h (ER-01).
  *
  * ⚠️  Notification DÉ-IDENTIFIÉE : ne contient QUE le code VBG, la classification agrégée
  *     (GBVIMS), la date et la zone de l'incident, jamais l'identité de la survivante ni

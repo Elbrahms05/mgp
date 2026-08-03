@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 /**
- * Rappel critique n°10 — Chaque guide d'aide contextuelle porte une référence MGP
+ * Rappel critique n°10 - Chaque guide d'aide contextuelle porte une référence MGP
  * obligatoire. Le seeder alimente les guides des pages du back-office.
  */
 class PageGuideDisplayTest extends TestCase

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 /**
- * ER-01 — La notification ESIRT (EAS/HS) est réellement émise vers les points
+ * ER-01 - La notification ESIRT (EAS/HS) est réellement émise vers les points
  * focaux Banque mondiale configurés, tracée dans notification_logs, et marque
  * le signalement comme notifié (délai contractuel 24 h).
  */

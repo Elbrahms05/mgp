@@ -21,7 +21,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>{{ $project->name }} — {{ ($annual ?? false) ? 'Rapport annuel MGP' : 'Tableau de bord périodique' }}</h1>
+        <h1>{{ $project->name }} - {{ ($annual ?? false) ? 'Rapport annuel MGP' : 'Tableau de bord périodique' }}</h1>
         <div class="sub">
             {{ $project->donor }} · Projet {{ $project->project_id }} ·
             Période : {{ $from->format('d/m/Y') }} → {{ $to->format('d/m/Y') }}
@@ -41,7 +41,7 @@
             <td><div class="n">{{ $kpis['rejected'] }}</div><div class="l">Rejetées</div></td>
             <td><div class="n">{{ number_format($resolution, 1) }}%</div><div class="l">Taux résolution</div></td>
             <td>
-                <div class="n">{{ $satisfaction['count'] > 0 ? number_format($satisfaction['avg_overall'], 1) . '/5' : '—' }}</div>
+                <div class="n">{{ $satisfaction['count'] > 0 ? number_format($satisfaction['avg_overall'], 1) . '/5' : '-' }}</div>
                 <div class="l">Satisfaction</div>
             </td>
         </tr>
@@ -73,12 +73,12 @@
         @forelse ($avgDays as $level => $days)
             <tr><td>{{ strtoupper($level) }}</td><td>{{ $days }}</td></tr>
         @empty
-            <tr><td colspan="2">—</td></tr>
+            <tr><td colspan="2">-</td></tr>
         @endforelse
     </table>
 
     <div class="footer">
-        Généré automatiquement le {{ $generatedAt->format('d/m/Y H:i') }} — {{ $project->name }} · Confidentiel
+        Généré automatiquement le {{ $generatedAt->format('d/m/Y H:i') }} - {{ $project->name }} · Confidentiel
     </div>
 </body>
 </html>

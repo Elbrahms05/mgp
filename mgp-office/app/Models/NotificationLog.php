@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * Trace intangible de chaque notification émise (SMS, email, database).
  *
  * Sert de preuve de conformité aux délais contractuels Banque mondiale
- * (ESIRT 24h, PEES 48h — cf. ER-01) et de piste d'audit des accusés de réception.
+ * (ESIRT 24h, PEES 48h - cf. ER-01) et de piste d'audit des accusés de réception.
  *
  * ⚠️  Ne jamais journaliser de donnée identifiant une survivante VBG dans `body`
  *     ou `subject` : seul le code VBG-xxxx circule hors du module VBG (règle n°1).

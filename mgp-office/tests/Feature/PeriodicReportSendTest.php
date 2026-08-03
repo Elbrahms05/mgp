@@ -14,7 +14,7 @@ use Spatie\Permission\PermissionRegistrar;
 use Tests\TestCase;
 
 /**
- * EF-05 / EF-14 / ER-04 — L'envoi automatique périodique adresse le rapport aux personnes
+ * EF-05 / EF-14 / ER-04 - L'envoi automatique périodique adresse le rapport aux personnes
  * habilitées (par rôle/email des Paramètres) et trace l'émission.
  */
 class PeriodicReportSendTest extends TestCase

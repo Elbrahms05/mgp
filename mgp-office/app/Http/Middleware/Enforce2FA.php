@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * ER-02 / ENF-02 — Impose le 2FA aux rôles sensibles (super_admin, coordonnateur_ugp,
+ * ER-02 / ENF-02 - Impose le 2FA aux rôles sensibles (super_admin, coordonnateur_ugp,
  * specialiste_vbg). Tant que le 2FA n'est pas **confirmé**, l'utilisateur concerné est
  * bloqué sur la page de configuration : aucun accès au back-office n'est possible.
  */

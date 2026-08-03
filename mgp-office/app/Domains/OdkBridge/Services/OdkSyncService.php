@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Log;
  */
 class OdkSyncService
 {
-    /** Type MGP VBG — géré via syncVbg() avec logs et contrôles séparés. */
+    /** Type MGP VBG - géré via syncVbg() avec logs et contrôles séparés. */
     private const VBG_TYPE = 'F03';
 
     /** Préfixe des curseurs Redis pour la pagination des soumissions. */
@@ -50,7 +50,7 @@ class OdkSyncService
     public function sync(): array
     {
         if (! $this->settings->sync_enabled) {
-            Log::info('OdkSyncService — sync désactivée (OdkSettings::sync_enabled = false)');
+            Log::info('OdkSyncService - sync désactivée (OdkSettings::sync_enabled = false)');
             return ['processed' => 0, 'skipped' => 0, 'errors' => 0];
         }
 
@@ -60,7 +60,7 @@ class OdkSyncService
             ->get();
 
         if ($forms->isEmpty()) {
-            Log::info('OdkSyncService — aucun formulaire actif non-VBG dans la table forms.');
+            Log::info('OdkSyncService - aucun formulaire actif non-VBG dans la table forms.');
             return ['processed' => 0, 'skipped' => 0, 'errors' => 0];
         }
 
@@ -73,7 +73,7 @@ class OdkSyncService
             $totals['errors']    += $result['errors'];
         }
 
-        Log::info('OdkSyncService — sync terminée', $totals);
+        Log::info('OdkSyncService - sync terminée', $totals);
 
         return $totals;
     }
@@ -94,7 +94,7 @@ class OdkSyncService
             ->get();
 
         if ($forms->isEmpty()) {
-            Log::channel('vbg')->info('OdkSyncService VBG — aucun formulaire F03 actif trouvé.');
+            Log::channel('vbg')->info('OdkSyncService VBG - aucun formulaire F03 actif trouvé.');
             return ['processed' => 0, 'skipped' => 0, 'errors' => 0];
         }
 
@@ -107,7 +107,7 @@ class OdkSyncService
             $totals['errors']    += $result['errors'];
         }
 
-        Log::channel('vbg')->info('OdkSyncService VBG — sync terminée', $totals);
+        Log::channel('vbg')->info('OdkSyncService VBG - sync terminée', $totals);
 
         return $totals;
     }
@@ -123,7 +123,7 @@ class OdkSyncService
         $form = Form::where('form_id', $xmlFormId)->where('is_active', true)->first();
 
         if (! $form || ! $form->form_type) {
-            Log::warning("OdkSyncService::syncByFormId — formulaire inconnu ou sans form_type : {$xmlFormId}");
+            Log::warning("OdkSyncService::syncByFormId - formulaire inconnu ou sans form_type : {$xmlFormId}");
             return ['processed' => 0, 'skipped' => 0, 'errors' => 0];
         }
 
@@ -146,7 +146,7 @@ class OdkSyncService
         try {
             $submissions = $this->apiClient->listSubmissions($xmlFormId, $since);
         } catch (\Throwable $e) {
-            Log::channel($logChannel)->error("OdkSyncService — listSubmissions({$xmlFormId}) a échoué", [
+            Log::channel($logChannel)->error("OdkSyncService - listSubmissions({$xmlFormId}) a échoué", [
                 'error' => $e->getMessage(),
             ]);
             return ['processed' => 0, 'skipped' => 0, 'errors' => 1];
@@ -176,7 +176,7 @@ class OdkSyncService
                 }
             } catch (\Throwable $e) {
                 $errors++;
-                Log::channel($logChannel)->error("OdkSyncService — erreur soumission {$instanceId}", [
+                Log::channel($logChannel)->error("OdkSyncService - erreur soumission {$instanceId}", [
                     'form_id'   => $xmlFormId,
                     'form_type' => $formType,
                     'error'     => $e->getMessage(),
@@ -212,6 +212,6 @@ class OdkSyncService
     public function resetCursor(string $formId): void
     {
         Cache::forget(self::CURSOR_PREFIX . $formId);
-        Log::warning("OdkSyncService — curseur réinitialisé pour {$formId}");
+        Log::warning("OdkSyncService - curseur réinitialisé pour {$formId}");
     }
 }

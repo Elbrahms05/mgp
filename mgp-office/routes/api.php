@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes — app mobile terrain (auth par jeton Sanctum)
+| API Routes - app mobile terrain (auth par jeton Sanctum)
 |--------------------------------------------------------------------------
 |
 | ⚠️ À exposer derrière TLS 1.3 + certificat client des appareils (mTLS) en production.

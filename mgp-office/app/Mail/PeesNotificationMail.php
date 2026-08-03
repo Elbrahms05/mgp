@@ -12,7 +12,7 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Notification PEES à la Banque mondiale pour un incident E&S — délai contractuel 48 h (ER-01).
+ * Notification PEES à la Banque mondiale pour un incident E&S - délai contractuel 48 h (ER-01).
  *
  * ⚠️  Notification DÉ-IDENTIFIÉE (cf. EsirtNotificationMail). Émise après confirmation du
  *     lien avec le projet par la commission d'enquête (VbgEnquiry).

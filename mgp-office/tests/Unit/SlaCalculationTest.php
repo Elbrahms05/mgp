@@ -12,7 +12,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 /**
- * EF-03 — Le calcul des échéances SLA suit les délais contractuels par niveau :
+ * EF-03 - Le calcul des échéances SLA suit les délais contractuels par niveau :
  * CBGP 3+7 = 10 j, CCGP 3+4 = 7 j, CNGP 7+3 = 10 j (rappel critique n°4).
  */
 class SlaCalculationTest extends TestCase

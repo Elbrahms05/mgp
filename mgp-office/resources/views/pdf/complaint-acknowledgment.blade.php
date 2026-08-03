@@ -25,7 +25,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>PACIPA — Mécanisme de Gestion des Plaintes</h1>
+        <h1>PACIPA - Mécanisme de Gestion des Plaintes</h1>
         <div class="sub">République du Niger · Ministère de l'Agriculture et de l'Élevage · Projet P179272</div>
     </div>
 
@@ -33,7 +33,7 @@
     <p style="color:#6b7280; margin:0;">Délivré le {{ $issuedAt }}</p>
 
     <div class="ref-box">
-        <div class="label">Numéro de suivi — à conserver</div>
+        <div class="label">Numéro de suivi - à conserver</div>
         <div class="value">{{ $complaint->registration_number }}</div>
     </div>
 
@@ -58,7 +58,7 @@
     </div>
 
     <div class="footer">
-        Document généré automatiquement — PACIPA-MGP · {{ $issuedAt }}
+        Document généré automatiquement - PACIPA-MGP · {{ $issuedAt }}
     </div>
 </body>
 </html>

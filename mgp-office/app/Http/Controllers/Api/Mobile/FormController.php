@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
  *
  * Les XForms servis sont ceux de `mgp-office/forms/`. Le mobile (FormSyncService) compare
  * le `version` (hash) pour ne télécharger que les formulaires nouveaux ou modifiés.
- * Le formulaire VBG (F03) n'est distribué qu'aux agents habilités (`vbg.receive`) — le
+ * Le formulaire VBG (F03) n'est distribué qu'aux agents habilités (`vbg.receive`) - le
  * cloisonnement du circuit sensible commence dès la distribution (ER-02).
  */
 class FormController extends Controller

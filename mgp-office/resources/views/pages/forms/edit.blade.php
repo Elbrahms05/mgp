@@ -28,13 +28,13 @@
                                     <select id="form_type" name="form_type"
                                             class="form-select @error('form_type') is-invalid @enderror"
                                             required>
-                                        <option value="F01" {{ old('form_type', $form->form_type) === 'F01' ? 'selected' : '' }}>F01 — Dépôt de plainte</option>
-                                        <option value="F02" {{ old('form_type', $form->form_type) === 'F02' ? 'selected' : '' }}>F02 — Plainte non sensible</option>
-                                        <option value="F03" {{ old('form_type', $form->form_type) === 'F03' ? 'selected' : '' }}>F03 — Rapport VBG/EAS/HS</option>
-                                        <option value="F04" {{ old('form_type', $form->form_type) === 'F04' ? 'selected' : '' }}>F04 — PV de conciliation</option>
-                                        <option value="F05" {{ old('form_type', $form->form_type) === 'F05' ? 'selected' : '' }}>F05 — Suivi périodique</option>
-                                        <option value="F06" {{ old('form_type', $form->form_type) === 'F06' ? 'selected' : '' }}>F06 — PV installation comité</option>
-                                        <option value="F07" {{ old('form_type', $form->form_type) === 'F07' ? 'selected' : '' }}>F07 — Évaluation trimestrielle</option>
+                                        <option value="F01" {{ old('form_type', $form->form_type) === 'F01' ? 'selected' : '' }}>F01 - Dépôt de plainte</option>
+                                        <option value="F02" {{ old('form_type', $form->form_type) === 'F02' ? 'selected' : '' }}>F02 - Plainte non sensible</option>
+                                        <option value="F03" {{ old('form_type', $form->form_type) === 'F03' ? 'selected' : '' }}>F03 - Rapport VBG/EAS/HS</option>
+                                        <option value="F04" {{ old('form_type', $form->form_type) === 'F04' ? 'selected' : '' }}>F04 - PV de conciliation</option>
+                                        <option value="F05" {{ old('form_type', $form->form_type) === 'F05' ? 'selected' : '' }}>F05 - Suivi périodique</option>
+                                        <option value="F06" {{ old('form_type', $form->form_type) === 'F06' ? 'selected' : '' }}>F06 - PV installation comité</option>
+                                        <option value="F07" {{ old('form_type', $form->form_type) === 'F07' ? 'selected' : '' }}>F07 - Évaluation trimestrielle</option>
                                     </select>
                                     @error('form_type')<div class="invalid-feedback">{{ $message }}</div>@enderror
                                 </div>

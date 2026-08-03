@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Date de réception réelle de la plainte (EF-11) — distincte de la date de saisie.
+ * Date de réception réelle de la plainte (EF-11) - distincte de la date de saisie.
  *
  * Pour une fiche papier F01 saisie en différé, le calcul SLA doit partir de la date de
  * réception papier, pas de la date d'encodage. `created_at` reste la date de saisie.

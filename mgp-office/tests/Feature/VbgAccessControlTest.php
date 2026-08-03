@@ -12,7 +12,7 @@ use Spatie\Permission\PermissionRegistrar;
 use Tests\TestCase;
 
 /**
- * ER-02 — Le déchiffrement des données VBG est réservé aux rôles habilités
+ * ER-02 - Le déchiffrement des données VBG est réservé aux rôles habilités
  * (spécialiste VBG, coordonnateur UGP, super admin). Un rôle non habilité ne
  * possède jamais la permission `vbg.view_decrypted`.
  */

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  F03 — Rapport VBG/EAS/HS (Annexe 9)
-  CONFIDENTIEL — Ne mentionne jamais "VBG" ni "violence" dans les labels visibles.
+  F03 - Rapport VBG/EAS/HS (Annexe 9)
+  CONFIDENTIEL - Ne mentionne jamais "VBG" ni "violence" dans les labels visibles.
   Circuit : point focal → UGP → commission enquête. Jamais de médiation.
 -->
 <h:html xmlns="http://www.w3.org/2002/xforms"
@@ -10,7 +10,7 @@
         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
   <h:head>
-    <h:title>F03 — Signalement (Annexe 9)</h:title>
+    <h:title>F03 - Signalement (Annexe 9)</h:title>
 
     <model>
       <instance>

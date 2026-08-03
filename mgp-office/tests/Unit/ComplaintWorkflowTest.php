@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 /**
- * EF-02 / EF-06 — L'enregistrement d'une plainte : attribue un code, positionne le
+ * EF-02 / EF-06 - L'enregistrement d'une plainte : attribue un code, positionne le
  * statut initial, journalise l'action et génère l'accusé de réception PDF.
  */
 class ComplaintWorkflowTest extends TestCase

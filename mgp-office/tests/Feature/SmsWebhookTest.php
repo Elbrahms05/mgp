@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 /**
- * EF-06 / EF-10 / ENF-01 — Webhook de soumission SMS (option A) : signature HMAC vérifiée,
+ * EF-06 / EF-10 / ENF-01 - Webhook de soumission SMS (option A) : signature HMAC vérifiée,
  * idempotence, création d'une plainte non sensible. Un type sensible n'est jamais
  * matérialisé par ce canal.
  */

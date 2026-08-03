@@ -1,4 +1,4 @@
-<x-layout.app title="Saisie différée — fiche papier"
+<x-layout.app title="Saisie différée - fiche papier"
     description="Reprise d'une fiche F01 papier reçue antérieurement"
     icon="file-plus">
 
@@ -26,7 +26,7 @@
                             <div class="col-md-6">
                                 <label class="form-label">Type de plainte <span class="text-danger">*</span></label>
                                 <select name="complaint_type_id" class="form-select @error('complaint_type_id') is-invalid @enderror" required>
-                                    <option value="">— Choisir —</option>
+                                    <option value="">- Choisir -</option>
                                     @foreach ($complaintTypes as $type)
                                         <option value="{{ $type->id }}" @selected(old('complaint_type_id') == $type->id)>{{ $type->label }}</option>
                                     @endforeach

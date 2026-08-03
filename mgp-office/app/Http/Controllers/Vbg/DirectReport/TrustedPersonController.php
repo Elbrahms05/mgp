@@ -49,7 +49,7 @@ class TrustedPersonController extends Controller
 
         $trustedPerson = $request->user();
 
-        // 2.5 — Recyclage obligatoire : une formation à jour (< 6 mois) est requise.
+        // 2.5 - Recyclage obligatoire : une formation à jour (< 6 mois) est requise.
         if (! $this->compliance->isTrainingValid($trustedPerson)) {
             return response()->json([
                 'message' => "Votre formation de personne de confiance n'est plus à jour. "
@@ -57,7 +57,7 @@ class TrustedPersonController extends Controller
             ], 403);
         }
 
-        // 2.5 — Contrôle automatique de conflit d'intérêts.
+        // 2.5 - Contrôle automatique de conflit d'intérêts.
         if ($this->compliance->detectConflict($validated, $trustedPerson)) {
             return response()->json([
                 'message' => "Conflit d'intérêts détecté : vous ne pouvez pas traiter ce cas. "
