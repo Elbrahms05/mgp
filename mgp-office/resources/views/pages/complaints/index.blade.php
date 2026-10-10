@@ -11,6 +11,10 @@
         <a href="{{ route('complaints.create') }}" class="btn btn-success">
             <i data-feather="plus" class="me-1" style="width:15px;height:15px;"></i>Nouvelle plainte
         </a>
+        <a href="{{ route('complaints.deferred.create') }}" class="btn btn-outline-secondary ms-1"
+           title="Reprise d'une fiche papier reçue au niveau communal ou régional">
+            <i data-feather="file-plus" class="me-1" style="width:15px;height:15px;"></i>Saisie différée (papier)
+        </a>
         @endcan
         @can('complaints.export')
         <a href="{{ route('complaints.export') }}" class="btn btn-warning ms-1">
@@ -100,6 +104,7 @@
                     <p class="mt-2">Aucune plainte trouvée.</p>
                     @can('complaints.create')
                     <a href="{{ route('complaints.create') }}" class="btn btn-success">Enregistrer une plainte</a>
+                    <a href="{{ route('complaints.deferred.create') }}" class="btn btn-outline-secondary ms-1">Saisie différée (papier)</a>
                     @endcan
                 </div>
                 @else

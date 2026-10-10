@@ -31,6 +31,22 @@ class DeferredComplaintTest extends TestCase
         Storage::fake('local');
     }
 
+    public function test_l_ecran_de_saisie_differee_est_accessible(): void
+    {
+        Permission::create(['name' => 'complaints.view_own_region']);
+        Permission::create(['name' => 'complaints.create']);
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
+
+        $agent = User::factory()->create();
+        $agent->givePermissionTo(['complaints.view_own_region', 'complaints.create']);
+        ComplaintType::create(['code' => 't1', 'label' => 'Foncier', 'is_sensitive' => false, 'sort_order' => 1]);
+
+        $this->actingAs($agent)
+            ->get(route('complaints.deferred.create'))
+            ->assertOk()
+            ->assertSee('Saisie différée');
+    }
+
     public function test_le_sla_est_calcule_depuis_la_date_de_reception_papier(): void
     {
         Carbon::setTestNow('2026-02-01 10:00:00');
